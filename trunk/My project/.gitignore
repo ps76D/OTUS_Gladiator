@@ -2,3 +2,24 @@
 /Logs/
 /obj/
 /UserSettings/
+/Assembly-CSharp-Editor-firstpass.csproj
+/Assembly-CSharp-firstpass.csproj
+/Assembly-CSharp.csproj
+/MasterAudio.csproj
+/My project.sln
+/NaughtyAttributes.Core.csproj
+/NaughtyAttributes.Editor.csproj
+/NaughtyAttributes.Test.csproj
+/Sirenix.OdinInspector.CompatibilityLayer.Editor.csproj
+/Sirenix.OdinInspector.CompatibilityLayer.csproj
+/Sirenix.OdinInspector.Modules.UnityMathematics.csproj
+/UniRx.Examples.csproj
+/UniRx.csproj
+/Zenject-Editor.csproj
+/Zenject-IntegrationTests-Editor.csproj
+/Zenject-IntegrationTests.csproj
+/Zenject-PoolMonitor-Editor.csproj
+/Zenject-ReflectionBaking-Editor.csproj
+/Zenject-TestFramework.csproj
+/Zenject-UnitTests-Editor.csproj
+/Zenject.csproj
