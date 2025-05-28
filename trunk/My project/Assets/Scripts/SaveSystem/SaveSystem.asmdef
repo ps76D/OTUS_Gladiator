@@ -1,0 +1,4 @@
+{
+  "name": "SaveSystem",
+  "references":[ "GUID:ef9891d991f348f19ed1d8dc3abb4b8a", "GUID:e92cb6376d0d4e28b484855ee7c3a9b5", "AesEncrypt" ]
+}
