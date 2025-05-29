@@ -9,35 +9,45 @@ namespace UI
     {
         [SerializeField] private Button _startGameButton;
         [SerializeField] private Button _loadGameButton;
-        [SerializeField] private Button _saveGameButton;
         [SerializeField] private Button _settingsButton;
+        
+        private IMainMenuModel _viewModel;
+        public IMainMenuModel ViewModel => _viewModel;
 
-        private void OnEnable()
+        public void Show(IMainMenuModel viewModel)
         {
+            _viewModel = viewModel;
+
+            gameObject.SetActive(true);
+            
             _startGameButton.onClick.AddListener(StartGameButton);
             _loadGameButton.onClick.AddListener(LoadGameButton);
-            _saveGameButton.onClick.AddListener(StartGameButton);
-            _settingsButton.onClick.AddListener(StartGameButton);
+            _settingsButton.onClick.AddListener(SettingsGameButton);
+        }
+
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+            
+            _startGameButton.onClick.RemoveListener(StartGameButton);
+            _loadGameButton.onClick.RemoveListener(LoadGameButton);
+            _settingsButton.onClick.RemoveListener(SettingsGameButton);
         }
 
         private void StartGameButton()
         {
-            StartGame(new MainMenuModel(_uiManager));
-        }
-        
-        private void StartGame(MainMenuModel model)
-        {
-            model.OnStartGameButtonClicked?.Invoke();
+            _viewModel.StartGame();
         }
         
         private void LoadGameButton()
         {
-            LoadGame(new MainMenuModel(_uiManager));
+            _viewModel.LoadGame();
         }
         
-        private void LoadGame(MainMenuModel model)
+        private void SettingsGameButton()
         {
-            model.OnLoadGameButtonClicked?.Invoke();
+
         }
+
     }
 }

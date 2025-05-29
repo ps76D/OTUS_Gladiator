@@ -1,14 +1,15 @@
 ﻿using System;
 using Sirenix.OdinInspector;
+using UniRx;
 using UnityEngine;
 
 namespace GameEngine
 {
     [Serializable]
-    public class DayService
+    public sealed class DayService
     {
         public event Action<int> OnDayChanged;
-
+        
         public int Day => _day;
 
         [NaughtyAttributes.ReadOnly]
@@ -19,6 +20,7 @@ namespace GameEngine
         public void SetupDay(int day)
         {
             _day = day;
+            OnDayChanged?.Invoke(_day);
         }
         
         [Button]

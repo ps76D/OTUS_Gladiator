@@ -11,7 +11,7 @@ namespace GameEngine
 
         public int Money => _money;
 
-        [ReadOnly]
+        [NaughtyAttributes.ReadOnly]
         [ShowInInspector]
         private int _money;
 
@@ -19,6 +19,7 @@ namespace GameEngine
         public void SetupMoney(int money)
         {
             _money = money;
+            OnMoneyChanged?.Invoke(_money);
         }
 
         [Button]

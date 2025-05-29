@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TMPro;
 using UI.Model;
 using UniRx;
@@ -10,41 +11,75 @@ namespace UI
     public class Hud : UIScreen
     {
         [SerializeField] private Button _endDayButton;
+        [SerializeField] private Button _inGameMenuButton;
         [SerializeField] private TMP_Text _currentDayText;
+        [SerializeField] private TMP_Text _moneyCountText;
         
         /*[SerializeField] private Button _loadGameButton;
         [SerializeField] private Button _saveGameButton;
-        [SerializeField] private Button _settingsButton;*/
+        */
         
-        private HudModel _hudModel;
+        private readonly List<IDisposable> _disposables = new();
+        
+        private IHudModel _viewModel;
+        public IHudModel ViewModel => _viewModel;
 
-        private void OnEnable()
+        public void Show(IHudModel viewModel)
         {
-            _hudModel = new HudModel(_uiManager, _uiManager.ProfileService.PlayerProfile.DayService);
+            _viewModel = viewModel;
             
-            _hudModel.DayCount.Subscribe(_ => { UpdateDayText(); });
+            gameObject.SetActive(true);
+
+            _disposables.Add(viewModel.DayCount.Subscribe(UpdateDayText));
+            _disposables.Add(viewModel.MoneyCount.Subscribe(UpdateMoneyText));
             
-            _endDayButton.onClick.AddListener(EndDayButton);
-            
-            /*_loadGameButton.onClick.AddListener(LoadGameButton);
-            _saveGameButton.onClick.AddListener(StartGameButton);
-            _settingsButton.onClick.AddListener(StartGameButton);*/
+            _endDayButton.onClick.AddListener(EndDayButtonClicked);
+            _inGameMenuButton.onClick.AddListener(InGameMenuButtonClicked);
         }
 
-        private void EndDayButton()
+        public void Hide()
         {
-            EndDay(_hudModel);
+            gameObject.SetActive(false);
+            
+            _endDayButton.onClick.RemoveListener(EndDayButtonClicked);
+            _inGameMenuButton.onClick.RemoveListener(InGameMenuButtonClicked);
+            
+            foreach (var disposable in _disposables)
+                disposable.Dispose();
+        }
+
+        private void EndDayButtonClicked()
+        {
+            EndDay();
         }
         
-        private void EndDay(HudModel model)
+        private void EndDay()
         {
-            model.OnEndDayButtonClicked?.Invoke();
+            _viewModel.EndDay();
         }
 
-        private void UpdateDayText()
+        private void UpdateDayText(int day)
         {
-            _currentDayText.text = _hudModel.DayCount.Value.ToString();
-
+            SetDayData(_viewModel);
+        }
+        
+        private void SetDayData(IHudModel viewModel)
+        {
+            _currentDayText.text = viewModel.DayCount.ToString();
+        }
+        
+        private void UpdateMoneyText(int money)
+        {
+            SetMoneyData(_viewModel);
+        }
+        private void SetMoneyData(IHudModel viewModel)
+        {
+            _moneyCountText.text = viewModel.MoneyCount.ToString();
+        }
+        
+        private void InGameMenuButtonClicked()
+        {
+            _viewModel.InGameMenuShow();
         }
     }
 }

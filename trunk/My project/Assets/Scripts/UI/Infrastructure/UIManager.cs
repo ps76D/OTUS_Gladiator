@@ -1,9 +1,8 @@
 ﻿using System;
 using Infrastructure;
-using Infrastructure.DI;
-using Infrastructure.Listeners;
 using PlayerProfileSystem;
 using SaveSystem;
+using UI.Model;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -23,14 +22,11 @@ namespace UI.Infrastructure
         
         [SerializeField] private MainMenu _mainMenuScreen;
         [SerializeField] private Hud _hud;
+        [SerializeField] private InGameMenu _inGameMenu;
         /*[SerializeField] private LoseScreen _loseScreen;
         [SerializeField] private PauseScreen _pauseScreen;
         [SerializeField] private HUDScreen _hud;*/
-
-        private Action _mainMenuShowHandler;
-        private Action _mainMenuHideHandler;
-        private Action _hudShowHandler;
-        private Action _hudHideHandler;
+        
         private Action _loseScreenShowHandler;
         private Action _pauseScreenShowHandler;
         
@@ -40,35 +36,37 @@ namespace UI.Infrastructure
 
         private void Start()
         {
-            _mainMenuShowHandler = () => ShowScreen(_mainMenuScreen);
-            _mainMenuHideHandler = () => CloseScreen(_mainMenuScreen);
-            _hudShowHandler = () => ShowScreen(_hud);
-            _hudHideHandler = () => CloseScreen(_hud);
             /*_loseScreenShowHandler = () => ShowScreen(_loseScreen);
             _pauseScreenShowHandler = () => ShowScreen(_pauseScreen);*/
             
-            _gameBootstrapper.Game.StateMachine.GetState<MainMenuState>().OnMainMenuSceneLoaded += _mainMenuShowHandler;
-            _gameBootstrapper.Game.StateMachine.GetState<GameLoopState>().OnGameLoopState += _mainMenuHideHandler;
+            _gameBootstrapper.Game.StateMachine.GetState<MainMenuState>().OnMainMenuSceneLoaded += ShowMainMenu;
+            _gameBootstrapper.Game.StateMachine.GetState<GameLoopState>().OnGameLoopState += HideMainMenu;
+            _gameBootstrapper.Game.StateMachine.GetState<GameLoopState>().OnGameLoopState += HideInGameMenu;
             
-            _gameBootstrapper.Game.StateMachine.GetState<MainMenuState>().OnMainMenuState += _hudHideHandler;
-            _gameBootstrapper.Game.StateMachine.GetState<LoadInGameState>().OnLoadInGameState += _hudHideHandler;
-            _gameBootstrapper.Game.StateMachine.GetState<LoadInGameState>().OnGameLoopSceneLoaded += _hudShowHandler;
+            _gameBootstrapper.Game.StateMachine.GetState<MainMenuState>().OnMainMenuState += HideHud;
+            _gameBootstrapper.Game.StateMachine.GetState<MainMenuState>().OnMainMenuState += HideInGameMenu;
+            _gameBootstrapper.Game.StateMachine.GetState<LoadInGameState>().OnLoadInGameState += HideHud;
+            _gameBootstrapper.Game.StateMachine.GetState<GameLoopState>().OnGameLoopState += ShowHud;
 
             _gameBootstrapper.Game.StateMachine.GetState<LoseState>().OnLoseState += _loseScreenShowHandler;
-            _gameBootstrapper.Game.StateMachine.GetState<PauseState>().OnPauseState += _pauseScreenShowHandler;
+            _gameBootstrapper.Game.StateMachine.GetState<PauseState>().OnPauseState += ShowInGameMenu;
+            _gameBootstrapper.Game.StateMachine.GetState<PauseState>().OnPauseState += HideHud;
         }
         
         private void OnDisable()
         {
-            _gameBootstrapper.Game.StateMachine.GetState<MainMenuState>().OnMainMenuSceneLoaded -= _mainMenuShowHandler;
-            _gameBootstrapper.Game.StateMachine.GetState<GameLoopState>().OnGameLoopState -= _mainMenuHideHandler;
+            _gameBootstrapper.Game.StateMachine.GetState<MainMenuState>().OnMainMenuSceneLoaded -= ShowMainMenu;
+            _gameBootstrapper.Game.StateMachine.GetState<GameLoopState>().OnGameLoopState -= HideMainMenu;
+            _gameBootstrapper.Game.StateMachine.GetState<GameLoopState>().OnGameLoopState -= HideInGameMenu;
             
-            _gameBootstrapper.Game.StateMachine.GetState<MainMenuState>().OnMainMenuState -= _hudHideHandler;
-            _gameBootstrapper.Game.StateMachine.GetState<LoadInGameState>().OnLoadInGameState -= _hudHideHandler;
-            _gameBootstrapper.Game.StateMachine.GetState<LoadInGameState>().OnGameLoopSceneLoaded -= _hudShowHandler;
+            _gameBootstrapper.Game.StateMachine.GetState<MainMenuState>().OnMainMenuState -= HideHud;
+            _gameBootstrapper.Game.StateMachine.GetState<MainMenuState>().OnMainMenuState -= HideInGameMenu;
+            _gameBootstrapper.Game.StateMachine.GetState<LoadInGameState>().OnLoadInGameState -= HideHud;
+            _gameBootstrapper.Game.StateMachine.GetState<GameLoopState>().OnGameLoopState -= ShowHud;
 
             _gameBootstrapper.Game.StateMachine.GetState<LoseState>().OnLoseState -= _loseScreenShowHandler;
-            _gameBootstrapper.Game.StateMachine.GetState<PauseState>().OnPauseState -= _pauseScreenShowHandler;
+            _gameBootstrapper.Game.StateMachine.GetState<PauseState>().OnPauseState -= ShowInGameMenu;
+            _gameBootstrapper.Game.StateMachine.GetState<PauseState>().OnPauseState -= HideHud;
         }
         
         private void ShowScreen(Component screen)
@@ -80,6 +78,39 @@ namespace UI.Infrastructure
         {
             EventSystem.current.SetSelectedGameObject(null);
             screen.gameObject.SetActive(false);
+        }
+        
+        private void ShowHud()
+        {
+            var viewModel = new HudModel(this);
+            _hud.Show(viewModel);
+        }
+        
+        private void HideHud()
+        {
+            _hud.Hide();
+        }
+        
+        private void ShowMainMenu()
+        {
+            var viewModel = new MainMenuModel(this);
+            _mainMenuScreen.Show(viewModel);
+        }
+        
+        private void HideMainMenu()
+        {
+            _mainMenuScreen.Hide();
+        }
+
+        private void ShowInGameMenu()
+        {
+            var viewModel = new InGameMenuModel(this);
+            _inGameMenu.Show(viewModel);
+        }
+        
+        private void HideInGameMenu()
+        {
+            _inGameMenu.Hide();
         }
     }
 }

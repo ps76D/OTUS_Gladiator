@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 5020622391017036905}
   - component: {fileID: 2140043078297641135}
   m_Layer: 5
-  m_Name: SettingsButton
+  m_Name: InGameMenuButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -779,7 +779,7 @@ GameObject:
   - component: {fileID: 8961964798175891834}
   - component: {fileID: 6782337369793342266}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: MoneyCountText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4289,7 +4289,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041D\u0430\u0441\u0442\u0440\u043E\u0439\u043A\u0438"
+  m_text: "\u041C\u0435\u043D\u044E"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 03c997edfc901194c82a687a8f30b976, type: 2}
   m_sharedMaterial: {fileID: -3129174661773119394, guid: 03c997edfc901194c82a687a8f30b976, type: 2}
@@ -5000,7 +5000,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _uiManager: {fileID: 0}
   _endDayButton: {fileID: 2188221683629068594}
+  _inGameMenuButton: {fileID: 2140043078297641135}
   _currentDayText: {fileID: 8435949777231447013}
+  _moneyCountText: {fileID: 6782337369793342266}
 --- !u!1 &7993906947103795030
 GameObject:
   m_ObjectHideFlags: 0
