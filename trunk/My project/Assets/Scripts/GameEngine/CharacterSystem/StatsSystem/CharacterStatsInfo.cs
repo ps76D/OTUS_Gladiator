@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Sirenix.OdinInspector;
 
-namespace Character
+namespace GameEngine.CharacterSystem.StatsSystem
 {
     [Serializable]
     public sealed class CharacterStatsInfo

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94973b3c7ebe4877b604cf29163beb0a, type: 3}
+  m_Name: Syrian
+  m_EditorClassIdentifier: 
+  _characterGuid: c822c3fc-76af-4266-a6ff-991cfe732289
+  _characterName: "\u042D\u043B\u0430\u0433\u0430\u0431\u0430\u043B"
+  _characterDescription: "\u0411\u043B\u0438\u0441\u0442\u0430\u0442\u0435\u043B\u044C\u043D\u044B\u0439
+    \u0441\u0438\u0440\u0438\u0435\u0446"
+  _characterIcon: {fileID: 21300000, guid: 78f4978d39f98ae4ab6977caa9c18b3e, type: 3}
+  _statsDatabase: {fileID: 11400000, guid: 95941e53ace42674eab98a0f90c98bf2, type: 2}

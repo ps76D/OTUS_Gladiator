@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using GameEngine;
+using GameEngine.CharacterSystem;
 using UnityEngine;
-using Zenject;
 
 namespace PlayerProfileSystem
 {
@@ -13,6 +12,10 @@ namespace PlayerProfileSystem
         [SerializeField] private MoneyStorage _moneyStorage;
         [SerializeField] private DayService _dayService;
         [SerializeField] private ActionsService _actionsService;
+        
+        [SerializeField] private CharacterService _characterService;
+        
+
         
         /*[Inject]
         private ProfileService _profileService;*/
@@ -31,23 +34,25 @@ namespace PlayerProfileSystem
         public MoneyStorage MoneyStorage => _moneyStorage;
         public DayService DayService => _dayService;
         public ActionsService ActionsService => _actionsService;
+        public CharacterService CharacterService => _characterService;
         
         /*public ResourceService ResourceService => _resourceService;
         public UnitManager UnitManager => _unitManager;*/
 
         /*[SerializeField] private MoneyData _moneyData;*/
-        /*[SerializeField] private int _day;
+        /*[SerializeField] private int Day;
         public int Day {
-            get => _day;
-            set => _day = value;
+            get => Day;
+            set => Day = value;
         }*/
 
 
-        public PlayerProfile(MoneyStorage moneyStorage, DayService dayService, ActionsService actionsService)
+        public PlayerProfile(MoneyStorage moneyStorage, DayService dayService, ActionsService actionsService, CharacterService characterService)
         {
             _moneyStorage = moneyStorage;
             _dayService = dayService;
             _actionsService = actionsService;
+            _characterService = characterService;
         }
         
         /*public void InitializeNewGame()

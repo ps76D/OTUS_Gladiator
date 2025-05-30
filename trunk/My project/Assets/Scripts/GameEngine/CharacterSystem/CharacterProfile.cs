@@ -1,13 +1,15 @@
 ﻿using System;
-using StatSystem;
+using Character;
+using GameEngine.CharacterSystem.StatsSystem;
 using UnityEngine;
+using CharacterInfo = Character.CharacterInfo;
 
-namespace Character
+namespace GameEngine.CharacterSystem
 {
     [Serializable]
     public class CharacterProfile
     {
-        [SerializeField] private CharacterInfoData _characterInfoData;
+        /*[SerializeField] private CharacterInfoData _characterInfoData;*/
         [SerializeField] private CharacterInfo _characterInfo;
         [SerializeField] private CharacterLevel _characterLevel;
 
@@ -18,17 +20,26 @@ namespace Character
         
         public CharacterStatsInfo CharacterStatsInfo => _characterStatsInfo;
 
-        public CharacterInfoData CharacterInfoData => _characterInfoData; 
+        /*public CharacterInfoData CharacterInfoData => _characterInfoData; */
 
-        public CharacterProfile(CharacterInfoData characterInfoData)
+        public CharacterProfile(CharacterInfoSObj characterInfoSObj)
         {
-            _characterInfoData = characterInfoData;
-            _characterInfo = CreateCharacterInfo(characterInfoData);
+            _characterInfo = new CharacterInfo
+            {
+                _guid = characterInfoSObj.CharacterGuid,
+                _name = characterInfoSObj.CharacterName,
+                _description = characterInfoSObj.CharacterDescription,
+                _icon = characterInfoSObj.CharacterIcon
+            };
+
+            /*_characterInfo = CreateCharacterInfo(characterInfoData);*/
+            
             _characterLevel = new CharacterLevel();
-            _characterStatsInfo = CreateCharacterStatsInfo(characterInfoData);
+            
+            /*_characterStatsInfo = CreateCharacterStatsInfo(characterInfoData);*/
         }
 
-        private CharacterInfo CreateCharacterInfo(CharacterInfoData characterInfoData)
+        /*private CharacterInfo CreateCharacterInfo(CharacterInfoData characterInfoData)
         {
             var characterInfo = new CharacterInfo();
 
@@ -37,9 +48,9 @@ namespace Character
             characterInfo.ChangeIcon(characterInfoData.CharacterIcon);
             
             return characterInfo;
-        }
+        }*/
 
-        private CharacterStatsInfo CreateCharacterStatsInfo(CharacterInfoData characterInfoData)
+        /*private CharacterStatsInfo CreateCharacterStatsInfo(CharacterInfoData characterInfoData)
         {
             var characterStatsInfo = new CharacterStatsInfo();
 
@@ -58,6 +69,6 @@ namespace Character
             }
 
             return characterStatsInfo;
-        }
+        }*/
     }
 }

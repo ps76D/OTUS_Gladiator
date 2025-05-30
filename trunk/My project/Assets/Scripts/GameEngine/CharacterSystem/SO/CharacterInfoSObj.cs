@@ -2,10 +2,10 @@
 using StatSystem;
 using UnityEngine;
 
-namespace Character
+namespace GameEngine.CharacterSystem
 {
-    [CreateAssetMenu(fileName = "CharacterInfoData", menuName = "CharacterProfile/CharacterInfoData", order = 0)]
-    public sealed class CharacterInfoData : ScriptableObject
+    [CreateAssetMenu(fileName = "CharacterInfoSObj", menuName = "CharacterProfile/CharacterInfoSObj", order = 0)]
+    public sealed class CharacterInfoSObj : ScriptableObject
     {
         [SerializeField] private string _characterGuid = Guid.NewGuid().ToString();
         [SerializeField] private string _characterName;

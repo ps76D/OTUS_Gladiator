@@ -2,7 +2,7 @@ using System;
 using Sirenix.OdinInspector;
 using UniRx;
 
-namespace Character
+namespace GameEngine.CharacterSystem.StatsSystem
 {
     public sealed class CharacterStat
     {

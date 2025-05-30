@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91dd1e6b70f7463592e828bc7d1cc874, type: 3}
+  m_Name: SlaveStatsDatabase
+  m_EditorClassIdentifier: 
+  _startStatsDatabase:
+  - _statInfoData: {fileID: 11400000, guid: 2525014f123aa914daa2200da747deda, type: 2}
+    _startStatValue: 2
+  - _statInfoData: {fileID: 11400000, guid: f45f74fcc1d88e247925e6d7ea5f93e5, type: 2}
+    _startStatValue: 1
+  - _statInfoData: {fileID: 11400000, guid: 75bc24839b133524e851d3f79e10ca66, type: 2}
+    _startStatValue: 3

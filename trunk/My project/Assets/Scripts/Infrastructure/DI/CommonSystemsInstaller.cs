@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using AesEncrypt;
+using Character;
 using GameEngine;
+using GameEngine.CharacterSystem;
 using Infrastructure.Listeners;
 using PlayerProfileSystem;
 using SaveSystem;
@@ -20,6 +22,8 @@ namespace Infrastructure.DI
         /*[SerializeField] private DayService _dayService;*/
         
         [SerializeField] private PlayerProfileDefault _playerProfileDefault;
+        [SerializeField] private CharacterInfoSObj _characterInfoDataDefault;
+        [SerializeField] private CharacterDatabase _characterDatabase;
         
         public override void InstallBindings()
         {
@@ -37,9 +41,15 @@ namespace Infrastructure.DI
 
             Container.Bind<DayService>().FromNew().AsSingle().NonLazy();
             Container.Bind<ISaveLoader>().To<DaySaveLoader>().AsCached().NonLazy();
+
+            Container.Bind<CharacterInfoSObj>().FromInstance(_characterInfoDataDefault).AsSingle().NonLazy();
+            Container.Bind<CharacterDatabase>().FromInstance(_characterDatabase).AsSingle().NonLazy();
+
+            Container.Bind<CharacterService>().ToSelf().AsSingle().NonLazy();
+            Container.Bind<ISaveLoader>().To<CharacterSaveLoader>().AsCached().NonLazy();
             
             Container.Bind<PlayerProfileDefault>().FromInstance(_playerProfileDefault).AsSingle().NonLazy();
-            
+
             Container.Bind<PlayerProfile>().ToSelf().AsSingle().NonLazy();
 
             Container.Bind<ProfileService>().ToSelf().AsSingle().NonLazy();

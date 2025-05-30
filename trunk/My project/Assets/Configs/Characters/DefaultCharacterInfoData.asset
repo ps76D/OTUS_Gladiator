@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94973b3c7ebe4877b604cf29163beb0a, type: 3}
+  m_Name: DefaultCharacterInfoData
+  m_EditorClassIdentifier: 
+  _characterGuid: 1efd79c6-417f-4851-aaa0-2c871ee39fd8
+  _characterName: "\u0411\u0435\u0437\u044B\u043C\u044F\u043D\u043D\u044B\u0439"
+  _characterDescription: "\u041F\u0440\u0435\u0437\u0440\u0435\u043D\u043D\u044B\u0439
+    \u0440\u0430\u0431, \u043A\u043E\u0442\u043E\u0440\u043E\u0433\u043E \u0437\u0430\u0441\u0442\u0430\u0432\u0438\u043B\u0438
+    \u0441\u0442\u0430\u0442\u044C \u0433\u043B\u0430\u0434\u0438\u0430\u0442\u043E\u0440\u043E\u043C"
+  _characterIcon: {fileID: 21300000, guid: e1e88cc68ada9e446b98cc7b19761bd8, type: 3}
+  _statsDatabase: {fileID: 11400000, guid: 38c52d7dcde9ad94bbf3c4da1750a947, type: 2}
