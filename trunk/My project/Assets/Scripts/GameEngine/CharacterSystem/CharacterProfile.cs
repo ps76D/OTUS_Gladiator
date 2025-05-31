@@ -1,8 +1,7 @@
 ﻿using System;
-using Character;
 using GameEngine.CharacterSystem.StatsSystem;
 using UnityEngine;
-using CharacterInfo = Character.CharacterInfo;
+using CharacterInfo = GameEngine.CharacterSystem.CharacterInfo.CharacterInfo;
 
 namespace GameEngine.CharacterSystem
 {
@@ -10,12 +9,12 @@ namespace GameEngine.CharacterSystem
     public class CharacterProfile
     {
         /*[SerializeField] private CharacterInfoData _characterInfoData;*/
-        [SerializeField] private CharacterInfo _characterInfo;
+        [SerializeField] private CharacterInfo.CharacterInfo _characterInfo;
         [SerializeField] private CharacterLevel _characterLevel;
 
         [SerializeField] private CharacterStatsInfo _characterStatsInfo;
 
-        public CharacterInfo CharacterInfo => _characterInfo;
+        public CharacterInfo.CharacterInfo CharacterInfo => _characterInfo;
         public CharacterLevel CharacterLevel => _characterLevel;
         
         public CharacterStatsInfo CharacterStatsInfo => _characterStatsInfo;
@@ -24,7 +23,7 @@ namespace GameEngine.CharacterSystem
 
         public CharacterProfile(CharacterInfoSObj characterInfoSObj)
         {
-            _characterInfo = new CharacterInfo
+            _characterInfo = new CharacterInfo.CharacterInfo
             {
                 _guid = characterInfoSObj.CharacterGuid,
                 _name = characterInfoSObj.CharacterName,
@@ -36,7 +35,7 @@ namespace GameEngine.CharacterSystem
             
             _characterLevel = new CharacterLevel();
             
-            /*_characterStatsInfo = CreateCharacterStatsInfo(characterInfoData);*/
+            _characterStatsInfo = CreateCharacterStatsInfo(characterInfoSObj);
         }
 
         /*private CharacterInfo CreateCharacterInfo(CharacterInfoData characterInfoData)
@@ -50,25 +49,26 @@ namespace GameEngine.CharacterSystem
             return characterInfo;
         }*/
 
-        /*private CharacterStatsInfo CreateCharacterStatsInfo(CharacterInfoData characterInfoData)
+        private CharacterStatsInfo CreateCharacterStatsInfo(CharacterInfoSObj characterInfoData)
         {
-            var characterStatsInfo = new CharacterStatsInfo();
+            CharacterStatsInfo characterStatsInfo = new CharacterStatsInfo();
 
             int index;
             for (index = 0; index < characterInfoData.StatsDatabase.StartStatsDatabase.Count; index++)
             {
                 StatData statData = characterInfoData.StatsDatabase.StartStatsDatabase[index];
-                var stat = new CharacterStat()
+                CharacterStat stat = new()
                 {
                     Name = statData._statInfoData.StatName,
                 };
 
                 stat.ChangeValue(statData._startStatValue);
+                stat.ChangeIcon(statData._statInfoData.StatIcon);
 
                 characterStatsInfo.AddStat(stat);
             }
 
             return characterStatsInfo;
-        }*/
+        }
     }
 }

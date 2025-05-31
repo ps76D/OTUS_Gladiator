@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc82f836fd62419aa2c005cfec6e63b1, type: 3}
   m_Name: AgilityStat
   m_EditorClassIdentifier: 
-  _statName: Strenght
+  _statName: Agility
+  _statIcon: {fileID: 21300000, guid: b5cf6e42e60bb9a469fbbfca537e9b44, type: 3}

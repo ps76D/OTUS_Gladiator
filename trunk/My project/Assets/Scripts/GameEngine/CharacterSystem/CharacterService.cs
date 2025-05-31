@@ -1,6 +1,8 @@
 using System;
-using Character;
+using System.Collections.Generic;
+using GameEngine.CharacterSystem.StatsSystem;
 using Sirenix.OdinInspector;
+using UnityEngine;
 using Zenject;
 
 namespace GameEngine.CharacterSystem
@@ -15,16 +17,13 @@ namespace GameEngine.CharacterSystem
         
         private CharacterInfoSObj _currentCharacterInfoSObj;
         
-        
         public event Action<CharacterProfile> OnCharacterDataChanged;
 
         public CharacterProfile CurrentCharacterProfile => _currentCharacterProfile;
         public CharacterInfoSObj CharacterInfoDefault => _characterInfoDefault;
         public CharacterInfoSObj CurrentCharacterInfoSObj => _currentCharacterInfoSObj;
         
-        [NaughtyAttributes.ReadOnly]
-        [ShowInInspector]
-        private CharacterProfile _currentCharacterProfile;
+        [SerializeField] private CharacterProfile _currentCharacterProfile;
 
         public void SetupCharacter(CharacterData characterData)
         {
@@ -35,9 +34,17 @@ namespace GameEngine.CharacterSystem
             _currentCharacterProfile.CharacterLevel.CurrentLevel = characterData.CurrentLevel;
             _currentCharacterProfile.CharacterLevel.CurrentExperience = characterData.CurrentExperience;
             
+            
             _currentCharacterInfoSObj = _characterDatabase.CharacterInfoDatabaseSObjs.
-                Find(gu => gu.CharacterGuid == _currentCharacterProfile.CharacterInfo._guid);
+                Find(c => c.CharacterGuid == _currentCharacterProfile.CharacterInfo._guid);
             _currentCharacterProfile.CharacterInfo._icon = _currentCharacterInfoSObj.CharacterIcon;
+
+            _currentCharacterProfile.CharacterStatsInfo.Stats = new HashSet<CharacterStat>();
+            
+            foreach (CharacterStat stat in characterData.Stats)
+            {
+                _currentCharacterProfile.CharacterStatsInfo.Stats.Add(stat);
+            }
             
             OnCharacterDataChanged?.Invoke(_currentCharacterProfile);
         }

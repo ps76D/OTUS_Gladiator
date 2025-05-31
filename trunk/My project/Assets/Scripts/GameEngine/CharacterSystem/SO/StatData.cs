@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StatSystem
+namespace GameEngine.CharacterSystem
 {
     [Serializable]
     public sealed class StatData

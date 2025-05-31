@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using GameEngine;
 using GameEngine.CharacterSystem;
 using UnityEngine;
@@ -20,6 +21,7 @@ namespace SaveSystem
                 CurrentLevel = service.CurrentCharacterProfile.CharacterLevel.CurrentLevel,
                 CurrentExperience = service.CurrentCharacterProfile.CharacterLevel.CurrentExperience,
                 
+                Stats = service.CurrentCharacterProfile.CharacterStatsInfo.GetStats()
                 /*Icon = service.CurrentCharacterProfile.CharacterInfo.Icon,*/
             };
         }

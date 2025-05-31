@@ -2,7 +2,7 @@ using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Character
+namespace GameEngine.CharacterSystem.CharacterInfo
 {
     [Serializable]
     public sealed class CharacterInfo

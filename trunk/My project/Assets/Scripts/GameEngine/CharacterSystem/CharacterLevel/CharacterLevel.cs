@@ -1,22 +1,22 @@
 using System;
 using Sirenix.OdinInspector;
-using UniRx;
 
 namespace GameEngine.CharacterSystem
 {
     [Serializable]
     public sealed class CharacterLevel
     {
-        public event Action OnLevelUp;
+        public event Action<int> OnLevelUp;
         public event Action<int> OnExperienceChanged;
-
-        [ShowInInspector, ReadOnly]
+        public event Action<int> OnRequiredExperienceChanged;
+        
+        [ShowInInspector]
         public int CurrentLevel { get; set; } = 1;
 
-        [ShowInInspector, ReadOnly]
+        [ShowInInspector]
         public int CurrentExperience { get; set; }
 
-        [ShowInInspector, ReadOnly]
+        [ShowInInspector]
         public int RequiredExperience => 100 * (CurrentLevel + 1);
 
         [Button]
@@ -34,7 +34,9 @@ namespace GameEngine.CharacterSystem
             
             CurrentExperience = 0;
             CurrentLevel++;
-            OnLevelUp?.Invoke();
+            OnLevelUp?.Invoke(CurrentLevel);
+            OnRequiredExperienceChanged?.Invoke(RequiredExperience);
+            OnExperienceChanged?.Invoke(CurrentExperience);
         }
 
         public bool CanLevelUp()

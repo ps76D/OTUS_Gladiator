@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: StrenghtStat
   m_EditorClassIdentifier: 
   _statName: Strenght
+  _statIcon: {fileID: 21300000, guid: 9f047709c301288469d710b4ab0af1a1, type: 3}

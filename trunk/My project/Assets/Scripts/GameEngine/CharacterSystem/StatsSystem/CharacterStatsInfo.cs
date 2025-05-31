@@ -10,11 +10,15 @@ namespace GameEngine.CharacterSystem.StatsSystem
     {
         public event Action<CharacterStat> OnStatAdded;
         public event Action<CharacterStat> OnStatRemoved;
-    
-        [ShowInInspector]
+        
+        [ShowInInspector] 
         private HashSet<CharacterStat> _stats = new();
+        
+        public HashSet<CharacterStat> Stats {
+            get => _stats;
+            set => _stats = value;
+        }
 
-        [Button]
         public void AddStat(CharacterStat stat)
         {
             if (_stats.Add(stat))
@@ -23,7 +27,6 @@ namespace GameEngine.CharacterSystem.StatsSystem
             }
         }
 
-        [Button]
         public void RemoveStat(CharacterStat stat)
         {
             if (_stats.Remove(stat))

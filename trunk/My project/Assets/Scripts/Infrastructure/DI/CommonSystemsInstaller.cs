@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using AesEncrypt;
-using Character;
 using GameEngine;
 using GameEngine.CharacterSystem;
 using Infrastructure.Listeners;

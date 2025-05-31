@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using GameEngine.CharacterSystem;
 using UnityEngine;
 
-namespace Character
+namespace GameEngine.CharacterSystem
 {
     [CreateAssetMenu(fileName = "CharacterInfoDatabase", menuName = "CharacterProfile/CharacterInfoDatabase", order = 0)]
     public sealed class CharacterDatabase : ScriptableObject
