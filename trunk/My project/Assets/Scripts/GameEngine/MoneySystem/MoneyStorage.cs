@@ -11,8 +11,7 @@ namespace GameEngine
 
         public int Money => _money;
 
-        [NaughtyAttributes.ReadOnly]
-        [ShowInInspector]
+        [ShowInInspector, ReadOnly]
         private int _money;
 
         [Button]

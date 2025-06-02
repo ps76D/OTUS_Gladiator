@@ -14,3 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _statName: Agility
   _statIcon: {fileID: 21300000, guid: b5cf6e42e60bb9a469fbbfca537e9b44, type: 3}
+  _statNameText:
+    m_TableReference:
+      m_TableCollectionName: GUID:bbdf63024d5754a4a91df6631864e794
+    m_TableEntryReference:
+      m_KeyId: 277027716227093
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  _statDescriptionText:
+    m_TableReference:
+      m_TableCollectionName: GUID:bbdf63024d5754a4a91df6631864e794
+    m_TableEntryReference:
+      m_KeyId: 0
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  references:
+    version: 2
+    RefIds: []

@@ -23,6 +23,7 @@ namespace Infrastructure.DI
         [SerializeField] private PlayerProfileDefault _playerProfileDefault;
         [SerializeField] private CharacterInfoSObj _characterInfoDataDefault;
         [SerializeField] private CharacterDatabase _characterDatabase;
+        [SerializeField] private MoralConfig _moralConfig;
         
         public override void InstallBindings()
         {
@@ -34,6 +35,10 @@ namespace Infrastructure.DI
 
             Container.Bind<ActionsService>().FromNew().AsSingle().NonLazy();
             Container.Bind<ISaveLoader>().To<ActionsSaveLoader>().AsCached().NonLazy();
+            Container.Bind<MoralConfig>().FromInstance(_moralConfig).AsSingle().NonLazy();
+            
+            Container.Bind<MoralService>().FromNew().AsSingle().NonLazy();
+            Container.Bind<ISaveLoader>().To<MoralSaveLoader>().AsCached().NonLazy();
             
             Container.Bind<MoneyStorage>().FromNew().AsSingle().NonLazy();
             Container.Bind<ISaveLoader>().To<MoneySaveLoader>().AsCached().NonLazy();

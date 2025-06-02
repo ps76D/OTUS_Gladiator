@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using GameEngine.CharacterSystem.StatsSystem;
+using Infrastructure;
 using TMPro;
 using UI.Model;
 using UniRx;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace UI
@@ -13,18 +14,21 @@ namespace UI
     {
         [SerializeField] private Button _endDayButton;
         [SerializeField] private Button _inGameMenuButton;
+        [SerializeField] private Button _trainStatStrengthButton;
+        [SerializeField] private Button _trainStatEnduranceButton;
+        [SerializeField] private Button _trainStatAgilityButton;
+        [SerializeField] private Button _restButton;
+        [SerializeField] private Button _levelUpButton;
         
         [SerializeField] private TMP_Text _currentDayText;
         [SerializeField] private TMP_Text _moneyCountText;
         [SerializeField] private TMP_Text _levelCountText;
         [SerializeField] private TMP_Text _expCountText;
+        [SerializeField] private TMP_Text _currentMoralText;
         [SerializeField] private Slider _expSlider;
         
         [SerializeField] private StatsView _statsView;
-        
-        /*[SerializeField] private Button _loadGameButton;
-        [SerializeField] private Button _saveGameButton;
-        */
+        [SerializeField] private ActionsPanelView _actionsPanelView;
         
         private readonly List<IDisposable> _disposables = new();
         
@@ -34,18 +38,31 @@ namespace UI
         public void Show(IHudModel viewModel)
         {
             _viewModel = viewModel;
-            
+
             gameObject.SetActive(true);
 
             _disposables.Add(viewModel.DayCount.Subscribe(UpdateDayText));
             _disposables.Add(viewModel.MoneyCount.Subscribe(UpdateMoneyText));
             _disposables.Add(viewModel.ExpCount.Subscribe(UpdateExpText));
             _disposables.Add(viewModel.LevelCount.Subscribe(UpdateLevelText));
+            _disposables.Add(viewModel.CurrentMoral.Subscribe(UpdateMoralText));
+            _disposables.Add(viewModel.LevelUpButtonIsInteractable.SubscribeToInteractable(_levelUpButton));
+            _disposables.Add(viewModel.ActionsButtonIsInteractable.SubscribeToInteractable(_trainStatStrengthButton));
+            _disposables.Add(viewModel.ActionsButtonIsInteractable.SubscribeToInteractable(_trainStatEnduranceButton));
+            _disposables.Add(viewModel.ActionsButtonIsInteractable.SubscribeToInteractable(_trainStatAgilityButton));
+            _disposables.Add(viewModel.ActionsButtonIsInteractable.SubscribeToInteractable(_restButton));
 
             _endDayButton.onClick.AddListener(EndDayButtonClicked);
             _inGameMenuButton.onClick.AddListener(InGameMenuButtonClicked);
-            
+            _trainStatStrengthButton.onClick.AddListener(TrainStatStrength);
+            _trainStatEnduranceButton.onClick.AddListener(TrainStatEndurance);
+            _trainStatAgilityButton.onClick.AddListener(TrainStatAgility);
+            _levelUpButton.onClick.AddListener(LevelUpButtonClicked);
+            _restButton.onClick.AddListener(RestButtonClicked);
+
             _statsView.Show(new StatsModel(_uiManager));
+
+            _actionsPanelView.Show(new ActionsPanelModel(_uiManager));
         }
 
         public void Hide()
@@ -54,11 +71,15 @@ namespace UI
             
             _endDayButton.onClick.RemoveListener(EndDayButtonClicked);
             _inGameMenuButton.onClick.RemoveListener(InGameMenuButtonClicked);
+            _trainStatStrengthButton.onClick.RemoveListener(TrainStatStrength);
+            _trainStatEnduranceButton.onClick.RemoveListener(TrainStatEndurance);
+            _trainStatAgilityButton.onClick.RemoveListener(TrainStatAgility);
             
             foreach (var disposable in _disposables)
                 disposable.Dispose();
             
             _statsView.Hide();
+            _actionsPanelView.Hide();
         }
 
         private void EndDayButtonClicked()
@@ -97,9 +118,9 @@ namespace UI
         
         private void SetExpData(IHudModel viewModel)
         {
-            _expCountText.text = viewModel.ExpCount + " / " + _viewModel.RequiredExpCount;
+            _expCountText.text = viewModel.ExpCount + " / " + viewModel.RequiredExpCount;
             
-            float sliderValue = (float)viewModel.ExpCount.Value / _viewModel.RequiredExpCount.Value;
+            float sliderValue = (float)viewModel.ExpCount.Value / viewModel.RequiredExpCount.Value;
             
             _expSlider.value = sliderValue;
         }
@@ -117,6 +138,43 @@ namespace UI
         private void InGameMenuButtonClicked()
         {
             _viewModel.InGameMenuShow();
+        }
+
+        private void TrainStat(IHudModel viewModel, string statName)
+        {
+            viewModel.IncreaseStat(statName);
+            _actionsPanelView.UpdateActionsPanel(_uiManager.ProfileService.PlayerProfile.ActionsService.AvailableActions.Value);
+        }
+        
+        private void TrainStatStrength()
+        {
+            TrainStat(_viewModel, StatsNamesConstants.Strength);
+        }
+        private void TrainStatEndurance()
+        {
+            TrainStat(_viewModel, StatsNamesConstants.Endurance);
+        }
+        private void TrainStatAgility()
+        {
+            TrainStat(_viewModel, StatsNamesConstants.Agility);
+        }
+        private void LevelUpButtonClicked()
+        {
+            _viewModel.LevelUp();
+        }
+
+        private void UpdateMoralText(int moral)
+        {
+            UpdateMoralData(_viewModel);
+        }
+        private void UpdateMoralData(IHudModel viewModel)
+        {
+            _currentMoralText.text = viewModel.GetMoralState().GetLocalizedString();
+        }
+
+        private void RestButtonClicked()
+        {
+            _viewModel.Rest();
         }
     }
 }

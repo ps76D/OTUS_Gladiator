@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Game_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: bbdf63024d5754a4a91df6631864e794, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 277027716227093
+    m_Localized: Agility
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325280795207819264
+    m_Localized: Stat System
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325280795249762304
+    m_Localized: Strength
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325280795249762305
+    m_Localized: Endurance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325280795249762306
+    m_Localized: Moral System
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325280795249762307
+    m_Localized: Courage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325280795249762308
+    m_Localized: Enthusiasm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325280795249762309
+    m_Localized: High
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325280795249762310
+    m_Localized: Raised
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325280795249762311
+    m_Localized: Normal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325280795249762312
+    m_Localized: Reduced
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325280795249762313
+    m_Localized: Low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325280795249762314
+    m_Localized: Despondency
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325280795249762315
+    m_Localized: Depression
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325280795249762316
+    m_Localized: Apathy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325298543912706048
+    m_Localized: Restrained
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

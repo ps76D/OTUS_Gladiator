@@ -13,9 +13,6 @@ namespace UI.Model
         
         public HashSet<StatModel> Stats=> _stats;
         
-        /*public IReadOnlyReactiveProperty<int> StatValue => _statValue;
-        private readonly ReactiveProperty<int> _statValue = new(0);*/
-        
         public StatsModel(UIManager uiManager)
         {
             _uiManager = uiManager;

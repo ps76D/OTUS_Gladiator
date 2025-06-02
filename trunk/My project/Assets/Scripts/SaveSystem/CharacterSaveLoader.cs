@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using GameEngine;
 using GameEngine.CharacterSystem;
 using UnityEngine;
 
@@ -17,12 +15,11 @@ namespace SaveSystem
                 Guid = service.CurrentCharacterProfile.CharacterInfo._guid,
                 Name = service.CurrentCharacterProfile.CharacterInfo._name,
                 Description = service.CurrentCharacterProfile.CharacterInfo._description,
-                
+
                 CurrentLevel = service.CurrentCharacterProfile.CharacterLevel.CurrentLevel,
-                CurrentExperience = service.CurrentCharacterProfile.CharacterLevel.CurrentExperience,
-                
-                Stats = service.CurrentCharacterProfile.CharacterStatsInfo.GetStats()
-                /*Icon = service.CurrentCharacterProfile.CharacterInfo.Icon,*/
+                CurrentExperience = service.CurrentCharacterProfile.CharacterLevel.CurrentExperience.Value,
+
+                Stats = service.CurrentCharacterProfile.CharacterStatsInfo.GetStatTransferData()
             };
         }
 

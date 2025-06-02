@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using GameEngine.CharacterSystem.StatsSystem;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
@@ -32,19 +30,14 @@ namespace GameEngine.CharacterSystem
             _currentCharacterProfile.CharacterInfo._description = characterData.Description;
             
             _currentCharacterProfile.CharacterLevel.CurrentLevel = characterData.CurrentLevel;
-            _currentCharacterProfile.CharacterLevel.CurrentExperience = characterData.CurrentExperience;
+            _currentCharacterProfile.CharacterLevel.CurrentExperience.Value = characterData.CurrentExperience;
             
             
             _currentCharacterInfoSObj = _characterDatabase.CharacterInfoDatabaseSObjs.
                 Find(c => c.CharacterGuid == _currentCharacterProfile.CharacterInfo._guid);
             _currentCharacterProfile.CharacterInfo._icon = _currentCharacterInfoSObj.CharacterIcon;
-
-            _currentCharacterProfile.CharacterStatsInfo.Stats = new HashSet<CharacterStat>();
             
-            foreach (CharacterStat stat in characterData.Stats)
-            {
-                _currentCharacterProfile.CharacterStatsInfo.Stats.Add(stat);
-            }
+            _currentCharacterProfile.CharacterStatsInfo.SetStats(characterData);
             
             OnCharacterDataChanged?.Invoke(_currentCharacterProfile);
         }

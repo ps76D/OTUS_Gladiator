@@ -1,7 +1,6 @@
 ﻿using System;
 using GameEngine.CharacterSystem.StatsSystem;
 using UnityEngine;
-using CharacterInfo = GameEngine.CharacterSystem.CharacterInfo.CharacterInfo;
 
 namespace GameEngine.CharacterSystem
 {
@@ -9,12 +8,12 @@ namespace GameEngine.CharacterSystem
     public class CharacterProfile
     {
         /*[SerializeField] private CharacterInfoData _characterInfoData;*/
-        [SerializeField] private CharacterInfo.CharacterInfo _characterInfo;
+        [SerializeField] private CharacterInfo _characterInfo;
         [SerializeField] private CharacterLevel _characterLevel;
 
         [SerializeField] private CharacterStatsInfo _characterStatsInfo;
 
-        public CharacterInfo.CharacterInfo CharacterInfo => _characterInfo;
+        public CharacterInfo CharacterInfo => _characterInfo;
         public CharacterLevel CharacterLevel => _characterLevel;
         
         public CharacterStatsInfo CharacterStatsInfo => _characterStatsInfo;
@@ -23,12 +22,12 @@ namespace GameEngine.CharacterSystem
 
         public CharacterProfile(CharacterInfoSObj characterInfoSObj)
         {
-            _characterInfo = new CharacterInfo.CharacterInfo
+            _characterInfo = new CharacterInfo
             {
                 _guid = characterInfoSObj.CharacterGuid,
                 _name = characterInfoSObj.CharacterName,
                 _description = characterInfoSObj.CharacterDescription,
-                _icon = characterInfoSObj.CharacterIcon
+                /*_icon = characterInfoSObj.CharacterIcon*/
             };
 
             /*_characterInfo = CreateCharacterInfo(characterInfoData);*/
@@ -51,8 +50,10 @@ namespace GameEngine.CharacterSystem
 
         private CharacterStatsInfo CreateCharacterStatsInfo(CharacterInfoSObj characterInfoData)
         {
-            CharacterStatsInfo characterStatsInfo = new CharacterStatsInfo();
+            CharacterStatsInfo characterStatsInfo = new ();
 
+            /*characterStatsInfo.SetStats(characterInfoData.StatsDatabase);*/
+                
             int index;
             for (index = 0; index < characterInfoData.StatsDatabase.StartStatsDatabase.Count; index++)
             {
@@ -63,7 +64,7 @@ namespace GameEngine.CharacterSystem
                 };
 
                 stat.ChangeValue(statData._startStatValue);
-                stat.ChangeIcon(statData._statInfoData.StatIcon);
+                /*stat.ChangeIcon(statData._statInfoData.StatIcon);*/
 
                 characterStatsInfo.AddStat(stat);
             }

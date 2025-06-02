@@ -13,6 +13,6 @@ namespace GameEngine.CharacterSystem
         public string Description;
         public int CurrentLevel;
         public int CurrentExperience;
-        public CharacterStat[] Stats;
+        public IEnumerable<StatTransferData> Stats;
     }
 }

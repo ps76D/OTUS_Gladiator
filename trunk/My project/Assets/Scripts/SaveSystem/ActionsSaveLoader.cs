@@ -13,8 +13,8 @@ namespace SaveSystem
             Debug.Log($"<color=yellow>MaxActionsCount convert to data = {service.MaxActionsCount}</color>");
             return new ActionData
             {
-                _availableActions = service.AvailableActions,
-                _maxActionsCount = service.MaxActionsCount
+                _availableActions = service.AvailableActions.Value,
+                _maxActionsCount = service.MaxActionsCount.Value
             };
         }
 

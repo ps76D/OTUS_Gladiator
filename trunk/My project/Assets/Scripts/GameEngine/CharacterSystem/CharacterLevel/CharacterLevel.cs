@@ -1,5 +1,6 @@
 using System;
 using Sirenix.OdinInspector;
+using UniRx;
 
 namespace GameEngine.CharacterSystem
 {
@@ -13,8 +14,8 @@ namespace GameEngine.CharacterSystem
         [ShowInInspector]
         public int CurrentLevel { get; set; } = 1;
 
-        [ShowInInspector]
-        public int CurrentExperience { get; set; }
+        [ShowInInspector, ReadOnly]
+        public IReactiveProperty<int> CurrentExperience { get; set; } = new ReactiveProperty<int>();
 
         [ShowInInspector]
         public int RequiredExperience => 100 * (CurrentLevel + 1);
@@ -22,8 +23,8 @@ namespace GameEngine.CharacterSystem
         [Button]
         public void AddExperience(int range)
         {
-            var xp = Math.Min(CurrentExperience + range, RequiredExperience);
-            CurrentExperience = xp;
+            var xp = Math.Min(CurrentExperience.Value + range, RequiredExperience);
+            CurrentExperience.Value = xp;
             OnExperienceChanged?.Invoke(xp);
         }
 
@@ -32,16 +33,16 @@ namespace GameEngine.CharacterSystem
         {
             if (!CanLevelUp()) return;
             
-            CurrentExperience = 0;
+            CurrentExperience.Value = 0;
             CurrentLevel++;
             OnLevelUp?.Invoke(CurrentLevel);
             OnRequiredExperienceChanged?.Invoke(RequiredExperience);
-            OnExperienceChanged?.Invoke(CurrentExperience);
+            OnExperienceChanged?.Invoke(CurrentExperience.Value);
         }
 
         public bool CanLevelUp()
         {
-            return CurrentExperience == RequiredExperience;
+            return CurrentExperience.Value == RequiredExperience;
         }
     }
 }

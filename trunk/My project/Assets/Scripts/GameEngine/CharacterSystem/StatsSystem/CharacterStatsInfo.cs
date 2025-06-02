@@ -37,20 +37,51 @@ namespace GameEngine.CharacterSystem.StatsSystem
 
         public CharacterStat GetStat(string name)
         {
-            foreach (var stat in _stats)
+            foreach (CharacterStat stat in _stats.Where(stat => stat.Name == name))
             {
-                if (stat.Name == name)
-                {
-                    return stat;
-                }
+                return stat;
             }
 
             throw new Exception($"StatData {name} is not found!");
         }
 
-        public CharacterStat[] GetStats()
+        public IEnumerable<CharacterStat> GetStats()
         {
             return _stats.ToArray();
+        }
+
+        public IEnumerable<StatTransferData> GetStatTransferData()
+        {
+            var data = new List<StatTransferData>();
+            
+            foreach (CharacterStat characterStat in _stats)
+            {
+                StatTransferData transferData = new StatTransferData()
+                {
+                    Name = characterStat.Name,
+                    Value = characterStat.Value,
+                    CurrentStatExperience = characterStat.CurrentStatExperience,
+                };
+                data.Add(transferData);
+            }
+
+            return data;
+        }
+        
+        public void SetStats(CharacterData characterData)
+        {
+            _stats = new HashSet<CharacterStat>();
+
+            foreach (StatTransferData statTransferData in characterData.Stats)
+            {
+                CharacterStat stat = new()
+                {
+                    Name = statTransferData.Name
+                };
+                stat.ChangeValue(statTransferData.Value);
+                stat.SetCurrentStatExperience(statTransferData.CurrentStatExperience);
+                _stats.Add(stat);
+            }
         }
     }
 }

@@ -27,6 +27,7 @@ namespace SaveSystem
             _services.Add(playerProfile.MoneyStorage);
             _services.Add(playerProfile.DayService);
             _services.Add(playerProfile.ActionsService);
+            _services.Add(playerProfile.MoralService);
             _services.Add(playerProfile.CharacterService);
             
             /*_playerProfile.Initialize();*/

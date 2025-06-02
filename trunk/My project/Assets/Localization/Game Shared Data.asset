@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Game Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Game
+  m_TableCollectionNameGuidString: bbdf63024d5754a4a91df6631864e794
+  m_Entries:
+  - m_Id: 325280795207819264
+    m_Key: Stat System
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325280795249762304
+    m_Key: STAT_STRENGTH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325280795249762305
+    m_Key: STAT_ENDURANCE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 277027716227093
+    m_Key: STAT_AGILITY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325280795249762306
+    m_Key: Moral System
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325280795249762307
+    m_Key: MORALLEVEL_COURAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325280795249762308
+    m_Key: MORALLEVEL_ENTHUSIASM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325280795249762309
+    m_Key: MORALLEVEL_HIGH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325280795249762310
+    m_Key: MORALLEVEL_RAISED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325280795249762311
+    m_Key: MORALLEVEL_NORMAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325298543912706048
+    m_Key: MORALLEVEL_RESTRAINED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325280795249762312
+    m_Key: MORALLEVEL_REDUSED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325280795249762313
+    m_Key: MORALLEVEL_LOW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325280795249762314
+    m_Key: MORALLEVEL_DESPONDENCY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325280795249762315
+    m_Key: MORALLEVEL_DEPRESSION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 325280795249762316
+    m_Key: MORALLEVEL_APATHY
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4052873922552528920
+  references:
+    version: 2
+    RefIds:
+    - rid: 4052873922552528920
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1671274366001

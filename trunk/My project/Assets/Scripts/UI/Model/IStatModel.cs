@@ -1,11 +1,14 @@
-﻿using UniRx;
-using UnityEngine;
+﻿using GameEngine.CharacterSystem.StatsSystem;
+using UniRx;
+
 
 namespace UI.Model
 {
     public interface IStatModel
     {
+        CharacterStat CharacterStat { get; }
         IReadOnlyReactiveProperty<int> StatValue { get; }
-        Sprite Icon { get; }
+        IReadOnlyReactiveProperty<int> CurrentStatExperience { get; }
+        IReadOnlyReactiveProperty<int> RequiredStatExperience { get; }
     }
 }

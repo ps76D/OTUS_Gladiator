@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UI.Model;
 using UnityEngine;
 
@@ -9,12 +8,12 @@ namespace UI
     {
         [SerializeField] private StatView _statViewWidget;
         private IStatsModel _viewModel;
-        public IStatsModel ViewModel => _viewModel;
+        /*public IStatsModel ViewModel => _viewModel;*/
         
-        private readonly List<IDisposable> _disposables = new();
+        /*private readonly List<IDisposable> _disposables = new();*/
         
         private readonly List<StatView> _statViews = new();
-        public List<StatView> StatViews => _statViews;
+        /*public List<StatView> StatViews => _statViews;*/
         
         public void Show(IStatsModel viewModel)
         {
@@ -25,11 +24,6 @@ namespace UI
             Cleanup();
             
             UpdateStats(_viewModel);
-            
-            /*_disposables.Add(viewModel.DayCount.Subscribe(UpdateDayText));
-            _disposables.Add(viewModel.MoneyCount.Subscribe(UpdateMoneyText));
-            _disposables.Add(viewModel.ExpCount.Subscribe(UpdateExpText));
-            _disposables.Add(viewModel.LevelCount.Subscribe(UpdateLevelText));*/
         }
 
         public void Hide()
@@ -38,8 +32,8 @@ namespace UI
             
             Cleanup();
             
-            foreach (var disposable in _disposables)
-                disposable.Dispose();
+            /*foreach (var disposable in _disposables)
+                disposable.Dispose();*/
         }
 
         private void UpdateStats(IStatsModel viewModel)

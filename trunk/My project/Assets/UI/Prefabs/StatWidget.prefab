@@ -546,9 +546,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _icon: {fileID: 2994530549096763908}
-  _statValue: {fileID: 4929813854981731166}
-  _statExpValue: {fileID: 1596611495980545147}
+  _statValueText: {fileID: 4929813854981731166}
+  _statExpValueText: {fileID: 1596611495980545147}
   _statExpSlider: {fileID: 752576024065789759}
+  _characterDatabase: {fileID: 11400000, guid: d5277a97a02766c44bc7cfa07be219ba, type: 2}
 --- !u!1 &8479609356529556698
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ namespace PlayerProfileSystem
         [SerializeField] private ActionsService _actionsService;
         
         [SerializeField] private CharacterService _characterService;
+        [SerializeField] private MoralService _moralService;
         
 
         
@@ -35,6 +36,7 @@ namespace PlayerProfileSystem
         public DayService DayService => _dayService;
         public ActionsService ActionsService => _actionsService;
         public CharacterService CharacterService => _characterService;
+        public MoralService MoralService => _moralService;
         
         /*public ResourceService ResourceService => _resourceService;
         public UnitManager UnitManager => _unitManager;*/
@@ -47,12 +49,14 @@ namespace PlayerProfileSystem
         }*/
 
 
-        public PlayerProfile(MoneyStorage moneyStorage, DayService dayService, ActionsService actionsService, CharacterService characterService)
+        public PlayerProfile(MoneyStorage moneyStorage, DayService dayService, ActionsService actionsService, CharacterService characterService,
+            MoralService moralService)
         {
             _moneyStorage = moneyStorage;
             _dayService = dayService;
             _actionsService = actionsService;
             _characterService = characterService;
+            _moralService = moralService;
         }
         
         /*public void InitializeNewGame()
