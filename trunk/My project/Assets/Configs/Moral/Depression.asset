@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Depression
   m_EditorClassIdentifier: 
   _moralLevelValue: 10
+  _moralModifier: 0.5
   _moralLevelText:
     m_TableReference:
       m_TableCollectionName: GUID:bbdf63024d5754a4a91df6631864e794

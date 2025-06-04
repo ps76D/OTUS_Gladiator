@@ -123,6 +123,106 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &486572268
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 486572269}
+  - component: {fileID: 486572270}
+  m_Layer: 0
+  m_Name: MatchMakingService
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &486572269
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486572268}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3003944674542450638}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &486572270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486572268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de436acfb878ad74b97901e0d9d0a0d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerCharacterProfile:
+    _characterInfo:
+      _guid: 
+      _name: 
+      _description: 
+      _icon: {fileID: 0}
+  _opponentProfile:
+    _characterInfo:
+      _guid: 
+      _name: 
+      _description: 
+      _icon: {fileID: 0}
+--- !u!1 &722976858
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 722976860}
+  - component: {fileID: 722976859}
+  m_Layer: 0
+  m_Name: BattleService
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &722976859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 722976858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbf634e76ae141fab96c3755c6b1f85e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &722976860
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 722976858}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3003944674542450638}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &917973527
 GameObject:
   m_ObjectHideFlags: 0
@@ -327,6 +427,9 @@ MonoBehaviour:
   _characterInfoDataDefault: {fileID: 11400000, guid: 49f6266bfe3643b45b18c9acc206d366, type: 2}
   _characterDatabase: {fileID: 11400000, guid: e7b5d65b12260de4dacc36da2bfcc0bc, type: 2}
   _moralConfig: {fileID: 11400000, guid: 3e468d2ad8248c24ebe7a0947cd6f4cf, type: 2}
+  _matchMakingService: {fileID: 486572270}
+  _battleService: {fileID: 722976859}
+  _enemyDatabase: {fileID: 11400000, guid: 78f0008df04382f4ea6acc5c5b35686b, type: 2}
 --- !u!1 &1143439074916920643
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,6 +487,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2367737602731183738}
+  - {fileID: 486572269}
+  - {fileID: 722976860}
   m_Father: {fileID: 917973529}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

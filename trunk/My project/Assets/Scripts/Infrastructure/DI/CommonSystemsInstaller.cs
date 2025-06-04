@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AesEncrypt;
 using GameEngine;
+using GameEngine.BattleSystem;
 using GameEngine.CharacterSystem;
 using Infrastructure.Listeners;
 using PlayerProfileSystem;
@@ -24,6 +25,9 @@ namespace Infrastructure.DI
         [SerializeField] private CharacterInfoSObj _characterInfoDataDefault;
         [SerializeField] private CharacterDatabase _characterDatabase;
         [SerializeField] private MoralConfig _moralConfig;
+        [SerializeField] private MatchMakingService _matchMakingService;
+        [SerializeField] private BattleService _battleService;
+        [SerializeField] private CharacterDatabase _enemyDatabase;
         
         public override void InstallBindings()
         {
@@ -57,6 +61,9 @@ namespace Infrastructure.DI
             Container.Bind<PlayerProfile>().ToSelf().AsSingle().NonLazy();
 
             Container.Bind<ProfileService>().ToSelf().AsSingle().NonLazy();
+            
+            Container.Bind<MatchMakingService>().FromInstance(_matchMakingService).AsSingle().NonLazy();
+            Container.Bind<BattleService>().FromInstance(_battleService).AsSingle().NonLazy();
 
 
             Container.Bind<AesEncryptComponent>().FromNew().AsSingle().NonLazy();

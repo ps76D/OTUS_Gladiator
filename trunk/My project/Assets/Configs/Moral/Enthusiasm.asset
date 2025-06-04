@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Enthusiasm
   m_EditorClassIdentifier: 
   _moralLevelValue: 90
+  _moralModifier: 1.15
   _moralLevelText:
     m_TableReference:
       m_TableCollectionName: GUID:bbdf63024d5754a4a91df6631864e794

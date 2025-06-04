@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UniRx;
-using UnityEngine.Localization;
 using Zenject;
 
 namespace GameEngine.CharacterSystem
@@ -23,6 +21,10 @@ namespace GameEngine.CharacterSystem
         [ShowInInspector, ReadOnly]
         private ReactiveProperty<int> _currentMoral = new ();
         
+        public IReactiveProperty<float> MoralModifier  => _moralModifier;
+        [ShowInInspector, ReadOnly]
+        private ReactiveProperty<float> _moralModifier = new ();
+        
         public IReactiveProperty<int> MaxMoralCount => _maxMoralCount;
         [ShowInInspector, ReadOnly]
         private ReactiveProperty<int> _maxMoralCount = new ();
@@ -31,12 +33,19 @@ namespace GameEngine.CharacterSystem
         public void SetupCurrentMorals(int currentMoral)
         {
             _currentMoral.Value = currentMoral;
+
+            UpdateMoralModifier();
         }
         
         [Button]
         public void SetupMaxMoralCount(int maxMoralCount)
         {
             _maxMoralCount.Value = maxMoralCount;
+        }
+        
+        public void UpdateMoralModifier()
+        {
+            _moralModifier.Value = GetMoralLevel().MoralModifier;
         }
         
         [Button]
@@ -55,6 +64,7 @@ namespace GameEngine.CharacterSystem
             {
                 _currentMoral.Value = 0;
             }
+            UpdateMoralModifier();
             OnCurrentMoralChanged?.Invoke(_currentMoral.Value);
         }
         
@@ -74,6 +84,7 @@ namespace GameEngine.CharacterSystem
             {
                 _currentMoral.Value = _maxMoralCount.Value;
             }
+            UpdateMoralModifier();
             OnCurrentMoralChanged?.Invoke(_currentMoral.Value);
         }
         
@@ -82,6 +93,7 @@ namespace GameEngine.CharacterSystem
         public void RecoverAllMoral()
         {
             _currentMoral.Value = _maxMoralCount.Value;
+            UpdateMoralModifier();
             OnCurrentMoralChanged?.Invoke(_currentMoral.Value);
         }
         

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: High
   m_EditorClassIdentifier: 
   _moralLevelValue: 80
+  _moralModifier: 1.1
   _moralLevelText:
     m_TableReference:
       m_TableCollectionName: GUID:bbdf63024d5754a4a91df6631864e794

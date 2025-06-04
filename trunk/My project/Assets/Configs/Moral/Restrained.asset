@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Restrained
   m_EditorClassIdentifier: 
   _moralLevelValue: 50
+  _moralModifier: 0.9
   _moralLevelText:
     m_TableReference:
       m_TableCollectionName: GUID:bbdf63024d5754a4a91df6631864e794
