@@ -82,6 +82,222 @@ MonoBehaviour:
     m_Localized: Restrained
     m_Metadata:
       m_Items: []
+  - m_Id: 326695754932060160
+    m_Localized: Common
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614592
+    m_Localized: Menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614593
+    m_Localized: End Day
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614594
+    m_Localized: Level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614595
+    m_Localized: Moral
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614596
+    m_Localized: Day
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614598
+    m_Localized: Arena
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614599
+    m_Localized: Raiting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614600
+    m_Localized: Actions
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614601
+    m_Localized: Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614602
+    m_Localized: Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614603
+    m_Localized: Strength
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614604
+    m_Localized: Endurance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614605
+    m_Localized: Agility
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614606
+    m_Localized: Rest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614607
+    m_Localized: Matching
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614608
+    m_Localized: Select Opponent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614609
+    m_Localized: To Battle!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614610
+    m_Localized: WinLose
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614611
+    m_Localized: Win
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614612
+    m_Localized: Lose
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614613
+    m_Localized: Moral
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614614
+    m_Localized: has risen to
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614615
+    m_Localized: has dropped to
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614616
+    m_Localized: Reward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614617
+    m_Localized: Battle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614618
+    m_Localized: Attack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614619
+    m_Localized: Powerful Attack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614620
+    m_Localized: Block
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614621
+    m_Localized: Skip Turn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614622
+    m_Localized: Give Up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614623
+    m_Localized: Dodge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614624
+    m_Localized: Days
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614625
+    m_Localized: Monday
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614626
+    m_Localized: Tuesday
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614627
+    m_Localized: Wednesday
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614628
+    m_Localized: Thursday
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614629
+    m_Localized: Friday
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614630
+    m_Localized: Saturday
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614631
+    m_Localized: Sunday
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614632
+    m_Localized: InGameMenu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614633
+    m_Localized: Start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614634
+    m_Localized: Load
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614635
+    m_Localized: Save
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614636
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614637
+    m_Localized: To Main Menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614638
+    m_Localized: Back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614639
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614640
+    m_Localized: Sound Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614641
+    m_Localized: Music Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326698232255774720
+    m_Localized: LevelUp!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326699871242977280
+    m_Localized: To City
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326699871196839936
+    m_Localized: Inventory
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326701440025919488
+    m_Localized: Events
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

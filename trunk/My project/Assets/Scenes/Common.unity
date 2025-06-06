@@ -208,6 +208,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbf634e76ae141fab96c3755c6b1f85e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isPlayerBlocks: 0
+  _isOpponentBlocks: 0
+  _isPlayerPowerfulAttackPrepared: 0
+  _isOpponentPowerfulAttackPrepared: 0
 --- !u!4 &722976860
 Transform:
   m_ObjectHideFlags: 0
@@ -310,6 +314,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1151705860690183671, guid: f25d146b1af1a6948b1fa18e6265a375, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4105890716019392187, guid: f25d146b1af1a6948b1fa18e6265a375, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4105890716019392187, guid: f25d146b1af1a6948b1fa18e6265a375, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4105890716575750564, guid: f25d146b1af1a6948b1fa18e6265a375, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4105890716575750564, guid: f25d146b1af1a6948b1fa18e6265a375, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4120352727034638911, guid: f25d146b1af1a6948b1fa18e6265a375, type: 3}

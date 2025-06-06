@@ -162,11 +162,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: OpenSans-Bold SDF
+  m_Name: OpenSans-Bold SDF_3d
   m_EditorClassIdentifier: 
-  hashCode: -766528734
+  hashCode: 1177083082
   material: {fileID: -3129174661773119394}
-  materialHashCode: 598723522
+  materialHashCode: -1937344086
   m_Version: 1.1.0
   m_SourceFontFileGUID: cb79271b2b0784d8d8f8e8adf4c4885a
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: cb79271b2b0784d8d8f8e8adf4c4885a, type: 3}

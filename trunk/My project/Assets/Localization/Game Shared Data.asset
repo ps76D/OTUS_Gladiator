@@ -79,6 +79,222 @@ MonoBehaviour:
     m_Key: MORALLEVEL_APATHY
     m_Metadata:
       m_Items: []
+  - m_Id: 326695754932060160
+    m_Key: Common
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614592
+    m_Key: COMMON_MENU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614593
+    m_Key: COMMON_ENDDAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614594
+    m_Key: COMMON_LEVEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614595
+    m_Key: COMMON_MORAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614596
+    m_Key: COMMON_DAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326698232255774720
+    m_Key: COMMON_LEVELUP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614598
+    m_Key: COMMON_ARENA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614599
+    m_Key: COMMON_RAITING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614600
+    m_Key: COMMON_ACTIONS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326699871196839936
+    m_Key: COMMON_INVENTORY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326699871242977280
+    m_Key: COMMON_MAP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326701440025919488
+    m_Key: COMMON_LOG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614601
+    m_Key: Training
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614602
+    m_Key: TRAIN_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614603
+    m_Key: TRAIN_STRENGTH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614604
+    m_Key: TRAIN_ENDURANCE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614605
+    m_Key: TRAIN_AGILITY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614606
+    m_Key: TRAIN_REST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614607
+    m_Key: Matching
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614608
+    m_Key: MATCHING_TITLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614609
+    m_Key: MATCHING_TOBATTLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614610
+    m_Key: WinLose
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614611
+    m_Key: WINLOSE_WIN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614612
+    m_Key: WINLOSE_LOSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614613
+    m_Key: WINLOSE_MORALCHANGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614614
+    m_Key: WINLOSE_MORALCHANGE_INCREASE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614615
+    m_Key: WINLOSE_MORALCHANGE_DEGREASE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614616
+    m_Key: WINLOSE_REWARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614617
+    m_Key: Battle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614618
+    m_Key: BATTLE_ATTACK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614619
+    m_Key: BATTLE_POWERFUL_ATTACK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614620
+    m_Key: BATTLE_BLOCK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614621
+    m_Key: BATTLE_SKIPTURN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614622
+    m_Key: BATTLE_GIVEUP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614623
+    m_Key: BATTLE_DODGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614624
+    m_Key: Days
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614625
+    m_Key: DAYS_MONDAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614626
+    m_Key: DAYS_TUESDAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614627
+    m_Key: DAYS_WEDNESDAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614628
+    m_Key: DAYS_THURSDAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614629
+    m_Key: DAYS_FRIDAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614630
+    m_Key: DAYS_SATURDAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614631
+    m_Key: DAYS_SUNDAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614632
+    m_Key: InGameMenu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614633
+    m_Key: INGAMEMENU_START
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614634
+    m_Key: INGAMEMENU_LOAD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614635
+    m_Key: INGAMEMENU_SAVE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614636
+    m_Key: INGAMEMENU_SETTINGS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614637
+    m_Key: INGAMEMENU_TOMAINMENU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614638
+    m_Key: INGAMEMENU_BACK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614639
+    m_Key: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614640
+    m_Key: SETTINGS_SOUND
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326695754965614641
+    m_Key: SETTINGS_MUSIC
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
