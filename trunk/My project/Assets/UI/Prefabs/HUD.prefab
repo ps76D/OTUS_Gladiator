@@ -1315,7 +1315,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000029579514}
+  m_AnchoredPosition: {x: 0, y: 0.000029187817}
   m_SizeDelta: {x: 0, y: 645}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &4651851798223049847
@@ -3384,7 +3384,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8575246349102185653}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99954635
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6113,6 +6113,7 @@ MonoBehaviour:
   _trainStatAgilityButton: {fileID: 7656226668528983233}
   _restButton: {fileID: 7216774810825532105}
   _levelUpButton: {fileID: 2923545089783401646}
+  _matchmakingButton: {fileID: 6849325309138178428}
   _currentDayText: {fileID: 8435949777231447013}
   _moneyCountText: {fileID: 6782337369793342266}
   _levelCountText: {fileID: 8240590702168247612}
@@ -6825,7 +6826,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e69a08772fc449e4b7decf65f85aa070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _statViewWidget: {fileID: -4144327007669272406, guid: a8b5991b03c2db0489081c02db5aa26d, type: 3}
+  _statViewWidget: {fileID: -4144327007669272406, guid: 0c3d00059c5461245987a2755105c09c, type: 3}
 --- !u!1 &8703581825158813785
 GameObject:
   m_ObjectHideFlags: 0

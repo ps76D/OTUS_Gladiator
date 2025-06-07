@@ -12,8 +12,8 @@ namespace GameEngine.BattleSystem
     [Serializable]
     public class MatchMakingService : MonoBehaviour
     {
-        [Inject]
-        private CharacterDatabase _enemyDatabase;
+        [SerializeField] private CharacterDatabase _enemyDatabase;
+        
         [Inject]
         private PlayerProfile _playerProfile;
         [Inject]
@@ -21,7 +21,7 @@ namespace GameEngine.BattleSystem
         
         [SerializeField] private CharacterProfile _playerCharacterProfile;
         [SerializeField] private CharacterProfile _opponentProfile;
-        
+        public CharacterDatabase EnemyDatabase => _enemyDatabase;
         public CharacterProfile OpponentProfile => _opponentProfile;
 
         [Button]

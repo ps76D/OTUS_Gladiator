@@ -27,7 +27,7 @@ namespace Infrastructure.DI
         [SerializeField] private MoralConfig _moralConfig;
         [SerializeField] private MatchMakingService _matchMakingService;
         [SerializeField] private BattleService _battleService;
-        [SerializeField] private CharacterDatabase _enemyDatabase;
+        /*[SerializeField] private CharacterDatabase _enemyDatabase;*/
         
         public override void InstallBindings()
         {
@@ -52,6 +52,7 @@ namespace Infrastructure.DI
 
             Container.Bind<CharacterInfoSObj>().FromInstance(_characterInfoDataDefault).AsSingle().NonLazy();
             Container.Bind<CharacterDatabase>().FromInstance(_characterDatabase).AsSingle().NonLazy();
+            /*Container.Bind<CharacterDatabase>().FromInstance(_enemyDatabase).AsSingle().NonLazy();*/
 
             Container.Bind<CharacterService>().ToSelf().AsSingle().NonLazy();
             Container.Bind<ISaveLoader>().To<CharacterSaveLoader>().AsCached().NonLazy();

@@ -1,4 +1,5 @@
 ﻿using System;
+using GameEngine.BattleSystem;
 using Infrastructure;
 using PlayerProfileSystem;
 using SaveSystem;
@@ -20,9 +21,14 @@ namespace UI.Infrastructure
         [Inject]
         private SaveLoadManager _saveLoadManager;
         
+        [Inject]
+        private MatchMakingService _matchMakingService;
+        
         [SerializeField] private MainMenu _mainMenuScreen;
         [SerializeField] private Hud _hud;
         [SerializeField] private InGameMenu _inGameMenu;
+        [SerializeField] private MatchmakingView _matchmakingView;
+        [SerializeField] private BattleView _battleView;
         /*[SerializeField] private LoseScreen _loseScreen;
         [SerializeField] private PauseScreen _pauseScreen;
         [SerializeField] private HUDScreen _hud;*/
@@ -33,6 +39,7 @@ namespace UI.Infrastructure
         public GameBootstrapper GameBootstrapper => _gameBootstrapper;
         public ProfileService ProfileService => _profileService;
         public SaveLoadManager SaveLoadManager => _saveLoadManager;
+        public MatchMakingService MatchMakingService => _matchMakingService;
 
         private void Start()
         {
@@ -86,7 +93,7 @@ namespace UI.Infrastructure
             _hud.Show(viewModel);
         }
         
-        private void HideHud()
+        public void HideHud()
         {
             _hud.Hide();
         }
@@ -111,6 +118,18 @@ namespace UI.Infrastructure
         private void HideInGameMenu()
         {
             _inGameMenu.Hide();
+        }
+
+        public void ShowMatchmakingScreen()
+        {
+            var viewModel = new MatchmakingModel(this, _matchMakingService.EnemyDatabase);
+            _matchmakingView.Show(viewModel);
+        }
+        
+        public void ShowBattleScreen()
+        {
+            var viewModel = new BattleModel(this);
+            _battleView.Show(viewModel);
         }
     }
 }

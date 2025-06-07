@@ -186,5 +186,10 @@ namespace UI.Model
             SpendAction(1);
             IncreaseMoral(5);
         }
+
+        public void ShowMatchmakingScreen()
+        {
+            _uiManager.ShowMatchmakingScreen();
+        }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using GameEngine.CharacterSystem.StatsSystem;
-using Infrastructure;
 using TMPro;
 using UI.Model;
 using UniRx;
@@ -19,6 +18,7 @@ namespace UI
         [SerializeField] private Button _trainStatAgilityButton;
         [SerializeField] private Button _restButton;
         [SerializeField] private Button _levelUpButton;
+        [SerializeField] private Button _matchmakingButton;
         
         [SerializeField] private TMP_Text _currentDayText;
         [SerializeField] private TMP_Text _moneyCountText;
@@ -59,6 +59,8 @@ namespace UI
             _trainStatAgilityButton.onClick.AddListener(TrainStatAgility);
             _levelUpButton.onClick.AddListener(LevelUpButtonClicked);
             _restButton.onClick.AddListener(RestButtonClicked);
+            
+            _matchmakingButton.onClick.AddListener(MatchmakingButtonClicked);
 
             _statsView.Show(new StatsModel(_uiManager));
 
@@ -74,12 +76,18 @@ namespace UI
             _trainStatStrengthButton.onClick.RemoveListener(TrainStatStrength);
             _trainStatEnduranceButton.onClick.RemoveListener(TrainStatEndurance);
             _trainStatAgilityButton.onClick.RemoveListener(TrainStatAgility);
+            _matchmakingButton.onClick.RemoveListener(MatchmakingButtonClicked);
             
             foreach (var disposable in _disposables)
                 disposable.Dispose();
             
             _statsView.Hide();
             _actionsPanelView.Hide();
+        }
+
+        private void MatchmakingButtonClicked()
+        {
+            _viewModel.ShowMatchmakingScreen();
         }
 
         private void EndDayButtonClicked()

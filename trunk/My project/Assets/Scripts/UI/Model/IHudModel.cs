@@ -22,5 +22,6 @@ namespace UI.Model
         void IncreaseMoral(int moral);
         void DegreaseMoral(int moral);
         void Rest();
+        void ShowMatchmakingScreen();
     }
 }

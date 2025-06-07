@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de436acfb878ad74b97901e0d9d0a0d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyDatabase: {fileID: 11400000, guid: 78f0008df04382f4ea6acc5c5b35686b, type: 2}
   _playerCharacterProfile:
     _characterInfo:
       _guid: 
@@ -449,7 +450,6 @@ MonoBehaviour:
   _moralConfig: {fileID: 11400000, guid: 3e468d2ad8248c24ebe7a0947cd6f4cf, type: 2}
   _matchMakingService: {fileID: 486572270}
   _battleService: {fileID: 722976859}
-  _enemyDatabase: {fileID: 11400000, guid: 78f0008df04382f4ea6acc5c5b35686b, type: 2}
 --- !u!1 &1143439074916920643
 GameObject:
   m_ObjectHideFlags: 0

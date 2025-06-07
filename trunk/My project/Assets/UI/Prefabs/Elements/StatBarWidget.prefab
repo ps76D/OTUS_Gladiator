@@ -466,7 +466,7 @@ GameObject:
   - component: {fileID: 8245671826376369795}
   - component: {fileID: -4144327007669272406}
   m_Layer: 5
-  m_Name: StatWidget
+  m_Name: StatBarWidget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

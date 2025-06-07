@@ -39,6 +39,8 @@ namespace GameEngine.CharacterSystem
             
             _currentCharacterProfile.CharacterStatsInfo.SetStats(characterData);
             
+            _currentCharacterProfile.CharacterInfo._icon = _currentCharacterInfoSObj.CharacterIcon;
+            
             OnCharacterDataChanged?.Invoke(_currentCharacterProfile);
         }
         

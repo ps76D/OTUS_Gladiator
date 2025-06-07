@@ -17,5 +17,5 @@ MonoBehaviour:
   _characterDescription: "\u041F\u0440\u0435\u0437\u0440\u0435\u043D\u043D\u044B\u0439
     \u0440\u0430\u0431, \u043A\u043E\u0442\u043E\u0440\u043E\u0433\u043E \u0437\u0430\u0441\u0442\u0430\u0432\u0438\u043B\u0438
     \u0441\u0442\u0430\u0442\u044C \u0433\u043B\u0430\u0434\u0438\u0430\u0442\u043E\u0440\u043E\u043C"
-  _characterIcon: {fileID: 21300000, guid: e1e88cc68ada9e446b98cc7b19761bd8, type: 3}
+  _characterIcon: {fileID: 21300000, guid: f2657dc46b4f04c43a5d9220ad7e8210, type: 3}
   _statsDatabase: {fileID: 11400000, guid: 38c52d7dcde9ad94bbf3c4da1750a947, type: 2}

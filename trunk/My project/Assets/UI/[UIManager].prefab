@@ -222,6 +222,8 @@ MonoBehaviour:
   _mainMenuScreen: {fileID: 1857452139268477659}
   _hud: {fileID: 5713346295714593156}
   _inGameMenu: {fileID: 3290477352050999171}
+  _matchmakingView: {fileID: 1302035433371553956}
+  _battleView: {fileID: 4064921480679291206}
 --- !u!1001 &398766397054274442
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1066,6 +1068,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b7a5ea2b7c17fa4a80f08ea492d871b, type: 3}
+--- !u!114 &4064921480679291206 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -1968893111158436971, guid: 9b7a5ea2b7c17fa4a80f08ea492d871b, type: 3}
+  m_PrefabInstance: {fileID: 6684633399972229843}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a58557afbe10354a8b39b5e2cb051de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5431425742397591051 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1703726555727609048, guid: 9b7a5ea2b7c17fa4a80f08ea492d871b, type: 3}
@@ -1468,6 +1481,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fdade5ef5ccdd8448a44b30408ee3c06, type: 3}
+--- !u!114 &1302035433371553956 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7869517200823615832, guid: fdade5ef5ccdd8448a44b30408ee3c06, type: 3}
+  m_PrefabInstance: {fileID: 9162545297501344252}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e4ab23b710748e0b4f4c6c104cba2e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &4105890716621738580 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5178272869845451688, guid: fdade5ef5ccdd8448a44b30408ee3c06, type: 3}

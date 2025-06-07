@@ -31,7 +31,7 @@ namespace GameEngine.CharacterSystem
             };
 
             /*_characterInfo = CreateCharacterInfo(characterInfoData);*/
-            
+            _characterInfo._icon = characterInfoSObj.CharacterIcon;
             _characterLevel = new CharacterLevel();
             
             _characterStatsInfo = CreateCharacterStatsInfo(characterInfoSObj);
