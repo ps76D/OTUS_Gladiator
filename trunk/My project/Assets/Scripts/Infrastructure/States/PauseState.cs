@@ -1,5 +1,4 @@
 ﻿using System;
-using GameManager;
 using UnityEngine;
 
 namespace Infrastructure

@@ -1,16 +1,18 @@
-﻿using GameEngine.BattleSystem;
+﻿using System;
+using GameEngine;
+using GameEngine.MessagesSystem;
+using GameManager;
 using Infrastructure;
 using PlayerProfileSystem;
 using SaveSystem;
 using UI.Model;
-using UI.SO;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
 namespace UI.Infrastructure
 {
-    public sealed class UIManager : MonoBehaviour
+    public sealed class UIManager : MonoBehaviour, ICoroutineRunner
     {
         [Inject]
         private GameBootstrapper _gameBootstrapper;
@@ -47,6 +49,8 @@ namespace UI.Infrastructure
         public WinPopupView WinPopupView => _winPopupView;
         public LosePopupView LosePopupView => _losePopupView;
 
+        public Action OnBackToTraining;
+
         private void Start()
         {
             _gameBootstrapper.Game.StateMachine.GetState<MainMenuState>().OnMainMenuSceneLoaded += ShowMainMenu;
@@ -58,8 +62,8 @@ namespace UI.Infrastructure
             _gameBootstrapper.Game.StateMachine.GetState<LoadInGameState>().OnLoadInGameState += HideHud;
             _gameBootstrapper.Game.StateMachine.GetState<GameLoopState>().OnGameLoopState += ShowHud;
 
-            _gameBootstrapper.Game.StateMachine.GetState<LoseState>().OnLoseState += ShowLoseScreen;
-            _gameBootstrapper.Game.StateMachine.GetState<WinState>().OnWinState += ShowWinScreen;
+            _gameBootstrapper.Game.StateMachine.GetState<LoseState>().OnLoseState += ShowLosePopup;
+            _gameBootstrapper.Game.StateMachine.GetState<WinState>().OnWinState += ShowWinPopup;
             
             _gameBootstrapper.Game.StateMachine.GetState<PauseState>().OnPauseState += ShowInGameMenu;
             _gameBootstrapper.Game.StateMachine.GetState<PauseState>().OnPauseState += HideHud;
@@ -76,8 +80,8 @@ namespace UI.Infrastructure
             _gameBootstrapper.Game.StateMachine.GetState<LoadInGameState>().OnLoadInGameState -= HideHud;
             _gameBootstrapper.Game.StateMachine.GetState<GameLoopState>().OnGameLoopState -= ShowHud;
 
-            _gameBootstrapper.Game.StateMachine.GetState<LoseState>().OnLoseState -= ShowLoseScreen;
-            _gameBootstrapper.Game.StateMachine.GetState<WinState>().OnWinState -= ShowWinScreen;
+            _gameBootstrapper.Game.StateMachine.GetState<LoseState>().OnLoseState -= ShowLosePopup;
+            _gameBootstrapper.Game.StateMachine.GetState<WinState>().OnWinState -= ShowWinPopup;
             
             _gameBootstrapper.Game.StateMachine.GetState<PauseState>().OnPauseState -= ShowInGameMenu;
             _gameBootstrapper.Game.StateMachine.GetState<PauseState>().OnPauseState -= HideHud;
@@ -93,8 +97,8 @@ namespace UI.Infrastructure
             EventSystem.current.SetSelectedGameObject(null);
             screen.gameObject.SetActive(false);
         }
-        
-        private void ShowHud()
+
+        public void ShowHud()
         {
             var viewModel = new HudModel(this);
             _hud.Show(viewModel);
@@ -104,6 +108,8 @@ namespace UI.Infrastructure
         {
             _hud.Hide();
         }
+        
+
         
         private void ShowMainMenu()
         {
@@ -139,13 +145,30 @@ namespace UI.Infrastructure
             _battleView.Show(viewModel);
         }
         
-        public void ShowWinScreen()
+        public void HideBattleScreen()
+        {
+            _battleView.Hide();
+        }
+        
+        public void ShowWinPopup()
         {
             _winPopupView.Show(new WinPopupModel(this));
         }
-        public void ShowLoseScreen()
+        public void ShowLosePopup()
         {
             _losePopupView.Show(new LosePopupModel(this));
+        }
+        
+        public void HideLosePopup()
+        {
+            _losePopupView.Close();
+            OnBackToTraining?.Invoke();
+        }
+        
+        public void HideWinPopup()
+        {
+            _winPopupView.Close();
+            OnBackToTraining?.Invoke();
         }
     }
 }

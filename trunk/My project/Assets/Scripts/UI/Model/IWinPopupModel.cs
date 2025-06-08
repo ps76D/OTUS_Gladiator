@@ -2,6 +2,6 @@
 {
     public interface IWinPopupModel
     {
-        
+        void BackToTraining();
     }
 }

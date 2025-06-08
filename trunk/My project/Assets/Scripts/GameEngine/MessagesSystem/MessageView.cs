@@ -1,10 +1,8 @@
 ﻿using System.Collections;
-using Sirenix.OdinInspector;
 using TMPro;
-using UI.Model;
 using UnityEngine;
 
-namespace UI
+namespace GameEngine.MessagesSystem
 {
     public class MessageView: MonoBehaviour
     {

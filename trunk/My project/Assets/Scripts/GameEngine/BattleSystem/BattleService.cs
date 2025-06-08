@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using GameEngine.BattleSystem;
 using Sirenix.OdinInspector;
 using UniRx;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace GameEngine.BattleSystem
+namespace GameEngine
 {
     [Serializable]
     public class BattleService : MonoBehaviour, IDisposable
     {
+        [SerializeField] private BattleSceneView _battleSceneView;
+        
         [SerializeField] private UnitBattleData _player = new ();
         [SerializeField] private UnitBattleData _opponent = new ();
 

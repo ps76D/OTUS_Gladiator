@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using GameEngine;
 using GameEngine.BattleSystem;
 using GameEngine.CharacterSystem;
+using GameManager;
 using Infrastructure;
 using UI.Infrastructure;
+using UnityEngine;
 using Zenject;
+using CharacterInfo = GameEngine.CharacterSystem.CharacterInfo;
 
 namespace UI.Model
 {
@@ -53,8 +58,19 @@ namespace UI.Model
             _uiManager.GameBootstrapper.Game.StateMachine.Enter<BattleState>();
             
             _makingService.StartMatch();
-            _uiManager.ShowBattleScreen();
-            _uiManager.HideHud();
+            /*_uiManager.ShowBattleScreen();*/
+
+            _uiManager.StartCoroutine(SwitchToBattleScreen());
+
         }
+        
+        private IEnumerator SwitchToBattleScreen()
+        {
+            yield return new WaitForSeconds(1f);
+            _uiManager.HideHud();
+            _uiManager.ShowBattleScreen();
+        }
+
+
     }
 }

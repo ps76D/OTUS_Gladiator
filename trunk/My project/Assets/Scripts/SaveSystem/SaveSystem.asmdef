@@ -1,4 +1,20 @@
 {
-  "name": "SaveSystem",
-  "references":[ "GUID:ef9891d991f348f19ed1d8dc3abb4b8a", "GUID:e92cb6376d0d4e28b484855ee7c3a9b5", "AesEncrypt", "GUID:046865d1f7d746b8a189549e4c8ea5f6", "GUID:4c136df7ca6a4248a8637164e0ebe615", "GUID:560b04d1a97f54a4e82edc0cbbb69285" ]
+    "name": "SaveSystem",
+    "rootNamespace": "",
+    "references": [
+        "GUID:963a78c5566c4494918607db69f4076c",
+        "GUID:560b04d1a97f54a4e82edc0cbbb69285",
+        "GUID:e92cb6376d0d4e28b484855ee7c3a9b5",
+        "GUID:4c136df7ca6a4248a8637164e0ebe615",
+        "GUID:ef9891d991f348f19ed1d8dc3abb4b8a"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

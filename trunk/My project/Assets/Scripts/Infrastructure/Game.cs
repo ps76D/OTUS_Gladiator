@@ -1,4 +1,3 @@
-using CodeBase.Infrastructure;
 using UI;
 
 namespace Infrastructure

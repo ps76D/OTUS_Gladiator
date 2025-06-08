@@ -2,17 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using GameEngine.BattleSystem;
+using GameEngine.MessagesSystem;
 using Sirenix.OdinInspector;
-using UI;
-using UI.Model;
-using UI.SO;
-using UniRx;
 using UnityEngine;
 using Zenject;
 
-namespace GameManager
+
+namespace GameEngine
 {
-    public class BattleSceneView : SceneView
+    public class BattleSceneView : SceneContentView
     {
         [Inject]
         [SerializeField] private BattleService _battleService;
@@ -20,8 +18,12 @@ namespace GameManager
         [SerializeField] private Transform _messagesPlayerRoot;
         [SerializeField] private Transform _messagesOpponentRoot;
         
+
         [SerializeField] private MessageView _messageViewPrefab;
         [SerializeField] private MessagesDatabase _messagesDatabase;
+        
+        [SerializeField] private Animator _playerAnimator;
+        [SerializeField] private Animator _opponentAnimator;
         
         private readonly List<Action> _messagesPull = new ();
 
@@ -60,8 +62,22 @@ namespace GameManager
             _battleService.OnOpponentEnduranceSpent -= OpponentEnduranceSpent;
         }
 
+        private IEnumerator PlayAnimation(Animator animator, string animationName, float duration)
+        {
+            animator.Play(animationName);
+            yield return new WaitForSeconds(duration);
+        }
+        
+        public void PlayerAttack()
+        {
+            StartCoroutine(PlayAnimation(_playerAnimator, "Attack", 1f));
+            _battleService.PlayerAttack();
+        }
+        
         private void PlayerBlock()
         {
+            _playerAnimator.Play("Block");
+            
             MessageModel message = BlockMessage();
             CollectAndShowMessages(message, _messagesPlayerRoot);
         }
@@ -74,6 +90,8 @@ namespace GameManager
         
         private void PlayerDodge()
         {
+            _playerAnimator.Play("Dodge");
+            
             MessageModel message = DodgeMessage();
             CollectAndShowMessages(message, _messagesPlayerRoot);
         }

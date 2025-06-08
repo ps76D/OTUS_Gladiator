@@ -182,7 +182,8 @@ namespace UI
         }
         private void LevelUpButtonClicked()
         {
-            _viewModel.LevelUp();
+            /*_viewModel.LevelUp();*/
+            //TODO сделать вызов окна распределения очков перков
         }
 
         private void UpdateMoralText(int moral)

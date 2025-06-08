@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class BattleView : UIScreen, IDisposable
+    public class BattleView : UIScreen
     {
         [SerializeField] private Slider _playerHealthBar;
         [SerializeField] private Slider _playerEnergyBar;
@@ -93,19 +93,7 @@ namespace UI
             _opponentEnergyBar.value = sliderValue;
         }
         
-        private void OnDisable()
-        {
-            /*Cleanup();
-            
-            _backButton.onClick.RemoveListener(Close);*/
-            
-            foreach (var disposable in _disposables)
-                disposable.Dispose();
-        }
-
-
-        
-        public void Dispose()
+        public void Hide()
         {
             _attackButton.onClick.RemoveListener(_viewModel.PlayerAttack);
             _preparePowerfulAttackButton.onClick.RemoveListener(_viewModel.PlayerPrepareAttack);
@@ -120,6 +108,8 @@ namespace UI
             _blockOppButton.onClick.RemoveListener(_viewModel.OpponentBlocks);
             _skipTurnOppButton.onClick.RemoveListener(_viewModel.OpponentSkipTurn);
             _giveUpOppButton.onClick.RemoveListener(_viewModel.OpponentGiveUp);
+            
+            gameObject.SetActive(false);
             
             foreach (var disposable in _disposables)
                 disposable.Dispose();

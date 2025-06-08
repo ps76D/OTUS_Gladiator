@@ -1,7 +1,7 @@
 ﻿namespace UI.Model
 {
-    public class ILosePopupModel
+    public interface ILosePopupModel
     {
-        
+        void BackToTraining();
     }
 }

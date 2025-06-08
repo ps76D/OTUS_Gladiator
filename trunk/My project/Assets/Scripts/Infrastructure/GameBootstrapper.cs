@@ -1,5 +1,4 @@
-﻿using CodeBase.Infrastructure;
-using UI;
+﻿using UI;
 using UI.Infrastructure;
 using UnityEngine;
 

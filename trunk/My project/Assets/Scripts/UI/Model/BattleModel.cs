@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using GameEngine;
 using GameEngine.BattleSystem;
 using Infrastructure;
 using UI.Infrastructure;
@@ -12,6 +13,8 @@ namespace UI.Model
     {
         [Inject]
         private BattleService _battleService;
+        
+        
         
         private readonly UIManager _uiManager;
         /*private readonly CharacterInfo _currentCharacter;

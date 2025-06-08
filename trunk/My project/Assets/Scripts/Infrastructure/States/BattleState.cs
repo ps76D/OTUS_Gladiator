@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections;
-using GameManager;
-using UI;
 using UnityEngine;
 
 namespace Infrastructure

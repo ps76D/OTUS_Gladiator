@@ -47,7 +47,7 @@ namespace UI
             _toBattleButton.onClick.AddListener(ToBattle);
         }
 
-        private void OnDisable()
+        /*private void OnDisable()
         {
             Cleanup();
             
@@ -55,11 +55,18 @@ namespace UI
             
             foreach (var disposable in _disposables)
                 disposable.Dispose();
-        }
+        }*/
         
         private void Close()
-        {
+        {            
+            Cleanup();
+            
+            _backButton.onClick.RemoveListener(Close);
+            
             gameObject.SetActive(false);
+            
+            foreach (var disposable in _disposables)
+                disposable.Dispose();
         }
         
         private void ToBattle()
@@ -67,7 +74,15 @@ namespace UI
             _viewModel.StartMatch();
             OnBattleButtonClicked?.Invoke();
             Close();
+            /*StartCoroutine(SwitchToBattleScreen());*/
         }
+
+        /*private IEnumerator SwitchToBattleScreen()
+        {
+            _uiManager.HideHud();
+            yield return new WaitForSeconds(1f);
+            _uiManager.ShowBattleScreen();
+        }*/
 
         private void SetupEnemyWidgets(IMatchmakingModel viewModel)
         {

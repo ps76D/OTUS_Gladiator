@@ -1,4 +1,6 @@
 using System;
+using GameEngine;
+using GameEngine.BattleSystem;
 using GameEngine.CharacterSystem;
 using GameEngine.CharacterSystem.StatsSystem;
 using PlayerProfileSystem;
@@ -7,7 +9,7 @@ using UniRx;
 using UnityEngine;
 using Zenject;
 
-namespace GameEngine.BattleSystem
+namespace GameManager
 {
     [Serializable]
     public class MatchMakingService : MonoBehaviour

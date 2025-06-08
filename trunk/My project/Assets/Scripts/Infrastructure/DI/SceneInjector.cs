@@ -1,9 +1,5 @@
-﻿using System;
-using UI;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 using Zenject;
-/*using CharacterController = Character.CharacterController;*/
 
 namespace Infrastructure.DI
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UI.Model
+namespace GameEngine.MessagesSystem
 {
     public class MessageModel : IMessageModel, IDisposable
     {

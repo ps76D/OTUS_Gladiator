@@ -1,9 +1,6 @@
 ﻿using System;
-using GameManager;
 using UI;
-using UI.Infrastructure;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Infrastructure
 {

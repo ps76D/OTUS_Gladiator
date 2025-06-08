@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections;
-using CodeBase.Infrastructure;
-using UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

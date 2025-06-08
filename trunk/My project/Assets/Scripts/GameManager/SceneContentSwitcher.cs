@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using GameEngine;
+using Infrastructure;
 using Sirenix.OdinInspector;
-using UI;
 using UI.Infrastructure;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace GameManager
@@ -13,19 +15,28 @@ namespace GameManager
         [Inject]
         [SerializeField] private UIManager _uiManager;
         
-        [SerializeField] private TrainingSceneView _trainingSceneView;
+        [SerializeField] private TrainingSceneContentView _trainingSceneContentView;
         [SerializeField] private BattleSceneView _battleView;
         
-        [SerializeField] private List<SceneView> _sceneViews = new ();
+        [SerializeField] private List<SceneContentView> _sceneViews = new ();
 
         private void Start()
         {
-            _uiManager.MatchmakingView.OnBattleButtonClicked += ShowBattleScene;
+            /*_uiManager.MatchmakingView.OnBattleButtonClicked += ShowBattleScene;*/
+            _uiManager.GameBootstrapper.Game.StateMachine.GetState<BattleState>().OnBattleState += ShowBattleScene;
+            _uiManager.GameBootstrapper.Game.StateMachine.GetState<LoadInGameState>().OnLoadInGameState += ShowTrainingScene;
+            /*_uiManager.OnBackToTraining += ShowTrainingScene;*/
         }
 
-        public void ShowScene<T>() where T : MonoBehaviour
+        private void OnDisable()
+        {
+            _uiManager.GameBootstrapper.Game.StateMachine.GetState<BattleState>().OnBattleState -= ShowBattleScene;
+            _uiManager.GameBootstrapper.Game.StateMachine.GetState<LoadInGameState>().OnLoadInGameState -= ShowTrainingScene;
+        }
+        
+        public void ShowScene<T>()
         { 
-            foreach (SceneView sceneView in _sceneViews)
+            foreach (SceneContentView sceneView in _sceneViews)
             {
                 bool isTarget = sceneView is T;
                 sceneView.gameObject.SetActive(isTarget);
@@ -35,7 +46,7 @@ namespace GameManager
         [Button]
         public void ShowTrainingScene()
         {
-            StartCoroutine(ChangeSceneToBattle<TrainingSceneView>());
+            StartCoroutine(ChangeSceneToTraining<TrainingSceneContentView>());
         }
         
         [Button]
@@ -44,7 +55,17 @@ namespace GameManager
             StartCoroutine(ChangeSceneToBattle<BattleSceneView>());
         }
 
-        private IEnumerator ChangeSceneToBattle<T>() where T : MonoBehaviour
+        private IEnumerator ChangeSceneToBattle<T>()
+        {
+            _uiManager.GameBootstrapper.LoadingCurtain.Hide();
+            yield return new WaitForSeconds(1f);
+
+            ShowScene<T>();
+            
+            _uiManager.GameBootstrapper.LoadingCurtain.Show();
+        }
+        
+        private IEnumerator ChangeSceneToTraining<T>()
         {
             _uiManager.GameBootstrapper.LoadingCurtain.Hide();
             yield return new WaitForSeconds(1f);

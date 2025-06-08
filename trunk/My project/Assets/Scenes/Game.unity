@@ -506,6 +506,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3357855729558221552, guid: d2bedac3789dc4741b36af10164e78ee, type: 3}
   m_PrefabInstance: {fileID: 855434611}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &855434613 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3357855729558221553, guid: d2bedac3789dc4741b36af10164e78ee, type: 3}
+  m_PrefabInstance: {fileID: 855434611}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &869501128
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,6 +563,8 @@ MonoBehaviour:
   _messagesOpponentRoot: {fileID: 1857316314}
   _messageViewPrefab: {fileID: 839193227230637422, guid: a1c2fe27f8beeb345a62664378ec7969, type: 3}
   _messagesDatabase: {fileID: 11400000, guid: 06fb0a3f702e9a546bdb9bc078738280, type: 2}
+  _playerAnimator: {fileID: 3357855728357943305}
+  _opponentAnimator: {fileID: 855434613}
 --- !u!1 &886926337
 GameObject:
   m_ObjectHideFlags: 0
@@ -1165,7 +1172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _uiManager: {fileID: 0}
-  _trainingSceneView: {fileID: 56845800}
+  _trainingSceneContentView: {fileID: 56845800}
   _battleView: {fileID: 869501130}
   _sceneViews:
   - {fileID: 56845800}
@@ -1292,6 +1299,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2bedac3789dc4741b36af10164e78ee, type: 3}
+--- !u!95 &3357855728357943305 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3357855729558221553, guid: d2bedac3789dc4741b36af10164e78ee, type: 3}
+  m_PrefabInstance: {fileID: 3357855728357943304}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4009895691298913031
 GameObject:
   m_ObjectHideFlags: 0

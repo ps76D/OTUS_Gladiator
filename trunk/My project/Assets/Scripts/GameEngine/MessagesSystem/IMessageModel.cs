@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using UnityEngine.Localization;
 
-namespace UI.Model
+namespace GameEngine.MessagesSystem
 {
     public interface IMessageModel
     {

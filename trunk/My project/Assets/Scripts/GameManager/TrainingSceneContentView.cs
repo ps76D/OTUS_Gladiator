@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using GameEngine;
+using GameEngine.MessagesSystem;
 using PlayerProfileSystem;
 using Sirenix.OdinInspector;
 using UI;
@@ -12,7 +15,7 @@ using Zenject;
 
 namespace GameManager
 {
-    public class TrainingSceneView : SceneView
+    public class TrainingSceneContentView : SceneContentView
     {
         [Inject]
         [SerializeField] private PlayerProfile _playerProfile;
@@ -30,18 +33,29 @@ namespace GameManager
         
         private bool _isDisplaying;
 
-        private void Start()
+        private void OnEnable()
         {
             _uiManager.Hud.OnStrengthIncreased += ShowMessageIncreaseStrength;
             _uiManager.Hud.OnEnduranceIncreased += ShowMessageIncreaseEndurance;
             _uiManager.Hud.OnAgilityIncreased += ShowMessageIncreaseAgility;
-            _uiManager.Hud.OnLevelUp += ShowMessageLevelUp;
+            _playerProfile.CharacterService.CurrentCharacterProfile.CharacterLevel.OnLevelUp += ShowMessageLevelUp;
             _uiManager.Hud.OnMoralChanged += ShowMessageMoralChanged;
             
             _messagesPull.Clear();
         }
-        
-        
+
+        private void OnDisable()
+        {
+            _uiManager.Hud.OnStrengthIncreased -= ShowMessageIncreaseStrength;
+            _uiManager.Hud.OnEnduranceIncreased -= ShowMessageIncreaseEndurance;
+            _uiManager.Hud.OnAgilityIncreased -= ShowMessageIncreaseAgility;
+            _playerProfile.CharacterService.CurrentCharacterProfile.CharacterLevel.OnLevelUp -= ShowMessageLevelUp;
+            _uiManager.Hud.OnMoralChanged -= ShowMessageMoralChanged;
+            
+            _messagesPull.Clear();
+        }
+
+
         [Button]
         private void ShowMessage(MessageModel messageModel)
         {
@@ -55,9 +69,10 @@ namespace GameManager
             
             yield return null;
 
-            foreach (var action in _messagesPull)
+            foreach (var action in _messagesPull.ToList())
             {
                 action?.Invoke();
+                _messagesPull.Remove(action);
                 yield return new WaitForSecondsRealtime(0.1f);
             }
             
@@ -66,7 +81,7 @@ namespace GameManager
             _isDisplaying = false;
         }
         
-        private void ShowMessageLevelUp()
+        private void ShowMessageLevelUp(int i)
         {
             MessageModel message = LevelUpMessage();
             CollectAndShowMessages(message);

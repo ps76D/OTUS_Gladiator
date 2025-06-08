@@ -20,12 +20,12 @@ namespace UI
 
     private void DoFadeOut()
     {
-      _curtain.DOFade(0, 1f).SetUpdate(true);;
+      _curtain.DOFade(0, 1f).SetUpdate(true);
     }
 
     private void DoFadeIn()
     {
-      _curtain.DOFade(1, 1f).SetUpdate(true);;
+      _curtain.DOFade(1, 1f).SetUpdate(true);
     }
   }
 }

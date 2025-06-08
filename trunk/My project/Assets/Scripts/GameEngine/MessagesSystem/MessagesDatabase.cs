@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Localization;
 
-namespace UI.SO
+namespace GameEngine.MessagesSystem
 {
     [CreateAssetMenu(fileName = "MessagesDatabase", menuName = "MessagesDatabase", order = 0)]
     public class MessagesDatabase : ScriptableObject
