@@ -58,6 +58,13 @@ namespace UI
             _disposables.Add(_viewModel.OpponentHealth.Subscribe(UpdateOpponentHealth));
             _disposables.Add(_viewModel.OpponentEnergy.Subscribe(UpdateOpponentEnergy));
             
+            _disposables.Add(viewModel.BattleService.IsPlayerTurn.SubscribeToInteractable(_attackButton));
+            _disposables.Add(viewModel.BattleService.IsPlayerTurn.SubscribeToInteractable(_preparePowerfulAttackButton));
+            _disposables.Add(viewModel.BattleService.IsPlayerTurn.SubscribeToInteractable(_powerfulAttackButton));
+            _disposables.Add(viewModel.BattleService.IsPlayerTurn.SubscribeToInteractable(_blockButton));
+            _disposables.Add(viewModel.BattleService.IsPlayerTurn.SubscribeToInteractable(_skipTurnButton));
+            _disposables.Add(viewModel.BattleService.IsPlayerTurn.SubscribeToInteractable(_giveUpButton));
+            
             UpdatePlayerHealth(_viewModel.GetPlayerFullHealth());
             UpdatePlayerEnergy(_viewModel.GetPlayerFullEnergy());
             UpdateOpponentHealth(_viewModel.GetOpponentFullHealth());

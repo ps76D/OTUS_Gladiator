@@ -20,6 +20,8 @@ namespace UI
             _viewModel = viewModel;
 
             gameObject.SetActive(true);
+            
+            _nextButton.onClick.AddListener(BackToTraining);
         }
         
         public void Close()

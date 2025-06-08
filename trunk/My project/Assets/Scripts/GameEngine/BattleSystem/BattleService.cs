@@ -21,6 +21,9 @@ namespace GameEngine
         
         [SerializeField] private bool _isPlayerPowerfulAttackPrepared;
         [SerializeField] private bool _isOpponentPowerfulAttackPrepared;
+
+        public IReadOnlyReactiveProperty<bool> IsPlayerTurn => _isPlayerTurn;
+        private readonly ReactiveProperty<bool> _isPlayerTurn = new ();
         
         private readonly List<IDisposable> _disposables = new();
         
@@ -46,6 +49,9 @@ namespace GameEngine
         public Action<int> OnPlayerEnduranceSpent;
         public Action<int> OnOpponentEnduranceSpent;
         
+        public Action OnPlayerAttack;
+        public Action OnOpponentAttack;
+        
         public Action OnPlayerWin;
         public Action OnPlayerLose;
 
@@ -59,11 +65,35 @@ namespace GameEngine
             
             _disposables.Add(_opponent.Health.Subscribe(CheckOpponentHealthStats));
             _disposables.Add(_opponent.Energy.Subscribe(CheckOpponentEnergyStats));
+            
+            SetIsPlayerTurn();
+            _disposables.Add(_isPlayerTurn.Subscribe(x => _isPlayerTurn.Value = CheckIsPlayerTurn()));
+
+        }
+        
+        [Button]
+        public void SetIsPlayerTurn()
+        {
+            _isPlayerTurn.Value = true;
+        }
+        [Button]
+        public void SetIsOpponentTurn()
+        {
+            _isPlayerTurn.Value = false;
+        }
+        
+        public bool CheckIsPlayerTurn()
+        {
+            return _isPlayerTurn.Value;
         }
         
         [Button]
         public void PlayerAttack()
         {
+            if (!CheckIsPlayerTurn()) return;
+            
+            OnPlayerAttack?.Invoke();
+            
             int blockValue = _isOpponentBlocks ? _opponent.BlockValue : 0;
             
             var dodgeThrow = Random.Range(100, 0);
@@ -93,11 +123,17 @@ namespace GameEngine
                 OnOpponentDodge?.Invoke();
             }
             _isOpponentBlocks = false;
+
+            SetIsOpponentTurn();
         }
         
         [Button]
         public void OpponentAttack()
         {
+            if (CheckIsPlayerTurn()) return;
+            
+            OnOpponentAttack?.Invoke();
+            
             int blockValue = _isPlayerBlocks ? _player.BlockValue : 0;
             
             var dodgeThrow = Random.Range(100, 0);
@@ -127,33 +163,42 @@ namespace GameEngine
                 OnPlayerDodge?.Invoke();
             }
             _isPlayerBlocks = false;
+            
+            SetIsPlayerTurn();
         }
 
         [Button]
         public void PlayerBlocks()
         {
+            if (!CheckIsPlayerTurn()) return;
             _isPlayerBlocks = true;
             _player.Energy.Value -= _player.BlockEnduranceCostValue;
             OnPlayerEnergyChanged?.Invoke(_player.Energy.Value);
             
             Debug.Log("Player Blocks");
             PlayerSkipTurn();
+
+            SetIsOpponentTurn();
         }
         
         [Button]
         public void OpponentBlocks()
         {
+            if (CheckIsPlayerTurn()) return;
             _isOpponentBlocks = true;
             _opponent.Energy.Value -= _opponent.BlockEnduranceCostValue;
             OnOpponentEnergyChanged?.Invoke(_opponent.Energy.Value);
             
             Debug.Log("Opponent Blocks");
             OpponentSkipTurn();
+            
+            SetIsPlayerTurn();
         }
 
         [Button]
         public void PlayerPowerfulAttack()
         {
+            if (!CheckIsPlayerTurn()) return;
             if (_isPlayerPowerfulAttackPrepared)
             {
                 int blockValue = _isOpponentBlocks ? _opponent.BlockValue : 0;
@@ -199,11 +244,14 @@ namespace GameEngine
             {
                 Debug.Log("Player Powerful Attack Not Prepared ");
             }
+
+            SetIsOpponentTurn();
         }
         
         [Button]
         public void OpponentPowerfulAttack()
         {
+            if (CheckIsPlayerTurn()) return;
             if (_isOpponentPowerfulAttackPrepared)
             {
                 int blockValue = _isPlayerBlocks ? _player.BlockValue : 0;
@@ -249,11 +297,14 @@ namespace GameEngine
             {
                 Debug.Log("Opponent Powerful Attack Not Prepared ");
             }
+            
+            SetIsPlayerTurn();
         }
         
         [Button]
         public void GiveUp()
         {
+            if (!CheckIsPlayerTurn()) return;
             _player.Health.Value = 0;
             OnPlayerHealthChanged?.Invoke(_player.Health.Value);
         }
@@ -261,36 +312,51 @@ namespace GameEngine
         [Button]
         public void OpponentGiveUp()
         {
+            if (CheckIsPlayerTurn()) return;
             _opponent.Health.Value = 0;
             OnOpponentHealthChanged?.Invoke(_opponent.Health.Value);
+            
+            SetIsPlayerTurn();
         }
         
         [Button]
         public void PlayerSkipTurn()
         {
+            if (!CheckIsPlayerTurn()) return;
             Debug.Log("Player skip turn");
+
+            SetIsOpponentTurn();
         }
         
         [Button]
         public void OpponentSkipTurn()
         {
+            if (CheckIsPlayerTurn()) return;
             Debug.Log("Opponent skip turn");
+            
+            SetIsPlayerTurn();
         }
         
         [Button]
         public void PlayerPreparePowerfulAttack()
         {
+            if (!CheckIsPlayerTurn()) return;
             _isPlayerPowerfulAttackPrepared = true;
             PlayerSkipTurn();
             Debug.Log("Player Prepare Powerful Attack");
+
+            SetIsOpponentTurn();
         }
         
         [Button]
         public void OpponentPreparePowerfulAttack()
         {
+            if (CheckIsPlayerTurn()) return;
             _isOpponentPowerfulAttackPrepared = true;
             OpponentSkipTurn();
             Debug.Log("Opponent Prepare Powerful Attack");
+            
+            SetIsPlayerTurn();
         }
         
         public void CheckPlayerHealthStats(int value)

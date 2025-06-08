@@ -13,6 +13,7 @@ namespace UI.Model
     {
         [Inject]
         private BattleService _battleService;
+        public BattleService BattleService => _battleService;
         
         
         

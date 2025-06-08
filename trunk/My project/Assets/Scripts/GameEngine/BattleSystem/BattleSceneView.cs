@@ -40,6 +40,8 @@ namespace GameEngine
             _battleService.OnOpponentBlocked += OpponentBlock;
             _battleService.OnPlayerEnduranceSpent += PlayerEnduranceSpent;
             _battleService.OnOpponentEnduranceSpent += OpponentEnduranceSpent;
+            _battleService.OnPlayerAttack += PlayerAttack;
+            _battleService.OnOpponentAttack += OpponentAttack;
             
             /*_uiManager.Hud.OnStrengthIncreased += ShowMessageIncreaseStrength;
             _uiManager.Hud.OnEnduranceIncreased += ShowMessageIncreaseEndurance;
@@ -68,10 +70,18 @@ namespace GameEngine
             yield return new WaitForSeconds(duration);
         }
         
+        [Button]
         public void PlayerAttack()
         {
             StartCoroutine(PlayAnimation(_playerAnimator, "Attack", 1f));
-            _battleService.PlayerAttack();
+            /*_battleService.PlayerAttack();*/
+        }
+        
+        [Button]
+        public void OpponentAttack()
+        {
+            StartCoroutine(PlayAnimation(_opponentAnimator, "Attack", 1f));
+            /*_battleService.OpponentAttack();*/
         }
         
         private void PlayerBlock()

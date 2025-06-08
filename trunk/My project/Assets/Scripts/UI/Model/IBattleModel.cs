@@ -1,4 +1,5 @@
-﻿using UniRx;
+﻿using GameEngine;
+using UniRx;
 
 namespace UI.Model
 {
@@ -26,5 +27,7 @@ namespace UI.Model
         void OpponentBlocks();
         void OpponentSkipTurn();
         void OpponentGiveUp();
+        
+        BattleService BattleService { get; }
     }
 }
