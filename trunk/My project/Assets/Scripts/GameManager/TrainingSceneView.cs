@@ -1,0 +1,141 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using PlayerProfileSystem;
+using Sirenix.OdinInspector;
+using UI;
+using UI.Infrastructure;
+using UI.Model;
+using UI.SO;
+using UnityEngine;
+using Zenject;
+
+namespace GameManager
+{
+    public class TrainingSceneView : SceneView
+    {
+        [Inject]
+        [SerializeField] private PlayerProfile _playerProfile;
+        
+        [Inject]
+        [SerializeField] private UIManager _uiManager;
+        
+        [SerializeField] private MessagesDatabase _messagesDatabase;
+        
+        [SerializeField] private Transform _messagesRoot;
+        
+        [SerializeField] private MessageView _messageViewPrefab;
+        
+        private readonly List<Action> _messagesPull = new ();
+        
+        private bool _isDisplaying;
+
+        private void Start()
+        {
+            _uiManager.Hud.OnStrengthIncreased += ShowMessageIncreaseStrength;
+            _uiManager.Hud.OnEnduranceIncreased += ShowMessageIncreaseEndurance;
+            _uiManager.Hud.OnAgilityIncreased += ShowMessageIncreaseAgility;
+            _uiManager.Hud.OnLevelUp += ShowMessageLevelUp;
+            _uiManager.Hud.OnMoralChanged += ShowMessageMoralChanged;
+            
+            _messagesPull.Clear();
+        }
+        
+        
+        [Button]
+        private void ShowMessage(MessageModel messageModel)
+        {
+            MessageView messageView = Instantiate(_messageViewPrefab, _messagesRoot);
+            messageView.Show(messageModel);
+        }
+
+        private IEnumerator ShowMessagesPull()
+        {
+            _isDisplaying = true;
+            
+            yield return null;
+
+            foreach (var action in _messagesPull)
+            {
+                action?.Invoke();
+                yield return new WaitForSecondsRealtime(0.1f);
+            }
+            
+            _messagesPull.Clear();
+            
+            _isDisplaying = false;
+        }
+        
+        private void ShowMessageLevelUp()
+        {
+            MessageModel message = LevelUpMessage();
+            CollectAndShowMessages(message);
+        }
+        
+        private void ShowMessageIncreaseStrength()
+        {
+            MessageModel message = IncreaseStrengthMessage();
+            CollectAndShowMessages(message);
+        }
+        
+        private void ShowMessageIncreaseEndurance()
+        {
+            MessageModel message = IncreaseEnduranceMessage();
+            CollectAndShowMessages(message);
+        }
+        
+        private void ShowMessageIncreaseAgility()
+        {
+            MessageModel message = IncreaseAgilityMessage();
+            CollectAndShowMessages(message);
+        }
+
+        private void CollectAndShowMessages(MessageModel message)
+        {
+            void Action() => ShowMessage(message);
+            _messagesPull.Add(Action);
+            
+            if (!_isDisplaying)
+            {
+                StartCoroutine(ShowMessagesPull());
+            } 
+        }
+
+        private void ShowMessageMoralChanged()
+        {
+            MessageModel message = MoralChangedMessage();
+            CollectAndShowMessages(message);
+        }
+        
+        private MessageModel LevelUpMessage()
+        {
+            var messageModel = new MessageModel(_messagesDatabase.LevelUp, Color.white, "" );
+            return messageModel;
+        }
+        
+        private MessageModel IncreaseStrengthMessage()
+        {
+            var messageModel = new MessageModel(_messagesDatabase.StrengthIncrease, Color.red, 1.ToString() );
+            return messageModel;
+        }
+        
+        private MessageModel IncreaseEnduranceMessage()
+        {
+            var messageModel = new MessageModel(_messagesDatabase.EnduranceIncrease, Color.green, 1.ToString() );
+            return messageModel;
+        }
+        
+        private MessageModel IncreaseAgilityMessage()
+        {
+            var messageModel = new MessageModel(_messagesDatabase.AgilityIncrease, Color.blue, 1.ToString() );
+            return messageModel;
+        }
+        
+        private MessageModel MoralChangedMessage()
+        {
+            var newMoralState = _playerProfile.MoralService.GetMoralLevel().MoralLevelText.GetLocalizedString();
+            var messageModel = new MessageModel(_messagesDatabase.MoraleChanged, Color.cyan, newMoralState);
+            return messageModel;
+        }
+    }
+}

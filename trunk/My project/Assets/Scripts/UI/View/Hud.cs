@@ -32,6 +32,16 @@ namespace UI
         
         private readonly List<IDisposable> _disposables = new();
         
+        public Action OnStrengthIncreased;
+        public Action OnEnduranceIncreased;
+        public Action OnAgilityIncreased;
+        public Action OnLevelUp;
+        
+        public Action OnMoralChanged;
+        
+        
+        
+        
         private IHudModel _viewModel;
         public IHudModel ViewModel => _viewModel;
 
@@ -136,6 +146,7 @@ namespace UI
         private void UpdateLevelText(int exp)
         {
             SetLevelData(_viewModel);
+            OnLevelUp?.Invoke();
         }
         
         private void SetLevelData(IHudModel viewModel)
@@ -157,14 +168,17 @@ namespace UI
         private void TrainStatStrength()
         {
             TrainStat(_viewModel, StatsNamesConstants.Strength);
+            OnStrengthIncreased?.Invoke();
         }
         private void TrainStatEndurance()
         {
             TrainStat(_viewModel, StatsNamesConstants.Endurance);
+            OnEnduranceIncreased?.Invoke();
         }
         private void TrainStatAgility()
         {
             TrainStat(_viewModel, StatsNamesConstants.Agility);
+            OnAgilityIncreased?.Invoke();
         }
         private void LevelUpButtonClicked()
         {
@@ -174,6 +188,7 @@ namespace UI
         private void UpdateMoralText(int moral)
         {
             UpdateMoralData(_viewModel);
+            /*OnMoralChanged?.Invoke();*/
         }
         private void UpdateMoralData(IHudModel viewModel)
         {
@@ -183,6 +198,7 @@ namespace UI
         private void RestButtonClicked()
         {
             _viewModel.Rest();
+            OnMoralChanged?.Invoke();
         }
     }
 }

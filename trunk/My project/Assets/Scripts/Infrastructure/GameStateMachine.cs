@@ -17,10 +17,12 @@ namespace Infrastructure
         [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingCurtain),
         [typeof(MainMenuState)] = new MainMenuState(this, sceneLoader, loadingCurtain),
         [typeof(GameLoopState)] = new GameLoopState(),
+        [typeof(BattleState)] = new BattleState(),
         [typeof(LoadInGameState)] = new LoadInGameState(this, sceneLoader, loadingCurtain),
         [typeof(LoadSavedGameState)] = new LoadSavedGameState(this, sceneLoader, loadingCurtain),
         [typeof(PauseState)] = new PauseState(this, sceneLoader),
-        [typeof(LoseState)] = new LoseState(this, sceneLoader, loadingCurtain),
+        [typeof(LoseState)] = new LoseState(this),
+        [typeof(WinState)] = new WinState(this),
       };
     }
     

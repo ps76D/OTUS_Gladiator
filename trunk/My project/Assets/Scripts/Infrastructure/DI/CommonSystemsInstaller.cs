@@ -8,6 +8,7 @@ using Infrastructure.Listeners;
 using PlayerProfileSystem;
 using SaveSystem;
 using UI.Infrastructure;
+using UI.SO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
@@ -27,6 +28,7 @@ namespace Infrastructure.DI
         [SerializeField] private MoralConfig _moralConfig;
         [SerializeField] private MatchMakingService _matchMakingService;
         [SerializeField] private BattleService _battleService;
+        [SerializeField] private MessagesDatabase _messagesDatabase;
         /*[SerializeField] private CharacterDatabase _enemyDatabase;*/
         
         public override void InstallBindings()
@@ -52,6 +54,8 @@ namespace Infrastructure.DI
 
             Container.Bind<CharacterInfoSObj>().FromInstance(_characterInfoDataDefault).AsSingle().NonLazy();
             Container.Bind<CharacterDatabase>().FromInstance(_characterDatabase).AsSingle().NonLazy();
+            
+            Container.Bind<MessagesDatabase>().FromInstance(_messagesDatabase).AsSingle().NonLazy();
             /*Container.Bind<CharacterDatabase>().FromInstance(_enemyDatabase).AsSingle().NonLazy();*/
 
             Container.Bind<CharacterService>().ToSelf().AsSingle().NonLazy();

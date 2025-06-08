@@ -13,6 +13,7 @@ namespace Infrastructure
     public Game Game;
 
     public Camera CommonCamera => _commonCamera;
+    public LoadingCurtain LoadingCurtain => _loadingCurtain;
 
     private void Awake()
     {

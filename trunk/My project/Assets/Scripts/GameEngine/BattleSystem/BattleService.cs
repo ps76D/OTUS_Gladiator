@@ -20,6 +20,31 @@ namespace GameEngine.BattleSystem
         [SerializeField] private bool _isOpponentPowerfulAttackPrepared;
         
         private readonly List<IDisposable> _disposables = new();
+        
+        public bool IsPlayerBlocks => _isPlayerBlocks;
+        public bool IsOpponentBlocks => _isOpponentBlocks;
+        public bool IsPlayerPowerfulAttackPrepared => _isPlayerPowerfulAttackPrepared;
+        public bool IsOpponentPowerfulAttackPrepared => _isOpponentPowerfulAttackPrepared;
+        
+        public UnitBattleData Player => _player;
+        public UnitBattleData Opponent => _opponent;
+
+        public Action<int> OnPlayerHealthChanged;
+        public Action<int> OnOpponentHealthChanged;
+        public Action<int> OnPlayerEnergyChanged;
+        public Action<int> OnOpponentEnergyChanged;
+        
+        public Action<int> OnPlayerTakeDamage;
+        public Action<int> OnOpponentTakeDamage;
+        public Action OnPlayerBlocked;
+        public Action OnOpponentBlocked;
+        public Action OnPlayerDodge;
+        public Action OnOpponentDodge;
+        public Action<int> OnPlayerEnduranceSpent;
+        public Action<int> OnOpponentEnduranceSpent;
+        
+        public Action OnPlayerWin;
+        public Action OnPlayerLose;
 
         public void Init(UnitBattleData player, UnitBattleData opponent)
         {
@@ -27,10 +52,10 @@ namespace GameEngine.BattleSystem
             _opponent = opponent;
 
             _disposables.Add(_player.Health.Subscribe(CheckPlayerHealthStats));
-            _disposables.Add(_player.Endurance.Subscribe(CheckPlayerEnduranceStats));
+            _disposables.Add(_player.Energy.Subscribe(CheckPlayerEnergyStats));
             
             _disposables.Add(_opponent.Health.Subscribe(CheckOpponentHealthStats));
-            _disposables.Add(_opponent.Endurance.Subscribe(CheckOpponentEnduranceStats));
+            _disposables.Add(_opponent.Energy.Subscribe(CheckOpponentEnergyStats));
         }
         
         [Button]
@@ -49,11 +74,20 @@ namespace GameEngine.BattleSystem
                     resultDamage = 0;
                 }
                 
+                OnOpponentTakeDamage?.Invoke(resultDamage);
+                
                 _opponent.Health.Value -= resultDamage;
+                OnOpponentHealthChanged?.Invoke(_opponent.Health.Value);
+
+                if (_isOpponentBlocks)
+                {
+                    OnOpponentBlocked?.Invoke();
+                }
             }
             else
             {
                 Debug.Log("Dodge");
+                OnOpponentDodge?.Invoke();
             }
             _isOpponentBlocks = false;
         }
@@ -74,11 +108,20 @@ namespace GameEngine.BattleSystem
                     resultDamage = 0;
                 }
                 
+                OnPlayerTakeDamage?.Invoke(resultDamage);
+                
                 _player.Health.Value -= resultDamage;
+                OnPlayerHealthChanged?.Invoke(_player.Health.Value);
+                
+                if (_isPlayerBlocks)
+                {
+                    OnPlayerBlocked?.Invoke();
+                }
             }
             else
             {
                 Debug.Log("Dodge");
+                OnPlayerDodge?.Invoke();
             }
             _isPlayerBlocks = false;
         }
@@ -87,7 +130,9 @@ namespace GameEngine.BattleSystem
         public void PlayerBlocks()
         {
             _isPlayerBlocks = true;
-            _player.Endurance.Value -= _player.BlockEnduranceCostValue;
+            _player.Energy.Value -= _player.BlockEnduranceCostValue;
+            OnPlayerEnergyChanged?.Invoke(_player.Energy.Value);
+            
             Debug.Log("Player Blocks");
             PlayerSkipTurn();
         }
@@ -96,7 +141,9 @@ namespace GameEngine.BattleSystem
         public void OpponentBlocks()
         {
             _isOpponentBlocks = true;
-            _opponent.Endurance.Value -= _opponent.BlockEnduranceCostValue;
+            _opponent.Energy.Value -= _opponent.BlockEnduranceCostValue;
+            OnOpponentEnergyChanged?.Invoke(_opponent.Energy.Value);
+            
             Debug.Log("Opponent Blocks");
             OpponentSkipTurn();
         }
@@ -119,12 +166,27 @@ namespace GameEngine.BattleSystem
                         resultDamage = 0;
                     }
                     
+                    OnOpponentTakeDamage?.Invoke(resultDamage);
+                    
                     _opponent.Health.Value -= resultDamage;
-                    _player.Endurance.Value -= _player.PowerfulDamageEnduranceCost;
+                    OnOpponentHealthChanged?.Invoke(_opponent.Health.Value);
+                    
+                    if (_isOpponentBlocks)
+                    {
+                        OnOpponentBlocked?.Invoke();
+                        OnOpponentEnduranceSpent?.Invoke(_opponent.BlockEnduranceCostValue);
+                    }
+                    
+                    _player.Energy.Value -= _player.PowerfulDamageEnduranceCost;
+                    OnPlayerEnduranceSpent?.Invoke(_player.PowerfulDamageEnduranceCost);
+                    OnPlayerEnergyChanged?.Invoke(_player.Energy.Value);
                 }
                 else
                 {
+                    OnOpponentDodge?.Invoke();
                     Debug.Log("Dodge");
+                    OnPlayerEnduranceSpent?.Invoke(_player.PowerfulDamageEnduranceCost);
+                    OnPlayerEnergyChanged?.Invoke(_player.Energy.Value);
                 }
                 _isOpponentBlocks = false;
                 
@@ -154,12 +216,27 @@ namespace GameEngine.BattleSystem
                         resultDamage = 0;
                     }
                     
+                    OnPlayerTakeDamage?.Invoke(resultDamage);
+                    
                     _player.Health.Value -= resultDamage;
-                    _opponent.Endurance.Value -= _opponent.PowerfulDamageEnduranceCost;
+                    OnPlayerHealthChanged?.Invoke(_player.Health.Value);
+                    
+                    if (_isPlayerBlocks)
+                    {
+                        OnPlayerBlocked?.Invoke();
+                        OnPlayerEnduranceSpent?.Invoke(_player.BlockEnduranceCostValue);
+                    }
+                    
+                    _opponent.Energy.Value -= _opponent.PowerfulDamageEnduranceCost;
+                    OnOpponentEnduranceSpent?.Invoke(_opponent.PowerfulDamageEnduranceCost);
+                    OnOpponentEnergyChanged?.Invoke(_opponent.Energy.Value);
                 }
                 else
                 {
+                    OnPlayerDodge?.Invoke();
                     Debug.Log("Dodge");
+                    OnOpponentEnduranceSpent?.Invoke(_opponent.PowerfulDamageEnduranceCost);
+                    OnOpponentEnergyChanged?.Invoke(_opponent.Energy.Value);
                 }
                 _isPlayerBlocks = false;
                 
@@ -175,6 +252,14 @@ namespace GameEngine.BattleSystem
         public void GiveUp()
         {
             _player.Health.Value = 0;
+            OnPlayerHealthChanged?.Invoke(_player.Health.Value);
+        }
+        
+        [Button]
+        public void OpponentGiveUp()
+        {
+            _opponent.Health.Value = 0;
+            OnOpponentHealthChanged?.Invoke(_opponent.Health.Value);
         }
         
         [Button]
@@ -214,10 +299,10 @@ namespace GameEngine.BattleSystem
             }
         }
 
-        public void CheckPlayerEnduranceStats(int value)
+        public void CheckPlayerEnergyStats(int value)
         {
-            Debug.Log("Check Player Endurance Stats: " + _player.Endurance.Value);
-            if (_player.Endurance.Value <= 0)
+            Debug.Log("Check Player Energy Stats: " + _player.Energy.Value);
+            if (_player.Energy.Value <= 0)
             {
                 Lose();
             }
@@ -232,10 +317,10 @@ namespace GameEngine.BattleSystem
             }
         }
         
-        public void CheckOpponentEnduranceStats(int value)
+        public void CheckOpponentEnergyStats(int value)
         {
-            Debug.Log("Check Opponent Endurance Stats: " + _opponent.Endurance.Value);
-            if (_opponent.Endurance.Value <= 0)
+            Debug.Log("Check Opponent Energy Stats: " + _opponent.Energy.Value);
+            if (_opponent.Energy.Value <= 0)
             {
                 Win();
             }
@@ -244,12 +329,14 @@ namespace GameEngine.BattleSystem
         [Button]
         public void Win()
         {
+            OnPlayerWin?.Invoke();
             Debug.Log("Player Win");
         }
         
         [Button]
         public void Lose()
         {
+            OnPlayerLose?.Invoke();
             Debug.Log("Player Lose");
         }
 

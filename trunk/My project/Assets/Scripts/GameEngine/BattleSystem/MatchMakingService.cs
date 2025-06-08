@@ -64,8 +64,8 @@ namespace GameEngine.BattleSystem
             {
                 Health =  new ReactiveProperty<int>(health),
                 FullHealth = health,
-                Endurance =  new ReactiveProperty<int>(endurance),
-                FullEndurance = endurance,
+                Energy =  new ReactiveProperty<int>(endurance),
+                FullEnergy = endurance,
                 Agility = statsInfo.GetStat(StatsNamesConstants.Agility).Value,
                 BaseDamageValue = baseDamageValue,
                 PowerfulDamageValue = powerfulDamageValue,

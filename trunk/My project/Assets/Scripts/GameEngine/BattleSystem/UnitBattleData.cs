@@ -12,9 +12,9 @@ namespace GameEngine.BattleSystem
         [ShowInInspector, ReadOnly]
         private int _fullHealth;
         [ShowInInspector, ReadOnly]
-        private ReactiveProperty<int> _endurance = new ();
+        private ReactiveProperty<int> _energy = new ();
         [ShowInInspector, ReadOnly]
-        private int _fullEndurance;
+        private int _fullEnergy;
         [ShowInInspector, ReadOnly]
         private int _agility;
         [ShowInInspector, ReadOnly]
@@ -40,13 +40,13 @@ namespace GameEngine.BattleSystem
             set => _fullHealth = value;
         }
 
-        public ReactiveProperty<int> Endurance {
-            get => _endurance;
-            set => _endurance = value;
+        public ReactiveProperty<int> Energy {
+            get => _energy;
+            set => _energy = value;
         }
-        public int FullEndurance {
-            get => _fullEndurance;
-            set => _fullEndurance = value;
+        public int FullEnergy {
+            get => _fullEnergy;
+            set => _fullEnergy = value;
         }
 
         public int Agility {

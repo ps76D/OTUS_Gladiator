@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using GameEngine.BattleSystem;
 using GameEngine.CharacterSystem;
+using Infrastructure;
 using UI.Infrastructure;
 using Zenject;
 
@@ -49,6 +50,8 @@ namespace UI.Model
 
         public void StartMatch()
         {
+            _uiManager.GameBootstrapper.Game.StateMachine.Enter<BattleState>();
+            
             _makingService.StartMatch();
             _uiManager.ShowBattleScreen();
             _uiManager.HideHud();

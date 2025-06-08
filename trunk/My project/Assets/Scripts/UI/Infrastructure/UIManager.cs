@@ -1,9 +1,9 @@
-﻿using System;
-using GameEngine.BattleSystem;
+﻿using GameEngine.BattleSystem;
 using Infrastructure;
 using PlayerProfileSystem;
 using SaveSystem;
 using UI.Model;
+using UI.SO;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
@@ -24,28 +24,31 @@ namespace UI.Infrastructure
         [Inject]
         private MatchMakingService _matchMakingService;
         
+        [Inject]
+        private MessagesDatabase _messagesDatabase;
+        
+        [Inject]
+        private BattleService _battleService;
+        
         [SerializeField] private MainMenu _mainMenuScreen;
         [SerializeField] private Hud _hud;
         [SerializeField] private InGameMenu _inGameMenu;
         [SerializeField] private MatchmakingView _matchmakingView;
         [SerializeField] private BattleView _battleView;
-        /*[SerializeField] private LoseScreen _loseScreen;
-        [SerializeField] private PauseScreen _pauseScreen;
-        [SerializeField] private HUDScreen _hud;*/
+        [SerializeField] private WinPopupView _winPopupView;
+        [SerializeField] private LosePopupView _losePopupView;
         
-        private Action _loseScreenShowHandler;
-        private Action _pauseScreenShowHandler;
-        
+        public Hud Hud => _hud;
+        public MatchmakingView MatchmakingView => _matchmakingView;
         public GameBootstrapper GameBootstrapper => _gameBootstrapper;
         public ProfileService ProfileService => _profileService;
         public SaveLoadManager SaveLoadManager => _saveLoadManager;
         public MatchMakingService MatchMakingService => _matchMakingService;
+        public WinPopupView WinPopupView => _winPopupView;
+        public LosePopupView LosePopupView => _losePopupView;
 
         private void Start()
         {
-            /*_loseScreenShowHandler = () => ShowScreen(_loseScreen);
-            _pauseScreenShowHandler = () => ShowScreen(_pauseScreen);*/
-            
             _gameBootstrapper.Game.StateMachine.GetState<MainMenuState>().OnMainMenuSceneLoaded += ShowMainMenu;
             _gameBootstrapper.Game.StateMachine.GetState<GameLoopState>().OnGameLoopState += HideMainMenu;
             _gameBootstrapper.Game.StateMachine.GetState<GameLoopState>().OnGameLoopState += HideInGameMenu;
@@ -55,7 +58,9 @@ namespace UI.Infrastructure
             _gameBootstrapper.Game.StateMachine.GetState<LoadInGameState>().OnLoadInGameState += HideHud;
             _gameBootstrapper.Game.StateMachine.GetState<GameLoopState>().OnGameLoopState += ShowHud;
 
-            _gameBootstrapper.Game.StateMachine.GetState<LoseState>().OnLoseState += _loseScreenShowHandler;
+            _gameBootstrapper.Game.StateMachine.GetState<LoseState>().OnLoseState += ShowLoseScreen;
+            _gameBootstrapper.Game.StateMachine.GetState<WinState>().OnWinState += ShowWinScreen;
+            
             _gameBootstrapper.Game.StateMachine.GetState<PauseState>().OnPauseState += ShowInGameMenu;
             _gameBootstrapper.Game.StateMachine.GetState<PauseState>().OnPauseState += HideHud;
         }
@@ -71,7 +76,9 @@ namespace UI.Infrastructure
             _gameBootstrapper.Game.StateMachine.GetState<LoadInGameState>().OnLoadInGameState -= HideHud;
             _gameBootstrapper.Game.StateMachine.GetState<GameLoopState>().OnGameLoopState -= ShowHud;
 
-            _gameBootstrapper.Game.StateMachine.GetState<LoseState>().OnLoseState -= _loseScreenShowHandler;
+            _gameBootstrapper.Game.StateMachine.GetState<LoseState>().OnLoseState -= ShowLoseScreen;
+            _gameBootstrapper.Game.StateMachine.GetState<WinState>().OnWinState -= ShowWinScreen;
+            
             _gameBootstrapper.Game.StateMachine.GetState<PauseState>().OnPauseState -= ShowInGameMenu;
             _gameBootstrapper.Game.StateMachine.GetState<PauseState>().OnPauseState -= HideHud;
         }
@@ -128,8 +135,17 @@ namespace UI.Infrastructure
         
         public void ShowBattleScreen()
         {
-            var viewModel = new BattleModel(this);
+            var viewModel = new BattleModel(this, _battleService);
             _battleView.Show(viewModel);
+        }
+        
+        public void ShowWinScreen()
+        {
+            _winPopupView.Show(new WinPopupModel(this));
+        }
+        public void ShowLoseScreen()
+        {
+            _losePopupView.Show(new LosePopupModel(this));
         }
     }
 }

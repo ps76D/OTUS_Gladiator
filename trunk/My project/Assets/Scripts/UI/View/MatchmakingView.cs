@@ -28,6 +28,8 @@ namespace UI
         
         private IMatchmakingModel _viewModel;
         public IMatchmakingModel ViewModel => _viewModel;
+        
+        public Action OnBattleButtonClicked;
 
         public void Show(IMatchmakingModel viewModel)
         {
@@ -63,6 +65,7 @@ namespace UI
         private void ToBattle()
         {
             _viewModel.StartMatch();
+            OnBattleButtonClicked?.Invoke();
             Close();
         }
 
