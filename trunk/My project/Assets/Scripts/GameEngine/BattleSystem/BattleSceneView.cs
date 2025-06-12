@@ -42,6 +42,8 @@ namespace GameEngine
             _battleService.OnOpponentEnduranceSpent += OpponentEnduranceSpent;
             _battleService.OnPlayerAttack += PlayerAttack;
             _battleService.OnOpponentAttack += OpponentAttack;
+            _battleService.OnPlayerDead += PlayerDead;
+            _battleService.OnOpponentDead += OpponentDead;
             
             /*_uiManager.Hud.OnStrengthIncreased += ShowMessageIncreaseStrength;
             _uiManager.Hud.OnEnduranceIncreased += ShowMessageIncreaseEndurance;
@@ -62,6 +64,10 @@ namespace GameEngine
             _battleService.OnOpponentBlocked -= OpponentBlock;
             _battleService.OnPlayerEnduranceSpent -= PlayerEnduranceSpent;
             _battleService.OnOpponentEnduranceSpent -= OpponentEnduranceSpent;
+            _battleService.OnPlayerAttack -= PlayerAttack;
+            _battleService.OnOpponentAttack -= OpponentAttack;
+            _battleService.OnPlayerDead -= PlayerDead;
+            _battleService.OnOpponentDead -= OpponentDead;
         }
 
         private IEnumerator PlayAnimation(Animator animator, string animationName, float duration)
@@ -133,6 +139,18 @@ namespace GameEngine
         {
             MessageModel message = EnduranceSpentMessage(value);
             CollectAndShowMessages(message, _messagesOpponentRoot);
+        }
+        
+        public void PlayerDead()
+        {
+            StartCoroutine(PlayAnimation(_playerAnimator, "Dying", 1f));
+            /*_battleService.PlayerAttack();*/
+        }
+        
+        public void OpponentDead()
+        {
+            StartCoroutine(PlayAnimation(_playerAnimator, "Dying", 1f));
+            /*_battleService.PlayerAttack();*/
         }
         
         
