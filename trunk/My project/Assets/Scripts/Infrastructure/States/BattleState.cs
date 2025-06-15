@@ -20,7 +20,7 @@ namespace Infrastructure
     {
       OnBattleState?.Invoke();
       
-      Debug.Log("Enter BattleState");
+      Debug.Log("Game Enter BattleState");
     }
   }
 }

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using AesEncrypt;
 using GameEngine;
-using GameEngine.BattleSystem;
+using GameEngine.AI;
 using GameEngine.CharacterSystem;
 using GameEngine.MessagesSystem;
 using GameManager;
@@ -28,6 +28,7 @@ namespace Infrastructure.DI
         [SerializeField] private MoralConfig _moralConfig;
         [SerializeField] private MatchMakingService _matchMakingService;
         [SerializeField] private BattleService _battleService;
+        [SerializeField] private BattleConfig _battleConfig;
         [SerializeField] private MessagesDatabase _messagesDatabase;
         /*[SerializeField] private CharacterDatabase _enemyDatabase;*/
         
@@ -68,8 +69,9 @@ namespace Infrastructure.DI
             Container.Bind<ProfileService>().ToSelf().AsSingle().NonLazy();
             
             Container.Bind<MatchMakingService>().FromInstance(_matchMakingService).AsSingle().NonLazy();
+            Container.Bind<BattleConfig>().FromInstance(_battleConfig).AsSingle().NonLazy();
+            Container.Bind<BrainStateMachine>().FromNew().AsSingle().NonLazy();
             Container.Bind<BattleService>().FromInstance(_battleService).AsSingle().NonLazy();
-
 
             Container.Bind<AesEncryptComponent>().FromNew().AsSingle().NonLazy();
             Container.Bind<GameRepository>().FromNew().AsSingle().NonLazy();

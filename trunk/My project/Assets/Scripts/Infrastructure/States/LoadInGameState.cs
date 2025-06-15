@@ -33,7 +33,7 @@ namespace Infrastructure
       
       OnLoadInGameState?.Invoke();
 
-      Debug.Log("Enter LoadInGameState");
+      Debug.Log("Game Enter LoadInGameState");
     }
     
     private void OnLoaded()

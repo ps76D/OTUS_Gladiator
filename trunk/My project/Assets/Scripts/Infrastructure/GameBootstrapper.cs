@@ -1,5 +1,4 @@
 ﻿using UI;
-using UI.Infrastructure;
 using UnityEngine;
 
 namespace Infrastructure

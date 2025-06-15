@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using GameEngine.CharacterSystem;
 using UI.Model;
@@ -29,7 +30,7 @@ namespace UI
         private IMatchmakingModel _viewModel;
         public IMatchmakingModel ViewModel => _viewModel;
         
-        public Action OnBattleButtonClicked;
+        /*public Action OnBattleButtonClicked;*/
 
         public void Show(IMatchmakingModel viewModel)
         {
@@ -46,44 +47,46 @@ namespace UI
             _fadeCloseButton.onClick.AddListener(Close);
             _toBattleButton.onClick.AddListener(ToBattle);
         }
-
-        /*private void OnDisable()
-        {
-            Cleanup();
-            
-            _backButton.onClick.RemoveListener(Close);
-            
-            foreach (var disposable in _disposables)
-                disposable.Dispose();
-        }*/
         
-        private void Close()
+        public void Close()
         {            
             Cleanup();
             
             _backButton.onClick.RemoveListener(Close);
-            
-            gameObject.SetActive(false);
-            
+            _fadeCloseButton.onClick.RemoveListener(Close);
+            _toBattleButton.onClick.RemoveListener(ToBattle);
+
             foreach (var disposable in _disposables)
                 disposable.Dispose();
+            
+            /*_viewModel.Dispose();*/
+            
+            gameObject.SetActive(false);
         }
+
+        public void CloseDispose()
+        {
+            Close();
+            (_viewModel as IDisposable)?.Dispose(); // Уничтожаем модель
+            _viewModel = null;
+        }
+
+        /*private IEnumerator DisposeCoroutine(IDisposable viewModel)
+        {
+            yield return new WaitForSeconds(1f);
+            yield return null;
+
+            viewModel.Dispose(); // Уничтожаем модель
+        }*/
         
         private void ToBattle()
         {
             _viewModel.StartMatch();
-            OnBattleButtonClicked?.Invoke();
+            /*OnBattleButtonClicked?.Invoke();*/
             Close();
-            /*StartCoroutine(SwitchToBattleScreen());*/
+            /*_uiManager.HideMatchmakingScreen();*/
+
         }
-
-        /*private IEnumerator SwitchToBattleScreen()
-        {
-            _uiManager.HideHud();
-            yield return new WaitForSeconds(1f);
-            _uiManager.ShowBattleScreen();
-        }*/
-
         private void SetupEnemyWidgets(IMatchmakingModel viewModel)
         {
             foreach (var unit in viewModel.GetCharacters())
@@ -108,8 +111,6 @@ namespace UI
 
         private void Cleanup()
         {
-            /*if (_enemyWidgets == null) return;
-            if (_enemyWidgets.Count == 0) return;*/
             foreach (var unit in _enemyWidgets)
             {
                 DestroyImmediate(unit.gameObject);

@@ -22,7 +22,7 @@ namespace Infrastructure
     {
       OnWinState?.Invoke();
       
-      Debug.Log("Enter WinState");
+      Debug.Log("Game Enter WinState");
     }
   }
 }

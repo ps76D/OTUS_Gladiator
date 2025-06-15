@@ -211,8 +211,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isPlayerBlocks: 0
   _isOpponentBlocks: 0
-  _isPlayerPowerfulAttackPrepared: 0
   _isOpponentPowerfulAttackPrepared: 0
+  _isOpponentDecideToPowerfulAttack: 0
+  _isOpponentDecideToAttack: 0
+  _isEnoughOpponentEnergy: 0
+  _isEndTurn: 0
+  _isOpponentTurn: 0
+  _isOpponentDead: 0
+  _isPlayerDead: 0
+  _isOpponentDecideToBlock: 0
 --- !u!4 &722976860
 Transform:
   m_ObjectHideFlags: 0
@@ -450,6 +457,7 @@ MonoBehaviour:
   _moralConfig: {fileID: 11400000, guid: 3e468d2ad8248c24ebe7a0947cd6f4cf, type: 2}
   _matchMakingService: {fileID: 486572270}
   _battleService: {fileID: 722976859}
+  _battleConfig: {fileID: 11400000, guid: cb1c3f8285389a54ba731d9ce829d826, type: 2}
   _messagesDatabase: {fileID: 11400000, guid: 06fb0a3f702e9a546bdb9bc078738280, type: 2}
 --- !u!1 &1143439074916920643
 GameObject:

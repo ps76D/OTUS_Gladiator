@@ -1,6 +1,5 @@
 using System;
 using GameEngine;
-using GameEngine.BattleSystem;
 using GameEngine.CharacterSystem;
 using GameEngine.CharacterSystem.StatsSystem;
 using PlayerProfileSystem;
@@ -55,25 +54,25 @@ namespace GameManager
         private UnitBattleData SetUnitBattleData(CharacterStatsInfo statsInfo, float moralModifier)
         {
             int health = CalcHealth(statsInfo);
-            int endurance = CalcEndurance(statsInfo);
+            int energy = CalcEnergy(statsInfo);
             int baseDamageValue = CalcBaseDamageValue(statsInfo, moralModifier);
             int powerfulDamageValue = CalcPowerfulDamageValue(statsInfo, moralModifier);
-            int powerfulDamageEnduranceCost = PowerfulDamageEnduranceCostValue(statsInfo);
+            int powerfulDamageEnergyCost = PowerfulDamageEnergyCostValue(statsInfo);
             int blockValue = CalcBlockValue(statsInfo, moralModifier);
-            int blockEnduranceCost = BlockEnduranceCostValue(statsInfo);
+            int blockEnergyCost = BlockEnergyCostValue(statsInfo);
             
             UnitBattleData unitBattleData = new ()
             {
                 Health =  new ReactiveProperty<int>(health),
                 FullHealth = health,
-                Energy =  new ReactiveProperty<int>(endurance),
-                FullEnergy = endurance,
+                Energy =  new ReactiveProperty<int>(energy),
+                FullEnergy = energy,
                 Agility = statsInfo.GetStat(StatsNamesConstants.Agility).Value,
                 BaseDamageValue = baseDamageValue,
                 PowerfulDamageValue = powerfulDamageValue,
-                PowerfulDamageEnduranceCost = powerfulDamageEnduranceCost,
+                PowerfulDamageEnergyCost = powerfulDamageEnergyCost,
                 BlockValue = blockValue,
-                BlockEnduranceCostValue = blockEnduranceCost,
+                BlockEnergyCostValue = blockEnergyCost,
             };
 
             return unitBattleData;
@@ -94,13 +93,13 @@ namespace GameManager
             return health;
         }
         
-        private int CalcEndurance(CharacterStatsInfo statsInfo)
+        private int CalcEnergy(CharacterStatsInfo statsInfo)
         {
             int enduranceValue = statsInfo.GetStat(StatsNamesConstants.Endurance).Value;
             
-            int endurance = enduranceValue * 15; 
+            int energy = enduranceValue * 15; 
             
-            return endurance;
+            return energy;
         }
         
         private int CalcBaseDamageValue(CharacterStatsInfo statsInfo, float moralModifier)
@@ -136,26 +135,26 @@ namespace GameManager
             return blockValue;
         }
         
-        private int BlockEnduranceCostValue(CharacterStatsInfo statsInfo)
+        private int BlockEnergyCostValue(CharacterStatsInfo statsInfo)
         {
             int strengthValue = statsInfo.GetStat(StatsNamesConstants.Strength).Value;
             int enduranceValue = statsInfo.GetStat(StatsNamesConstants.Endurance).Value;
             int agilityValue = statsInfo.GetStat(StatsNamesConstants.Agility).Value;
             
-            int blockEnduranceCost = (int) (strengthValue + agilityValue/2f); 
+            int blockEnergyCost = (int) (strengthValue + agilityValue/2f); 
             
-            return blockEnduranceCost;
+            return blockEnergyCost;
         }
         
-        private int PowerfulDamageEnduranceCostValue(CharacterStatsInfo statsInfo)
+        private int PowerfulDamageEnergyCostValue(CharacterStatsInfo statsInfo)
         {
             int strengthValue = statsInfo.GetStat(StatsNamesConstants.Strength).Value;
             int enduranceValue = statsInfo.GetStat(StatsNamesConstants.Endurance).Value;
             int agilityValue = statsInfo.GetStat(StatsNamesConstants.Agility).Value;
             
-            int blockEnduranceCost = (int) (strengthValue + agilityValue/2f) * 2; 
+            int blockEnergyCost = (int) (strengthValue + agilityValue/2f) * 2; 
             
-            return blockEnduranceCost;
+            return blockEnergyCost;
         }
         
         private float CalcDodgeChanceValue(UnitBattleData unitBattleData, UnitBattleData opponentBattleData, float moralModifier)

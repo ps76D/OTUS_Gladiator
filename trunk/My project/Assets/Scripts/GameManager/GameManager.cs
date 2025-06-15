@@ -53,7 +53,7 @@ namespace GameManager
             EnablePlayerInput(true);
         }
 
-        private void FinishGame()
+        /*private void FinishGame()
         {
             _gameStateMachine.Enter<LoseState>();
 
@@ -63,7 +63,7 @@ namespace GameManager
             Debug.Log("Game over!");
             
             EnablePlayerInput(false);
-        }
+        }*/
 
         private void EnablePlayerInput(bool value)
         {

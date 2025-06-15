@@ -32,7 +32,7 @@ namespace Infrastructure
 
       OnMainMenuState?.Invoke();
       
-      Debug.Log("Enter MainMenuState");
+      Debug.Log("Game Enter MainMenuState");
     }
     
     private void OnLoaded()

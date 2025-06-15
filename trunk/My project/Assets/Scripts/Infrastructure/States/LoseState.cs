@@ -22,7 +22,7 @@ namespace Infrastructure
     {
       OnLoseState?.Invoke();
       
-      Debug.Log("Enter LoseState");
+      Debug.Log("Game Enter LoseState");
     }
   }
 }

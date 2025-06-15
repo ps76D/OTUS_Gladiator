@@ -34,7 +34,7 @@ namespace Infrastructure
 
       OnLoadSavedGameState?.Invoke();
 
-      Debug.Log("Enter LoadSavedGameState");
+      Debug.Log("Game Enter LoadSavedGameState");
     }
     
     private void OnLoaded()

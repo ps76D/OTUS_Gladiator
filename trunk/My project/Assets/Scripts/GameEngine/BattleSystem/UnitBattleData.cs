@@ -2,7 +2,7 @@
 using Sirenix.OdinInspector;
 using UniRx;
 
-namespace GameEngine.BattleSystem
+namespace GameEngine
 {
     [Serializable]
     public class UnitBattleData
@@ -22,11 +22,11 @@ namespace GameEngine.BattleSystem
         [ShowInInspector, ReadOnly]
         private int _powerfulDamageValue;
         [ShowInInspector, ReadOnly]
-        private int _powerfulDamageEnduranceCost;
+        private int _powerfulDamageEnergyCost;
         [ShowInInspector, ReadOnly]
         private int _blockValue;
         [ShowInInspector, ReadOnly]
-        private int _blockEnduranceCost;
+        private int _blockEnergyCost;
         [ShowInInspector, ReadOnly]
         private float _dodgeChanceValue;
         [ShowInInspector, ReadOnly]
@@ -62,17 +62,17 @@ namespace GameEngine.BattleSystem
             get => _powerfulDamageValue;
             set => _powerfulDamageValue = value;
         }
-        public int BlockEnduranceCostValue {
-            get => _blockEnduranceCost;
-            set => _blockEnduranceCost = value;
+        public int BlockEnergyCostValue {
+            get => _blockEnergyCost;
+            set => _blockEnergyCost = value;
         }
         public int BlockValue {
             get => _blockValue;
             set => _blockValue = value;
         }
-        public int PowerfulDamageEnduranceCost {
-            get => _powerfulDamageEnduranceCost;
-            set => _powerfulDamageEnduranceCost = value;
+        public int PowerfulDamageEnergyCost {
+            get => _powerfulDamageEnergyCost;
+            set => _powerfulDamageEnergyCost = value;
         }
         
         public float DodgeChanceValue {

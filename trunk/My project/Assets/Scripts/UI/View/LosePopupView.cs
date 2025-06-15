@@ -27,11 +27,11 @@ namespace UI
         public void Close()
         {            
             _nextButton.onClick.RemoveListener(BackToTraining);
-            
-            gameObject.SetActive(false);
-            
+
             foreach (var disposable in _disposables)
                 disposable.Dispose();
+            
+            gameObject.SetActive(false);
         }
 
         private void BackToTraining()

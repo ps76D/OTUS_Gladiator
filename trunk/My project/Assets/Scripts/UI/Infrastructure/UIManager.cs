@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using GameEngine;
 using GameEngine.MessagesSystem;
 using GameManager;
@@ -139,6 +140,12 @@ namespace UI.Infrastructure
             _matchmakingView.Show(viewModel);
         }
         
+        /*public void HideMatchmakingScreen()
+        {
+            _matchmakingView.Close();
+            StartCoroutine(DisposeCoroutine((IDisposable) _matchmakingView.ViewModel, 1f));
+        }*/
+        
         public void ShowBattleScreen()
         {
             var viewModel = new BattleModel(this, _battleService);
@@ -169,6 +176,14 @@ namespace UI.Infrastructure
         {
             _winPopupView.Close();
             OnBackToTraining?.Invoke();
+        }
+        
+        private IEnumerator DisposeCoroutine(IDisposable viewModel, float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            yield return null;
+            
+            viewModel.Dispose(); // Уничтожаем модель
         }
     }
 }

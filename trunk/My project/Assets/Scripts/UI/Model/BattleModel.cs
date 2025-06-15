@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using GameEngine;
-using GameEngine.BattleSystem;
 using Infrastructure;
 using UI.Infrastructure;
 using UniRx;
+using UnityEngine;
 using Zenject;
 
 namespace UI.Model
@@ -15,17 +15,7 @@ namespace UI.Model
         private BattleService _battleService;
         public BattleService BattleService => _battleService;
         
-        
-        
         private readonly UIManager _uiManager;
-        /*private readonly CharacterInfo _currentCharacter;
-        
-        private readonly MatchMakingService _makingService;
-        
-        [Inject]
-        private readonly CharacterDatabase _characterDatabase;
-        
-        private CharacterInfoSObj _opponentInfoSObj;*/
         
         public IReadOnlyReactiveProperty<int> PlayerHealth => _playerHealth;
         private readonly ReactiveProperty<int> _playerHealth = new(0);
@@ -43,11 +33,6 @@ namespace UI.Model
         {
             _uiManager = uiManager;
             _battleService = battleService;
-
-            /*_battleService.OnPlayerHealthChanged += UpdatePlayerHealth;
-            _battleService.OnPlayerEnergyChanged += UpdatePlayerEnergy;
-            _battleService.OnOpponentHealthChanged += UpdateOpponentHealth;
-            _battleService.OnOpponentEnergyChanged += UpdateOpponentEnergy;*/
             
             _battleService.OnPlayerWin += PlayerWin;
             _battleService.OnPlayerLose += PlayerLose;
@@ -56,25 +41,23 @@ namespace UI.Model
             _disposables.Add(_battleService.Player.Energy.Subscribe(UpdatePlayerEnergy));
             _disposables.Add(_battleService.Opponent.Health.Subscribe(UpdateOpponentHealth));
             _disposables.Add(_battleService.Opponent.Energy.Subscribe(UpdateOpponentEnergy));
-            
-            
-            /*_characterDatabase = characterDatabase;
-            _currentCharacter = uiManager.ProfileService.PlayerProfile.CharacterService.CurrentCharacterProfile.CharacterInfo;
-            _makingService = uiManager.MatchMakingService;*/
         }
 
         public int GetPlayerFullHealth()
         {
             return _battleService.Player.FullHealth;
         }
+        
         public int GetPlayerFullEnergy()
         {
             return _battleService.Player.FullEnergy;
         }
+        
         public int GetOpponentFullHealth()
         {
             return _battleService.Opponent.FullHealth;
         }
+        
         public int GetOpponentFullEnergy()
         {
             return _battleService.Opponent.FullEnergy;
@@ -82,18 +65,41 @@ namespace UI.Model
         
         private void UpdatePlayerHealth(int value)
         {
+            if (value < 0)
+            {
+                value = 0;
+            }
+            
             _playerHealth.Value = value;
         }
+        
         private void UpdatePlayerEnergy(int value)
         {
+            if (value < 0)
+            {
+                value = 0;
+            }
+            
             _playerEnergy.Value = value;
         }
+        
         private void UpdateOpponentHealth(int value)
         {
+            if (value < 0)
+            {
+                value = 0;
+            }
+            
             _opponentHealth.Value = value;
         }
+        
         private void UpdateOpponentEnergy(int value)
         {
+            if (value < 0)
+            {
+                value = 0;
+            }
+            
             _opponentEnergy.Value = value;
         }
 
@@ -104,7 +110,7 @@ namespace UI.Model
         
         public void PlayerPowerfulAttack()
         {
-            if (_battleService.IsPlayerPowerfulAttackPrepared)
+            if (_battleService.IsPlayerPowerfulAttackPrepared.Value)
             {
                 _battleService.PlayerPowerfulAttack();
             }
@@ -129,54 +135,26 @@ namespace UI.Model
         {
             _battleService.GiveUp();
         }
-        
-        public void OpponentAttack()
-        {
-            _battleService.OpponentAttack();
-        }
-        
-        public void OpponentPowerfulAttack()
-        {
-            if (_battleService.IsOpponentPowerfulAttackPrepared)
-            {
-                _battleService.OpponentPowerfulAttack();
-            }
-        }
-        
-        public void OpponentPrepareAttack()
-        { 
-            _battleService.OpponentPreparePowerfulAttack();
-        }
-        
-        public void OpponentBlocks()
-        {
-            _battleService.OpponentBlocks();
-        }
-        
-        public void OpponentSkipTurn()
-        {
-            _battleService.OpponentSkipTurn();
-        }
-        
-        public void OpponentGiveUp()
-        {
-            _battleService.OpponentGiveUp();
-        }
-        
-        public void Dispose()
-        {
-            foreach (var disposable in _disposables)
-                disposable.Dispose();
-        }
 
-        public void PlayerWin()
+        private void PlayerWin()
         {
             _uiManager.GameBootstrapper.Game.StateMachine.Enter<WinState>();
         }
-        
-        public void PlayerLose()
+
+        private void PlayerLose()
         {
             _uiManager.GameBootstrapper.Game.StateMachine.Enter<LoseState>();
+        }
+
+        public void Dispose()
+        {
+            Debug.Log("Disposing BattleModel");
+            
+            _battleService.OnPlayerWin -= PlayerWin;
+            _battleService.OnPlayerLose -= PlayerLose;
+            
+            foreach (var disposable in _disposables)
+                disposable.Dispose();
         }
     }
 }

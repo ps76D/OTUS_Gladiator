@@ -23,7 +23,7 @@ namespace Infrastructure
     {
       OnPauseState?.Invoke();
  
-      Debug.Log("Enter PauseState");
+      Debug.Log("Game Enter PauseState");
     }
 
 

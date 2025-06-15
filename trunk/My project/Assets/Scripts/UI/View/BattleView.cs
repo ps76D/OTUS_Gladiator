@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UI.Model;
 using UniRx;
 using UnityEngine;
@@ -28,6 +29,12 @@ namespace UI
         [SerializeField] private Button _skipTurnOppButton;
         [SerializeField] private Button _giveUpOppButton;
         
+        [SerializeField] private TMP_Text _playerHealth;
+        [SerializeField] private TMP_Text _playerEnergy;
+        
+        [SerializeField] private TMP_Text _opponentHealth;
+        [SerializeField] private TMP_Text _opponentEnergy;
+        
         private IBattleModel _viewModel;
         public IBattleModel ViewModel => _viewModel;
         
@@ -46,13 +53,6 @@ namespace UI
             _skipTurnButton.onClick.AddListener(_viewModel.PlayerSkipTurn);
             _giveUpButton.onClick.AddListener(_viewModel.PlayerGiveUp);
             
-            _attackOppButton.onClick.AddListener(_viewModel.OpponentAttack);
-            _preparePowerfulAttackOppButton.onClick.AddListener(_viewModel.OpponentPrepareAttack);
-            _powerfulAttackOppButton.onClick.AddListener(_viewModel.OpponentPowerfulAttack);
-            _blockOppButton.onClick.AddListener(_viewModel.OpponentBlocks);
-            _skipTurnOppButton.onClick.AddListener(_viewModel.OpponentSkipTurn);
-            _giveUpOppButton.onClick.AddListener(_viewModel.OpponentGiveUp);
-            
             _disposables.Add(_viewModel.PlayerHealth.Subscribe(UpdatePlayerHealth));
             _disposables.Add(_viewModel.PlayerEnergy.Subscribe(UpdatePlayerEnergy));
             _disposables.Add(_viewModel.OpponentHealth.Subscribe(UpdateOpponentHealth));
@@ -64,6 +64,8 @@ namespace UI
             _disposables.Add(viewModel.BattleService.IsPlayerTurn.SubscribeToInteractable(_blockButton));
             _disposables.Add(viewModel.BattleService.IsPlayerTurn.SubscribeToInteractable(_skipTurnButton));
             _disposables.Add(viewModel.BattleService.IsPlayerTurn.SubscribeToInteractable(_giveUpButton));
+            
+            _disposables.Add(viewModel.BattleService.IsPlayerPowerfulAttackPrepared.Subscribe(ShowHidePowerfulAttackButton));
             
             UpdatePlayerHealth(_viewModel.GetPlayerFullHealth());
             UpdatePlayerEnergy(_viewModel.GetPlayerFullEnergy());
@@ -79,25 +81,38 @@ namespace UI
             _toBattleButton.onClick.AddListener(ToBattle);*/
         }
 
+        private void ShowHidePowerfulAttackButton(bool value)
+        {
+            _powerfulAttackButton.gameObject.SetActive(value);
+        }
+
         private void UpdatePlayerHealth(int value)
         {
             float sliderValue = (float)_viewModel.PlayerHealth.Value / _viewModel.GetPlayerFullHealth();
             _playerHealthBar.value = sliderValue;
+            
+            _playerHealth.text = _viewModel.PlayerHealth.Value + " / " + _viewModel.GetPlayerFullHealth();
         }
         private void UpdatePlayerEnergy(int value)
         {
             float sliderValue = (float)_viewModel.PlayerEnergy.Value / _viewModel.GetPlayerFullEnergy();
             _playerEnergyBar.value = sliderValue;
+            
+            _playerEnergy.text = _viewModel.PlayerEnergy.Value + " / " + _viewModel.GetPlayerFullEnergy();
         }
         private void UpdateOpponentHealth(int value)
         {
             float sliderValue = (float)_viewModel.OpponentHealth.Value / _viewModel.GetOpponentFullHealth();
             _opponentHealthBar.value = sliderValue;
+            
+            _opponentHealth.text = _viewModel.OpponentHealth.Value  + " / " + _viewModel.GetOpponentFullHealth();
         }
         private void UpdateOpponentEnergy(int value)
         {
             float sliderValue = (float)_viewModel.OpponentEnergy.Value / _viewModel.GetOpponentFullEnergy();
             _opponentEnergyBar.value = sliderValue;
+            
+            _opponentEnergy.text = _viewModel.OpponentEnergy.Value + " / " + _viewModel.GetOpponentFullEnergy();
         }
         
         public void Hide()
@@ -109,17 +124,20 @@ namespace UI
             _skipTurnButton.onClick.RemoveListener(_viewModel.PlayerSkipTurn);
             _giveUpButton.onClick.RemoveListener(_viewModel.PlayerGiveUp);
             
-            _attackOppButton.onClick.RemoveListener(_viewModel.OpponentAttack);
+            /*_attackOppButton.onClick.RemoveListener(_viewModel.OpponentAttack);
             _preparePowerfulAttackOppButton.onClick.RemoveListener(_viewModel.OpponentPrepareAttack);
             _powerfulAttackOppButton.onClick.RemoveListener(_viewModel.OpponentPowerfulAttack);
             _blockOppButton.onClick.RemoveListener(_viewModel.OpponentBlocks);
             _skipTurnOppButton.onClick.RemoveListener(_viewModel.OpponentSkipTurn);
-            _giveUpOppButton.onClick.RemoveListener(_viewModel.OpponentGiveUp);
+            _giveUpOppButton.onClick.RemoveListener(_viewModel.OpponentGiveUp);*/
+
+            foreach (var disposable in _disposables)
+                disposable.Dispose();
             
             gameObject.SetActive(false);
             
-            foreach (var disposable in _disposables)
-                disposable.Dispose();
+            (_viewModel as IDisposable)?.Dispose(); // Уничтожаем модель
+            _viewModel = null;
         }
     }
 }

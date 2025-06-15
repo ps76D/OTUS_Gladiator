@@ -17,7 +17,7 @@ namespace Infrastructure
     {
       /*this.RegisterServices();*/
       _sceneLoader.Load(SceneNamesConsts.Initial, onLoaded: EnterLoadLevel);
-      Debug.Log("Enter BootstrapState");
+      Debug.Log("Game Enter BootstrapState");
     }
 
     public void Exit()

@@ -207,6 +207,10 @@ MonoBehaviour:
     m_Key: BATTLE_ATTACK
     m_Metadata:
       m_Items: []
+  - m_Id: 329932254704721920
+    m_Key: BATTLE_PREPARE_POWERFUL_ATTACK
+    m_Metadata:
+      m_Items: []
   - m_Id: 326695754965614619
     m_Key: BATTLE_POWERFUL_ATTACK
     m_Metadata:

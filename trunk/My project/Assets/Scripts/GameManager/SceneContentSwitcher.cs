@@ -53,6 +53,7 @@ namespace GameManager
         public void ShowBattleScene()
         {
             StartCoroutine(ChangeSceneToBattle<BattleSceneView>());
+
         }
 
         private IEnumerator ChangeSceneToBattle<T>()
@@ -69,9 +70,9 @@ namespace GameManager
         {
             _uiManager.GameBootstrapper.LoadingCurtain.Hide();
             yield return new WaitForSeconds(1f);
-
-            ShowScene<T>();
             
+            ShowScene<T>();
+
             _uiManager.GameBootstrapper.LoadingCurtain.Show();
         }
     }

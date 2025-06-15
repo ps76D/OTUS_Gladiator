@@ -342,6 +342,10 @@ MonoBehaviour:
     m_Localized: Next
     m_Metadata:
       m_Items: []
+  - m_Id: 329932254704721920
+    m_Localized: "Prepare \nPowerful Attack"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -21,13 +21,6 @@ namespace UI.Model
         void PlayerSkipTurn();
         void PlayerGiveUp();
         
-        void OpponentAttack();
-        void OpponentPowerfulAttack();
-        void OpponentPrepareAttack();
-        void OpponentBlocks();
-        void OpponentSkipTurn();
-        void OpponentGiveUp();
-        
         BattleService BattleService { get; }
     }
 }

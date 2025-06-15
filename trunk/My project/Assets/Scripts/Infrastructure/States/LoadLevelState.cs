@@ -20,7 +20,7 @@ namespace Infrastructure
     {
       _sceneLoader.LoadAdditive(SceneNamesConsts.Common, OnLoaded, OnLoadStart);
       
-      Debug.Log("Enter LoadLevelState");
+      Debug.Log("Game Enter LoadLevelState");
     }
 
     public void Exit()

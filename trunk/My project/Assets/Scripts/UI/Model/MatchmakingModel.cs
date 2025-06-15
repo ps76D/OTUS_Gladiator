@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using GameEngine;
-using GameEngine.BattleSystem;
 using GameEngine.CharacterSystem;
 using GameManager;
 using Infrastructure;
@@ -37,12 +35,6 @@ namespace UI.Model
             _makingService = uiManager.MatchMakingService;
         }
 
-        public void Dispose()
-        {
-            foreach (var disposable in _disposables)
-                disposable.Dispose();
-        }
-        
         public List<CharacterInfoSObj> GetCharacters()
         {
             return _characterDatabase.CharacterInfoDatabaseSObjs;
@@ -63,7 +55,7 @@ namespace UI.Model
             _uiManager.StartCoroutine(SwitchToBattleScreen());
 
         }
-        
+
         private IEnumerator SwitchToBattleScreen()
         {
             yield return new WaitForSeconds(1f);
@@ -71,6 +63,12 @@ namespace UI.Model
             _uiManager.ShowBattleScreen();
         }
 
-
+        public void Dispose()
+        {
+            Debug.Log("Disposing MatchmakingModel");
+            
+            foreach (var disposable in _disposables)
+                disposable.Dispose();
+        }
     }
 }

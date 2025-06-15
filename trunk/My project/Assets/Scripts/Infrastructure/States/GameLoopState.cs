@@ -20,7 +20,7 @@ namespace Infrastructure
     {
       OnGameLoopState?.Invoke();
       
-      Debug.Log("Enter GameLoopState");
+      Debug.Log("Game Enter GameLoopState");
     }
   }
 }
