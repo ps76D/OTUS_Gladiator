@@ -17,6 +17,7 @@ namespace UI
         [SerializeField] private TMP_Text _statValueText;
         [SerializeField] private TMP_Text _statExpValueText;
         [SerializeField] private Slider _statExpSlider;
+        [SerializeField] private Image _statExpSliderSprite;
         [SerializeField] private StatsViewDatabase _characterDatabase;
         
         private readonly List<IDisposable> _disposables = new();
@@ -65,6 +66,8 @@ namespace UI
             }
 
             if (iconData != null) _icon.sprite = iconData._statInfoData.StatIcon;
+            
+            if (iconData != null) _statExpSliderSprite.sprite = iconData._statInfoData.StatExpSliderSprite;
         }
         
         private void UpdateStatExperienceText(int exp)

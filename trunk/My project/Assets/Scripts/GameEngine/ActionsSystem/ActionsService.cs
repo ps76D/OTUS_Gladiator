@@ -1,15 +1,36 @@
 ﻿using System;
+using GameEngine.DaySystem;
 using Sirenix.OdinInspector;
 using UniRx;
+using UnityEngine;
 
-namespace GameEngine
+namespace GameEngine.ActionsSystem
 {
     [Serializable]
-    public class ActionsService
+    public class ActionsService : IDisposable
     {
+        private DayService _dayService;
+
+        public Action OnCalcMaxActionsCount;
+        
+        private int _baseMaxActionsCount;
+        public int BaseMaxActionsCount {
+            get => _baseMaxActionsCount;
+            set => _baseMaxActionsCount = value;
+        }
+
+        /*[Inject]
+        private PlayerProfileDefault _playerProfile;*/
         public event Action<int> OnAvailableActionsChanged;
         public event Action<int> OnMaxActionsCountChanged;
-        
+
+        public ActionsService(DayService dayService)
+        {
+            _dayService = dayService;
+
+            _dayService.OnDayChanged += CalcMaxActionsCount;
+            _dayService.OnDayChanged += RecoverAllActions;
+        }
 
         public IReactiveProperty<int> AvailableActions  => _availableActions;
 
@@ -31,6 +52,13 @@ namespace GameEngine
         public void SetupMaxActionsCount(int maxActionsCount)
         {
             _maxActionsCount.Value = maxActionsCount;
+        }
+
+        public int CalcMaxActionsCount(int baseValue, int boost)
+        {
+            int calc= baseValue + boost;
+            
+            return calc;
         }
         
         [Button]
@@ -73,6 +101,12 @@ namespace GameEngine
             OnAvailableActionsChanged?.Invoke(_availableActions.Value);
         }
         
+        public void RecoverAllActions(int value)
+        {
+            _availableActions.Value = _maxActionsCount.Value;
+            OnAvailableActionsChanged?.Invoke(_availableActions.Value);
+        }
+        
         [Button]
         public void IncreaseMaxActionsCount()
         {
@@ -83,6 +117,19 @@ namespace GameEngine
         public bool CanSpendAction()
         {
             return _availableActions.Value > 0;
+        }
+
+        public void CalcMaxActionsCount(int value)
+        {
+            OnCalcMaxActionsCount?.Invoke();
+        }
+
+        public void Dispose()
+        {
+            _dayService.OnDayChanged -= CalcMaxActionsCount;
+            _dayService.OnDayChanged -= RecoverAllActions;
+            
+
         }
     }
 }

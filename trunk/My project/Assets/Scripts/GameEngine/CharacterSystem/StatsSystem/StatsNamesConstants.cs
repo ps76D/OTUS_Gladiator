@@ -1,4 +1,4 @@
-﻿namespace GameEngine.CharacterSystem.StatsSystem
+﻿namespace GameEngine.CharacterSystem
 {
     public static class StatsNamesConstants
     {

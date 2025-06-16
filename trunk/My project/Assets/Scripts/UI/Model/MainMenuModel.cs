@@ -25,6 +25,9 @@ namespace UI.Model
             _uiManager.SaveLoadManager.LoadGame();
         }
         
-        
+        public void OpenSettings()
+        {
+            _uiManager.ShowSettings();
+        }
     }
 }

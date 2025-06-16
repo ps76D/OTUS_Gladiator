@@ -1,9 +1,7 @@
 using System;
 using Sirenix.OdinInspector;
-using UniRx;
-using UnityEngine;
 
-namespace GameEngine.CharacterSystem.StatsSystem
+namespace GameEngine.CharacterSystem
 {
     [Serializable]
     public sealed class CharacterStat

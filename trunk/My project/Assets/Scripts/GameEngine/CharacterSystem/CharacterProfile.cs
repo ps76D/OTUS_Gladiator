@@ -1,26 +1,26 @@
 ﻿using System;
-using GameEngine.CharacterSystem.StatsSystem;
+using GameEngine.ActionsSystem;
+using GameEngine.DaySystem;
 using UnityEngine;
 
 namespace GameEngine.CharacterSystem
 {
     [Serializable]
-    public class CharacterProfile
+    public class CharacterProfile : IDisposable
     {
-        /*[SerializeField] private CharacterInfoData _characterInfoData;*/
+        [SerializeField] private ActionsService _actionsService;
+
         [SerializeField] private CharacterInfo _characterInfo;
         [SerializeField] private CharacterLevel _characterLevel;
 
         [SerializeField] private CharacterStatsInfo _characterStatsInfo;
-
+        public ActionsService ActionsService => _actionsService;
         public CharacterInfo CharacterInfo => _characterInfo;
         public CharacterLevel CharacterLevel => _characterLevel;
         
         public CharacterStatsInfo CharacterStatsInfo => _characterStatsInfo;
 
-        /*public CharacterInfoData CharacterInfoData => _characterInfoData; */
-
-        public CharacterProfile(CharacterInfoSObj characterInfoSObj)
+        public CharacterProfile(CharacterInfoSObj characterInfoSObj, DayService dayService)
         {
             _characterInfo = new CharacterInfo
             {
@@ -32,27 +32,20 @@ namespace GameEngine.CharacterSystem
 
             /*_characterInfo = CreateCharacterInfo(characterInfoData);*/
             _characterInfo._icon = characterInfoSObj.CharacterIcon;
+            _characterInfo._battleImage = characterInfoSObj.CharacterBattleImage;
             _characterLevel = new CharacterLevel();
             
             _characterStatsInfo = CreateCharacterStatsInfo(characterInfoSObj);
+
+            _actionsService = new ActionsService(dayService);
+            _actionsService.BaseMaxActionsCount = characterInfoSObj.MaxActionsCount;
+
+            _actionsService.OnCalcMaxActionsCount += CalcMaxActions;
         }
-
-        /*private CharacterInfo CreateCharacterInfo(CharacterInfoData characterInfoData)
-        {
-            var characterInfo = new CharacterInfo();
-
-            characterInfo.ChangeName(characterInfoData.CharacterName);
-            characterInfo.ChangeDescription(characterInfoData.CharacterDescription);
-            characterInfo.ChangeIcon(characterInfoData.CharacterIcon);
-            
-            return characterInfo;
-        }*/
 
         private CharacterStatsInfo CreateCharacterStatsInfo(CharacterInfoSObj characterInfoData)
         {
             CharacterStatsInfo characterStatsInfo = new ();
-
-            /*characterStatsInfo.SetStats(characterInfoData.StatsDatabase);*/
                 
             int index;
             for (index = 0; index < characterInfoData.StatsDatabase.StartStatsDatabase.Count; index++)
@@ -64,12 +57,32 @@ namespace GameEngine.CharacterSystem
                 };
 
                 stat.ChangeValue(statData._startStatValue);
-                /*stat.ChangeIcon(statData._statInfoData.StatIcon);*/
 
                 characterStatsInfo.AddStat(stat);
             }
 
             return characterStatsInfo;
+        }
+
+        public void CalcMaxActions()
+        {
+            var actionsBoost = _characterStatsInfo.GetStat(StatsNamesConstants.Endurance).Value / 5;
+            
+            Debug.Log("Calc Actions Boost: " + actionsBoost);
+
+            _actionsService.MaxActionsCount.Value = _actionsService.CalcMaxActionsCount(_actionsService.BaseMaxActionsCount, actionsBoost);
+        }
+        
+        public void Dispose()
+        {
+            _actionsService.OnCalcMaxActionsCount -= CalcMaxActions;
+            
+            if (_actionsService != null)
+            {
+                (_actionsService as IDisposable)?.Dispose();
+            }
+            
+            Debug.Log("Dispose ActionsService");
         }
     }
 }

@@ -19,7 +19,7 @@ namespace GameEngine.MessagesSystem
             set;
         }
 
-        Color Color {
+        Color32 Color {
             get;
             set;
         }

@@ -23,3 +23,30 @@ MonoBehaviour:
   _losePopupDelayTime: 4
   _blockChance: 60
   _simpleAttackChance: 70
+  _damageColor:
+    serializedVersion: 2
+    rgba: 4279107839
+  _dodgeColor:
+    serializedVersion: 2
+    rgba: 4290797824
+  _blockColor:
+    serializedVersion: 2
+    rgba: 4286700800
+  _energyColor:
+    serializedVersion: 2
+    rgba: 4293498112
+  _strengthColor:
+    serializedVersion: 2
+    rgba: 4279107839
+  _enduranceColor:
+    serializedVersion: 2
+    rgba: 4286700800
+  _agilityColor:
+    serializedVersion: 2
+    rgba: 4293498112
+  _baseColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  _moralChangeColor:
+    serializedVersion: 2
+    rgba: 4293663420

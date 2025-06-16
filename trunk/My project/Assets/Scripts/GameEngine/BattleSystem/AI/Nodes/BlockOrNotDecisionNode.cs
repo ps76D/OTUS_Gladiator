@@ -19,8 +19,7 @@ namespace GameEngine.AI
             _battleService.OnOpponentDecideToBlock += EnterBlockNode;
             _battleService.OnOpponentDecideToNotBlock += EnterChooseAttackNode;
             
-            //TODO шанс вынести в конфиг
-            _battleService.ThrowDoBlocking(60);
+            _battleService.ThrowDoBlocking(_battleService.BattleConfig.BlockChance);
         }
 
         public void Exit()

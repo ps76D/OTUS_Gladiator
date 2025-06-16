@@ -18,6 +18,8 @@ namespace UI
         [SerializeField] private UnitWidget _unitWidgetPrefab;
         
         [SerializeField] private List<UnitWidget> _enemyWidgets = new();
+        [SerializeField] private UnitWidget _currentlySelectedWidget;
+        
         [SerializeField] private UnitWidget _playerWidget;
         
         [SerializeField] private ScrollRect _matchmakingScrollView;
@@ -29,6 +31,8 @@ namespace UI
         
         private IMatchmakingModel _viewModel;
         public IMatchmakingModel ViewModel => _viewModel;
+
+        
         
         /*public Action OnBattleButtonClicked;*/
 
@@ -95,9 +99,30 @@ namespace UI
                 unitWidget.SetupWidget(new UnitModel(unit, viewModel.MatchMakingService));
                 unitWidget.UnitPortrait.sprite = unit.CharacterIcon;
                 
+                unitWidget.OnSelected += HandleWidgetSelected;
+                
                 _enemyWidgets.Add(unitWidget);
             }
         }
+
+        private void HandleWidgetSelected(UnitWidget selectedWidget)
+        {
+            if (_currentlySelectedWidget == selectedWidget && selectedWidget.IsSelected)
+            {
+                selectedWidget.SetSelected(false);
+                _currentlySelectedWidget = null;
+                return;
+            }
+
+            if (_currentlySelectedWidget != null)
+            {
+                _currentlySelectedWidget.SetSelected(false);
+            }
+            
+            _currentlySelectedWidget = selectedWidget;
+            _currentlySelectedWidget.SetSelected(true);
+        }
+        
 
         private void SetupPlayerWidget(IMatchmakingModel viewModel)
         {

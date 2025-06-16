@@ -34,5 +34,10 @@ namespace UI.Model
         {
             _uiManager.GameBootstrapper.Game.StateMachine.Enter<MainMenuState>();
         }
+
+        public void OpenSettings()
+        {
+            _uiManager.ShowSettings();
+        }
     }
 }

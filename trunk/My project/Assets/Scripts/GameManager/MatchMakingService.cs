@@ -2,6 +2,7 @@ using System;
 using GameEngine;
 using GameEngine.CharacterSystem;
 using GameEngine.CharacterSystem.StatsSystem;
+using GameEngine.DaySystem;
 using PlayerProfileSystem;
 using Sirenix.OdinInspector;
 using UniRx;
@@ -13,6 +14,9 @@ namespace GameManager
     [Serializable]
     public class MatchMakingService : MonoBehaviour
     {
+        [Inject]
+        private DayService _dayService;
+        
         [SerializeField] private CharacterDatabase _enemyDatabase;
         
         [Inject]
@@ -24,6 +28,8 @@ namespace GameManager
         [SerializeField] private CharacterProfile _opponentProfile;
         public CharacterDatabase EnemyDatabase => _enemyDatabase;
         public CharacterProfile OpponentProfile => _opponentProfile;
+        
+        public Action OnUnitSelected;
 
         [Button]
         public void StartMatch()
@@ -34,6 +40,8 @@ namespace GameManager
             
             UnitBattleData playerBattleData = SetUnitBattleData(_playerCharacterProfile.CharacterStatsInfo, playerMoralModifier);
             UnitBattleData opponentBattleData = SetUnitBattleData(_opponentProfile.CharacterStatsInfo,1);
+
+            opponentBattleData.Sprite = _opponentProfile.CharacterInfo._battleImage;
             
             playerBattleData.MoralModifier = playerMoralModifier;
             //TODO можно переделать чтобы в профиле врага была мораль определенного значения. и сделать механику снижения/увеличения его морали перед боем
@@ -48,7 +56,7 @@ namespace GameManager
         [Button]
         public void SelectOpponent(CharacterInfoSObj characterInfo)
         {
-            _opponentProfile = new CharacterProfile(characterInfo);
+            _opponentProfile = new CharacterProfile(characterInfo, _dayService);
         }
 
         private UnitBattleData SetUnitBattleData(CharacterStatsInfo statsInfo, float moralModifier)

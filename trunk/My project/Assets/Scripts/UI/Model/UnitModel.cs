@@ -13,6 +13,9 @@ namespace UI.Model
         private readonly CharacterInfoSObj _characterInfo;
         
         private readonly List<IDisposable> _disposables = new();
+        
+        public MatchMakingService MatchMakingService => _matchMakingService;
+        public CharacterInfoSObj CharacterInfoSObj => _characterInfo;
 
         public UnitModel(CharacterInfoSObj characterInfo, MatchMakingService matchMakingService)
         {

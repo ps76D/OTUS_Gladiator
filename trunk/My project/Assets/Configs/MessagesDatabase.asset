@@ -84,11 +84,11 @@ MonoBehaviour:
     m_FallbackState: 0
     m_WaitForCompletion: 0
     m_LocalVariables: []
-  _enduranceSpent:
+  _energySpent:
     m_TableReference:
       m_TableCollectionName: GUID:bbdf63024d5754a4a91df6631864e794
     m_TableEntryReference:
-      m_KeyId: 327414397219274752
+      m_KeyId: 330166111085420544
       m_Key: 
     m_FallbackState: 0
     m_WaitForCompletion: 0

@@ -16,7 +16,7 @@ namespace GameEngine.MessagesSystem
             set;
         }
         
-        public Color Color {
+        public Color32 Color {
             get;
             set;
         }
@@ -28,7 +28,7 @@ namespace GameEngine.MessagesSystem
 
         private readonly List<IDisposable> _disposables = new();
 
-        public MessageModel(string text, Color color, string count )
+        public MessageModel(string text, Color32 color, string count )
         {
             Text = text;
             Color = color;

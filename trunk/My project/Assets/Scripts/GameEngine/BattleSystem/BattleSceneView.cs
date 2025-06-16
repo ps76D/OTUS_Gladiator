@@ -23,6 +23,9 @@ namespace GameEngine
         [SerializeField] private Animator _playerAnimator;
         [SerializeField] private Animator _opponentAnimator;
         
+        [SerializeField] private SpriteRenderer _playerBattleImage;
+        [SerializeField] private SpriteRenderer _opponentBattleImage;
+        
         private readonly List<Action> _messagesPlayerPull = new ();
         private readonly List<Action> _messagesOpponentPull = new ();
         
@@ -83,18 +86,18 @@ namespace GameEngine
         [Button]
         public void PlayerAttack()
         {
-            StartCoroutine(PlayAnimation(_playerAnimator, "Attack", _battleService.PlayerAnimTime));
+            StartCoroutine(PlayAnimation(_playerAnimator, BattleConst.ATTACK, _battleService.PlayerAnimTime));
         }
         
         [Button]
         public void OpponentAttack()
         {
-            StartCoroutine(PlayAnimation(_opponentAnimator, "Attack", _battleService.PlayerAnimTime));
+            StartCoroutine(PlayAnimation(_opponentAnimator, BattleConst.ATTACK, _battleService.PlayerAnimTime));
         }
         
         private void PlayerBlock()
         {
-            _playerAnimator.Play("Block");
+            _playerAnimator.Play(BattleConst.BLOCK);
             
             MessageModel message = BlockMessage();
             CollectAndShowMessages(message, _messagesPlayerRoot, _messagesPlayerPull);
@@ -103,7 +106,7 @@ namespace GameEngine
         
         private void OpponentBlock()
         {
-            _opponentAnimator.Play("Block");
+            _opponentAnimator.Play(BattleConst.BLOCK);
             
             MessageModel message = BlockMessage();
             CollectAndShowOpponentMessages(message, _messagesOpponentRoot, _messagesOpponentPull);
@@ -112,7 +115,7 @@ namespace GameEngine
         
         private void PlayerDodge()
         {
-            _playerAnimator.Play("Dodge");
+            _playerAnimator.Play(BattleConst.DODGE);
             
             MessageModel message = DodgeMessage();
             CollectAndShowMessages(message, _messagesPlayerRoot, _messagesPlayerPull);
@@ -121,7 +124,7 @@ namespace GameEngine
         
         private void OpponentDodge()
         {
-            _opponentAnimator.Play("Dodge");
+            _opponentAnimator.Play(BattleConst.DODGE);
             
             MessageModel message = DodgeMessage();
             CollectAndShowOpponentMessages(message, _messagesOpponentRoot, _messagesOpponentPull);
@@ -130,7 +133,7 @@ namespace GameEngine
         
         private void PlayerTakeDamage(int damage)
         {
-            _playerAnimator.Play("Hit");
+            _playerAnimator.Play(BattleConst.HIT);
             
             MessageModel message = DamageMessage(damage);
             CollectAndShowMessages(message, _messagesPlayerRoot, _messagesPlayerPull);
@@ -139,7 +142,7 @@ namespace GameEngine
         
         private void OpponentTakeDamage(int damage)
         {
-            _opponentAnimator.Play("Hit");
+            _opponentAnimator.Play(BattleConst.HIT);
             
             MessageModel message = DamageMessage(damage);
             CollectAndShowOpponentMessages(message, _messagesOpponentRoot, _messagesOpponentPull);
@@ -148,48 +151,48 @@ namespace GameEngine
         
         private void PlayerEnergySpent(int value)
         {
-            MessageModel message = EnduranceSpentMessage(value);
+            MessageModel message = EnergySpentMessage(value);
             CollectAndShowMessages(message, _messagesPlayerRoot, _messagesPlayerPull);
             ShowMessages(_messagesPlayerPull);
         }
         private void OpponentEnergySpent(int value)
         {
-            MessageModel message = EnduranceSpentMessage(value);
+            MessageModel message = EnergySpentMessage(value);
             CollectAndShowOpponentMessages(message, _messagesOpponentRoot, _messagesOpponentPull);
             ShowOpponentMessages(_messagesOpponentPull);
         }
 
         private void PlayerDead()
         {
-            StartCoroutine(PlayAnimation(_playerAnimator, "Dying", 2f));
+            StartCoroutine(PlayAnimation(_playerAnimator, BattleConst.DYING, 2f));
         }
 
         private void OpponentDead()
         {
-            StartCoroutine(PlayAnimation(_opponentAnimator, "Dying", 2f));
+            StartCoroutine(PlayAnimation(_opponentAnimator, BattleConst.DYING, 2f));
         }
         
-        private MessageModel EnduranceSpentMessage(int value)
+        private MessageModel EnergySpentMessage(int value)
         {
-            MessageModel messageModel = new (_messagesDatabase.EnduranceSpent, Color.cyan, value.ToString());
+            MessageModel messageModel = new (_messagesDatabase.EnduranceSpent, _battleService.BattleConfig.EnergyColor, value.ToString());
             return messageModel;
         }
         
         private MessageModel DamageMessage(int value)
         {
-            MessageModel messageModel = new (_messagesDatabase.Damage, Color.red, value.ToString());
+            MessageModel messageModel = new (_messagesDatabase.Damage, _battleService.BattleConfig.DamageColor, value.ToString());
             return messageModel;
         }
         
         private MessageModel DodgeMessage()
         {
-            MessageModel messageModel = new (_messagesDatabase.Dodge, Color.blue, "");
+            MessageModel messageModel = new (_messagesDatabase.Dodge, _battleService.BattleConfig.DodgeColor, "");
             return messageModel;
         }
         
         private MessageModel BlockMessage()
         {
-            MessageModel messageModel = new (_messagesDatabase.Block, Color.green, "");
+            MessageModel messageModel = new (_messagesDatabase.Block, _battleService.BattleConfig.BlockColor, "");
             return messageModel;
         }
         
@@ -269,8 +272,10 @@ namespace GameEngine
 
         private void StartBattle()
         {
-            _playerAnimator.Play("Stand");
-            _opponentAnimator.Play("Stand");
+            _opponentBattleImage.sprite = _battleService.Opponent.Sprite;
+            
+            _playerAnimator.Play(BattleConst.STAND);
+            _opponentAnimator.Play(BattleConst.STAND);
         }
     }
 }

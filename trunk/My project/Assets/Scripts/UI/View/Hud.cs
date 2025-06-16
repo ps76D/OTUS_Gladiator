@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using GameEngine.CharacterSystem;
 using GameEngine.CharacterSystem.StatsSystem;
 using TMPro;
 using UI.Model;
@@ -162,7 +163,7 @@ namespace UI
         private void TrainStat(IHudModel viewModel, string statName)
         {
             viewModel.IncreaseStat(statName);
-            _actionsPanelView.UpdateActionsPanel(_uiManager.ProfileService.PlayerProfile.ActionsService.AvailableActions.Value);
+            _actionsPanelView.UpdateActionsPanel(_uiManager.ProfileService.PlayerProfile.CharacterService.CurrentCharacterProfile.ActionsService.AvailableActions.Value);
         }
         
         private void TrainStatStrength()

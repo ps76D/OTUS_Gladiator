@@ -19,7 +19,11 @@ namespace SaveSystem
                 CurrentLevel = service.CurrentCharacterProfile.CharacterLevel.CurrentLevel,
                 CurrentExperience = service.CurrentCharacterProfile.CharacterLevel.CurrentExperience.Value,
 
-                Stats = service.CurrentCharacterProfile.CharacterStatsInfo.GetStatTransferData()
+                Stats = service.CurrentCharacterProfile.CharacterStatsInfo.GetStatTransferData(),
+                
+                BaseMaxActionsCount = service.CurrentCharacterProfile.ActionsService.BaseMaxActionsCount,
+                MaxActionsCount = service.CurrentCharacterProfile.ActionsService.MaxActionsCount.Value,
+                AvailableActions = service.CurrentCharacterProfile.ActionsService.AvailableActions.Value,
             };
         }
 

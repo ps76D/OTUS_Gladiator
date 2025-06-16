@@ -339,8 +339,8 @@ MonoBehaviour:
     m_Key: MESSAGE_BLOCK
     m_Metadata:
       m_Items: []
-  - m_Id: 327414397219274752
-    m_Key: MESSAGE_ENDURANCESPENT
+  - m_Id: 330166111085420544
+    m_Key: MESSAGE_ENERGYSPENT
     m_Metadata:
       m_Items: []
   m_Metadata:

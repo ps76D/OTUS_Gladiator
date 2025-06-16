@@ -23,6 +23,9 @@ namespace GameManager
         [Inject]
         [SerializeField] private UIManager _uiManager;
         
+        [Inject]
+        [SerializeField] private BattleConfig _battleConfig;
+        
         [SerializeField] private MessagesDatabase _messagesDatabase;
         
         [SerializeField] private Transform _messagesRoot;
@@ -124,32 +127,32 @@ namespace GameManager
         
         private MessageModel LevelUpMessage()
         {
-            var messageModel = new MessageModel(_messagesDatabase.LevelUp, Color.white, "" );
+            var messageModel = new MessageModel(_messagesDatabase.LevelUp, _battleConfig.BaseColor, "" );
             return messageModel;
         }
         
         private MessageModel IncreaseStrengthMessage()
         {
-            var messageModel = new MessageModel(_messagesDatabase.StrengthIncrease, Color.red, 1.ToString() );
+            var messageModel = new MessageModel(_messagesDatabase.StrengthIncrease, _battleConfig.StrengthColor, 1.ToString() );
             return messageModel;
         }
         
         private MessageModel IncreaseEnduranceMessage()
         {
-            var messageModel = new MessageModel(_messagesDatabase.EnduranceIncrease, Color.green, 1.ToString() );
+            var messageModel = new MessageModel(_messagesDatabase.EnduranceIncrease, _battleConfig.EnduranceColor, 1.ToString() );
             return messageModel;
         }
         
         private MessageModel IncreaseAgilityMessage()
         {
-            var messageModel = new MessageModel(_messagesDatabase.AgilityIncrease, Color.blue, 1.ToString() );
+            var messageModel = new MessageModel(_messagesDatabase.AgilityIncrease, _battleConfig.AgilityColor, 1.ToString() );
             return messageModel;
         }
         
         private MessageModel MoralChangedMessage()
         {
             var newMoralState = _playerProfile.MoralService.GetMoralLevel().MoralLevelText.GetLocalizedString();
-            var messageModel = new MessageModel(_messagesDatabase.MoraleChanged, Color.cyan, newMoralState);
+            var messageModel = new MessageModel(_messagesDatabase.MoraleChanged, _battleConfig.MoralChangeColor, newMoralState);
             return messageModel;
         }
     }

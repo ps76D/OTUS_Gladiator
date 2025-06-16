@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Localization;
+using UnityEngine.Serialization;
 
 namespace GameEngine.MessagesSystem
 {
@@ -14,7 +15,7 @@ namespace GameEngine.MessagesSystem
         [SerializeField] private LocalizedString _damage;
         [SerializeField] private LocalizedString _dodge;
         [SerializeField] private LocalizedString _block;
-        [SerializeField] private LocalizedString _enduranceSpent;
+        [SerializeField] private LocalizedString _energySpent;
         public string MoraleChanged => _moraleChanged.GetLocalizedString();
         public string StrengthIncrease => _strengthIncrease.GetLocalizedString();
         public string EnduranceIncrease => _enduranceIncrease.GetLocalizedString();
@@ -23,7 +24,7 @@ namespace GameEngine.MessagesSystem
         public string Damage => _damage.GetLocalizedString();
         public string Dodge => _dodge.GetLocalizedString();
         public string Block => _block.GetLocalizedString();
-        public string EnduranceSpent => _enduranceSpent.GetLocalizedString();
+        public string EnduranceSpent => _energySpent.GetLocalizedString();
         
     }
 }

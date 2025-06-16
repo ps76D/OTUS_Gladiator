@@ -6,5 +6,6 @@
         void SaveGame();
         void BackToGame();
         void ToMainMenu();
+        void OpenSettings();
     }
 }

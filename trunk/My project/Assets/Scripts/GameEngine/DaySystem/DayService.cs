@@ -1,16 +1,13 @@
 ﻿using System;
 using Sirenix.OdinInspector;
-using Zenject;
 
-namespace GameEngine
+namespace GameEngine.DaySystem
 {
     [Serializable]
     public sealed class DayService
     {
-        [Inject]
-        private ActionsService _actionsService;
-        
-        public event Action<int> OnDayChanged;
+
+        public Action<int> OnDayChanged;
         
         public int Day => _day;
 
@@ -29,7 +26,7 @@ namespace GameEngine
         {
             _day++;
             OnDayChanged?.Invoke(_day);
-            _actionsService.RecoverAllActions();
+            /*_actionsService.RecoverAllActions();*/
         }
     }
 }

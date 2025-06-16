@@ -229,6 +229,7 @@ namespace GameEngine
         [Button]
         public void OpponentAttack()
         {
+            if (_isPlayerDead) return;
             if (CheckIsPlayerTurn()) return;
             
             _playerAnimTime = _battleConfig.AttackAnimTime;
@@ -289,6 +290,7 @@ namespace GameEngine
         [Button]
         public void OpponentBlocks()
         {
+            if (_isPlayerDead) return;
             if (CheckIsPlayerTurn()) return;
             
             _playerAnimTime = _battleConfig.BlockAnimTime;
@@ -365,6 +367,7 @@ namespace GameEngine
         [Button]
         public void OpponentPowerfulAttack()
         {
+            if (_isPlayerDead) return;
             if (CheckIsPlayerTurn()) return;
             
             Debug.Log("<color=magenta>Opponent PowerfulAttack</color>");
@@ -462,6 +465,7 @@ namespace GameEngine
         [Button]
         public void OpponentPreparePowerfulAttack()
         {
+            if (_isPlayerDead) return;
             if (CheckIsPlayerTurn()) return;
             
             _isOpponentPowerfulAttackPrepared = true;

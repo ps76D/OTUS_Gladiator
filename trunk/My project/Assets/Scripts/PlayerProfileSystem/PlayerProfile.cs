@@ -1,17 +1,19 @@
 ﻿using System;
 using GameEngine;
+using GameEngine.ActionsSystem;
 using GameEngine.CharacterSystem;
+using GameEngine.DaySystem;
 using UnityEngine;
 
 namespace PlayerProfileSystem
 {
     [Serializable]
-    public class PlayerProfile
+    public class PlayerProfile : IDisposable
     {
         /*[Inject]*/
         [SerializeField] private MoneyStorage _moneyStorage;
         [SerializeField] private DayService _dayService;
-        [SerializeField] private ActionsService _actionsService;
+
         
         [SerializeField] private CharacterService _characterService;
         [SerializeField] private MoralService _moralService;
@@ -34,7 +36,7 @@ namespace PlayerProfileSystem
         private IEnumerable<Unit> _units;*/
         public MoneyStorage MoneyStorage => _moneyStorage;
         public DayService DayService => _dayService;
-        public ActionsService ActionsService => _actionsService;
+
         public CharacterService CharacterService => _characterService;
         public MoralService MoralService => _moralService;
         
@@ -49,12 +51,11 @@ namespace PlayerProfileSystem
         }*/
 
 
-        public PlayerProfile(MoneyStorage moneyStorage, DayService dayService, ActionsService actionsService, CharacterService characterService,
+        public PlayerProfile(MoneyStorage moneyStorage, DayService dayService,  CharacterService characterService,
             MoralService moralService)
         {
             _moneyStorage = moneyStorage;
             _dayService = dayService;
-            _actionsService = actionsService;
             _characterService = characterService;
             _moralService = moralService;
         }
@@ -74,5 +75,14 @@ namespace PlayerProfileSystem
             /*_resourceService.SetResources(_resources);#1#
             /*_unitManager.SetupUnits(_units);#1#
         }*/
+        public void Dispose()
+        {
+            if (CharacterService != null)
+            {
+                (CharacterService.CurrentCharacterProfile as IDisposable)?.Dispose();
+            }
+            
+            Debug.Log("Dispose Character Profile");
+        }
     }
 }

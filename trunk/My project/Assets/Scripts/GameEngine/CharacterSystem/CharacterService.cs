@@ -1,4 +1,5 @@
 using System;
+using GameEngine.DaySystem;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
@@ -8,6 +9,9 @@ namespace GameEngine.CharacterSystem
     [Serializable]
     public sealed class CharacterService
     {
+        [Inject]
+        private DayService _dayService;
+        
         [Inject]
         private CharacterDatabase _characterDatabase;
         [Inject]
@@ -35,11 +39,15 @@ namespace GameEngine.CharacterSystem
             
             _currentCharacterInfoSObj = _characterDatabase.CharacterInfoDatabaseSObjs.
                 Find(c => c.CharacterGuid == _currentCharacterProfile.CharacterInfo._guid);
+            
             _currentCharacterProfile.CharacterInfo._icon = _currentCharacterInfoSObj.CharacterIcon;
+            _currentCharacterProfile.CharacterInfo._battleImage = _currentCharacterInfoSObj.CharacterBattleImage;
             
             _currentCharacterProfile.CharacterStatsInfo.SetStats(characterData);
-            
-            _currentCharacterProfile.CharacterInfo._icon = _currentCharacterInfoSObj.CharacterIcon;
+
+            _currentCharacterProfile.ActionsService.BaseMaxActionsCount = characterData.BaseMaxActionsCount;
+            _currentCharacterProfile.ActionsService.MaxActionsCount.Value = characterData.MaxActionsCount;
+            _currentCharacterProfile.ActionsService.AvailableActions.Value = characterData.AvailableActions;
             
             OnCharacterDataChanged?.Invoke(_currentCharacterProfile);
         }
@@ -47,7 +55,7 @@ namespace GameEngine.CharacterSystem
         [Button]
         public void CreateCharacter(CharacterInfoSObj characterInfo)
         {
-            _currentCharacterProfile = new CharacterProfile(characterInfo);
+            _currentCharacterProfile = new CharacterProfile(characterInfo, _dayService);
             
             OnCharacterDataChanged?.Invoke(_currentCharacterProfile);
         }

@@ -40,6 +40,7 @@ namespace UI.Infrastructure
         [SerializeField] private BattleView _battleView;
         [SerializeField] private WinPopupView _winPopupView;
         [SerializeField] private LosePopupView _losePopupView;
+        [SerializeField] private SettingsView _settingsView;
         
         public Hud Hud => _hud;
         public MatchmakingView MatchmakingView => _matchmakingView;
@@ -49,6 +50,7 @@ namespace UI.Infrastructure
         public MatchMakingService MatchMakingService => _matchMakingService;
         public WinPopupView WinPopupView => _winPopupView;
         public LosePopupView LosePopupView => _losePopupView;
+        public SettingsView SettingsView => _settingsView;
 
         public Action OnBackToTraining;
 
@@ -98,6 +100,18 @@ namespace UI.Infrastructure
             EventSystem.current.SetSelectedGameObject(null);
             screen.gameObject.SetActive(false);
         }
+        
+        public void ShowSettings()
+        {
+            var viewModel = new SettingsModel(this);
+            _settingsView.Show(viewModel);
+        }
+        
+        public void CloseSettings()
+        {
+            _settingsView.Close();
+        }
+        
 
         public void ShowHud()
         {

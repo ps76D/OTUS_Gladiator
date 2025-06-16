@@ -27,6 +27,7 @@ namespace UI
             _backButton.onClick.AddListener(BackButtonClicked);
             _fadeCloseButton.onClick.AddListener(BackButtonClicked);
             _toTitleButton.onClick.AddListener(ToTitleButtonClicked);
+            _settingsButton.onClick.AddListener(SettingsButtonClicked);
         }
 
         public void Hide()
@@ -38,6 +39,12 @@ namespace UI
             _backButton.onClick.RemoveListener(BackButtonClicked);
             _fadeCloseButton.onClick.RemoveListener(BackButtonClicked);
             _toTitleButton.onClick.RemoveListener(ToTitleButtonClicked);
+            _settingsButton.onClick.RemoveListener(SettingsButtonClicked);
+        }
+
+        private void SettingsButtonClicked()
+        {
+            _viewModel.OpenSettings();
         }
 
         private void LoadGameButtonClicked()

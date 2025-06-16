@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using GameEngine.CharacterSystem.StatsSystem;
 using Sirenix.OdinInspector;
 
-namespace GameEngine.CharacterSystem.StatsSystem
+namespace GameEngine.CharacterSystem
 {
     [Serializable]
     public sealed class CharacterStatsInfo

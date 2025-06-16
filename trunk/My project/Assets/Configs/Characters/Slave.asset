@@ -17,4 +17,6 @@ MonoBehaviour:
   _characterDescription: "\u0418\u0441\u0442\u043E\u0449\u0435\u043D\u043D\u044B\u0439
     \u0440\u0430\u0431"
   _characterIcon: {fileID: 21300000, guid: f2657dc46b4f04c43a5d9220ad7e8210, type: 3}
+  _characterBattleImage: {fileID: 21300000, guid: f2657dc46b4f04c43a5d9220ad7e8210, type: 3}
   _statsDatabase: {fileID: 11400000, guid: 549018d6bccf97d48aaf82785557ac77, type: 2}
+  _maxActionsCount: 3

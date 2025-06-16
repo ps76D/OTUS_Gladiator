@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using AesEncrypt;
 using GameEngine;
+using GameEngine.ActionsSystem;
 using GameEngine.AI;
 using GameEngine.CharacterSystem;
+using GameEngine.DaySystem;
 using GameEngine.MessagesSystem;
 using GameManager;
 using Infrastructure.Listeners;
@@ -40,13 +42,15 @@ namespace Infrastructure.DI
             BindObjectAsSingleNonLazy(gameBootstrapper);
             BindObjectAsSingleNonLazy(uiManager);
 
-            Container.Bind<ActionsService>().FromNew().AsSingle().NonLazy();
-            Container.Bind<ISaveLoader>().To<ActionsSaveLoader>().AsCached().NonLazy();
-            Container.Bind<MoralConfig>().FromInstance(_moralConfig).AsSingle().NonLazy();
+            Container.Bind<PlayerProfileDefault>().FromInstance(_playerProfileDefault).AsSingle().NonLazy();
             
+            /*Container.Bind<ActionsService>().FromNew().AsSingle().NonLazy();*/
+            /*Container.Bind<ISaveLoader>().To<ActionsSaveLoader>().AsCached().NonLazy();*/
+            Container.Bind<MoralConfig>().FromInstance(_moralConfig).AsSingle().NonLazy();
+
             Container.Bind<MoralService>().FromNew().AsSingle().NonLazy();
             Container.Bind<ISaveLoader>().To<MoralSaveLoader>().AsCached().NonLazy();
-            
+
             Container.Bind<MoneyStorage>().FromNew().AsSingle().NonLazy();
             Container.Bind<ISaveLoader>().To<MoneySaveLoader>().AsCached().NonLazy();
 
@@ -55,14 +59,13 @@ namespace Infrastructure.DI
 
             Container.Bind<CharacterInfoSObj>().FromInstance(_characterInfoDataDefault).AsSingle().NonLazy();
             Container.Bind<CharacterDatabase>().FromInstance(_characterDatabase).AsSingle().NonLazy();
-            
+
             Container.Bind<MessagesDatabase>().FromInstance(_messagesDatabase).AsSingle().NonLazy();
             /*Container.Bind<CharacterDatabase>().FromInstance(_enemyDatabase).AsSingle().NonLazy();*/
 
             Container.Bind<CharacterService>().ToSelf().AsSingle().NonLazy();
             Container.Bind<ISaveLoader>().To<CharacterSaveLoader>().AsCached().NonLazy();
-            
-            Container.Bind<PlayerProfileDefault>().FromInstance(_playerProfileDefault).AsSingle().NonLazy();
+
 
             Container.Bind<PlayerProfile>().ToSelf().AsSingle().NonLazy();
 

@@ -27,7 +27,19 @@ namespace GameEngine
         [InfoBox("Chance in percent, for example 60:")]
         [SerializeField] private int _blockChance = 60;
         [SerializeField] private int _simpleAttackChance = 70;
-
+        
+        [Header("Messages Color")]
+        [SerializeField] private Color32 _damageColor;
+        [SerializeField] private Color32 _dodgeColor;
+        [SerializeField] private Color32 _blockColor;
+        [SerializeField] private Color32 _energyColor;
+        [SerializeField] private Color32 _strengthColor;
+        [SerializeField] private Color32 _enduranceColor;
+        [SerializeField] private Color32 _agilityColor;
+        [SerializeField] private Color32 _baseColor;
+        [SerializeField] private Color32 _moralChangeColor;
+        
+        
         public float AttackAnimTime => _attackAnimTime;
         public float PowerfulAttackAnimTime => _powerfulAttackAnimTime;
         public float DyingAnimTime => _dyingAnimTime;
@@ -41,6 +53,16 @@ namespace GameEngine
         
         public int BlockChance => _blockChance;
         public int SimpleAttackChance => _simpleAttackChance;
+        public Color32 DamageColor => _damageColor;
+        public Color32 DodgeColor => _dodgeColor;
+        public Color32 BlockColor => _blockColor;
+        public Color32 EnergyColor => _energyColor;
+        public Color32 StrengthColor => _strengthColor;
+        public Color32 EnduranceColor => _enduranceColor;
+        public Color32 AgilityColor => _agilityColor;
+        public Color32 BaseColor => _baseColor;
+        public Color32 MoralChangeColor => _moralChangeColor;
+        
 
 
     }

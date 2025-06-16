@@ -14,5 +14,8 @@ namespace GameEngine.CharacterSystem
         public int CurrentLevel;
         public int CurrentExperience;
         public IEnumerable<StatTransferData> Stats;
+        public int AvailableActions;
+        public int MaxActionsCount;
+        public int BaseMaxActionsCount;
     }
 }

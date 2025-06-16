@@ -45,7 +45,7 @@ namespace UI
         
         private void SettingsGameButton()
         {
-
+            _viewModel.OpenSettings();
         }
 
     }

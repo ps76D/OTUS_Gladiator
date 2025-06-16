@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using GameEngine;
+using GameEngine.ActionsSystem;
 using GameEngine.CharacterSystem;
 using GameEngine.CharacterSystem.StatsSystem;
+using GameEngine.DaySystem;
 using Infrastructure;
 using UI.Infrastructure;
 using UniRx;
@@ -56,7 +58,7 @@ namespace UI.Model
             
             _dayService = uiManager.ProfileService.PlayerProfile.DayService;
             _moneyStorage = uiManager.ProfileService.PlayerProfile.MoneyStorage;
-            ActionsService actionsService = uiManager.ProfileService.PlayerProfile.ActionsService;
+            ActionsService actionsService = uiManager.ProfileService.PlayerProfile.CharacterService.CurrentCharacterProfile.ActionsService;
             _moralService = uiManager.ProfileService.PlayerProfile.MoralService;
             CharacterService characterService = uiManager.ProfileService.PlayerProfile.CharacterService;
             _characterService = characterService;
@@ -172,7 +174,7 @@ namespace UI.Model
 
         public void SpendAction(int action)
         {
-            _uiManager.ProfileService.PlayerProfile.ActionsService.SpendAction(action);
+            _uiManager.ProfileService.PlayerProfile.CharacterService.CurrentCharacterProfile.ActionsService.SpendAction(action);
         }
         
         public void Dispose()

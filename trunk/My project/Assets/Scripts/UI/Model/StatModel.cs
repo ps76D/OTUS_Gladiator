@@ -1,4 +1,5 @@
-﻿using GameEngine.CharacterSystem.StatsSystem;
+﻿using GameEngine.CharacterSystem;
+using GameEngine.CharacterSystem.StatsSystem;
 using UniRx;
 using UnityEngine;
 

@@ -11,10 +11,12 @@ namespace GameEngine.CharacterSystem
         public string _name;
         public string _description;
         public Sprite _icon;
+        public Sprite _battleImage;
         
         public event Action<string> OnNameChanged;
         public event Action<string> OnDescriptionChanged;
         public event Action<Sprite> OnIconChanged;
+        public event Action<Sprite> OnBattleImageChanged;
         
         [Button]
         public void ChangeName(string name)
@@ -35,6 +37,13 @@ namespace GameEngine.CharacterSystem
         {
             _icon = icon;
             OnIconChanged?.Invoke(icon);
+        }
+        
+        [Button]
+        public void ChangeBattleImage(Sprite icon)
+        {
+            _battleImage = icon;
+            OnBattleImageChanged?.Invoke(icon);
         }
     }
 }

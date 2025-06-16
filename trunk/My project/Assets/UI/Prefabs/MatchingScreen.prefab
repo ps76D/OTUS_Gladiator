@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4823483665913225646}
   - component: {fileID: 5639672158589658359}
   m_Layer: 5
-  m_Name: Mask (1)
+  m_Name: ScrollViewBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,10 +33,10 @@ RectTransform:
   m_Father: {fileID: 5178272869377177697}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 191.5, y: -8.000946}
-  m_SizeDelta: {x: -1217, y: -208.1999}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -8.000946}
+  m_SizeDelta: {x: 540, y: 671.8001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4823483665913225646
 CanvasRenderer:
@@ -59,14 +59,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -243,8 +243,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -381,8 +381,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 200, y: 84.999}
-  m_SizeDelta: {x: 220, y: 485.8}
+  m_AnchoredPosition: {x: 0, y: 85}
+  m_SizeDelta: {x: 540, y: 486}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5178272868607734429
 CanvasRenderer:
@@ -754,7 +754,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 1400}
+  m_SizeDelta: {x: 520, y: 1400}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &5178272869161623849
 CanvasRenderer:
@@ -1064,7 +1064,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 19.999992}
-  m_SizeDelta: {x: -500, y: -199.99998}
+  m_SizeDelta: {x: -800, y: -199.99998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5178272869377177699
 CanvasRenderer:
@@ -1087,14 +1087,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 16e6958f98831884ca3bcc53ecf21910, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1334,8 +1334,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5178272869891442779}
   m_HandleRect: {fileID: 5178272869891442776}
   m_Direction: 2
-  m_Value: -0.0000000585372
-  m_Size: 0.48235765
+  m_Value: -0.000000058559667
+  m_Size: 0.48255625
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1408,7 +1408,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: aca326753ad8c3543b435caaa617df14, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1521,6 +1521,7 @@ MonoBehaviour:
   _fadeCloseButton: {fileID: 6110889403965668655}
   _unitWidgetPrefab: {fileID: 529029663681774066, guid: c076d9575a69b044c91b25d66a288193, type: 3}
   _enemyWidgets: []
+  _currentlySelectedWidget: {fileID: 0}
   _playerWidget: {fileID: 1214206996038145834}
   _matchmakingScrollView: {fileID: 5178272868607734427}
   _scrollViewRoot: {fileID: 5178272869161623844}
@@ -2579,7 +2580,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 671, y: 969}
+  m_AnchoredPosition: {x: 520, y: 960}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6489724992559123675
@@ -2610,7 +2611,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: aca326753ad8c3543b435caaa617df14, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2883,6 +2884,10 @@ PrefabInstance:
     - target: {fileID: 3928803385802924743, guid: c076d9575a69b044c91b25d66a288193, type: 3}
       propertyPath: m_Name
       value: PlayerWidget
+      objectReference: {fileID: 0}
+    - target: {fileID: 3928803385802924743, guid: c076d9575a69b044c91b25d66a288193, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c076d9575a69b044c91b25d66a288193, type: 3}

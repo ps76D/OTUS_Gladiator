@@ -1,6 +1,6 @@
 using System;
 
-namespace GameEngine
+namespace GameEngine.ActionsSystem
 {
     [Serializable]
     public class ActionData

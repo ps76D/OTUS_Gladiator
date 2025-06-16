@@ -334,16 +334,16 @@ MonoBehaviour:
     m_Localized: Block
     m_Metadata:
       m_Items: []
-  - m_Id: 327414397219274752
-    m_Localized: 'Endurance - '
-    m_Metadata:
-      m_Items: []
   - m_Id: 327480106913792000
     m_Localized: Next
     m_Metadata:
       m_Items: []
   - m_Id: 329932254704721920
     m_Localized: "Prepare \nPowerful Attack"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 330166111085420544
+    m_Localized: 'Energy - '
     m_Metadata:
       m_Items: []
   references:

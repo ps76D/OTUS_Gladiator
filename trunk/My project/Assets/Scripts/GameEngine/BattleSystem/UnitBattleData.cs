@@ -1,12 +1,16 @@
 ﻿using System;
 using Sirenix.OdinInspector;
 using UniRx;
+using UnityEngine;
 
 namespace GameEngine
 {
     [Serializable]
     public class UnitBattleData
     {
+        [ShowInInspector, ReadOnly]
+        private Sprite _sprite;
+        
         [ShowInInspector, ReadOnly]
         private ReactiveProperty<int> _health  = new ();
         [ShowInInspector, ReadOnly]
@@ -31,6 +35,10 @@ namespace GameEngine
         private float _dodgeChanceValue;
         [ShowInInspector, ReadOnly]
         private float _moralModifier;
+        public Sprite Sprite {
+            get => _sprite;
+            set => _sprite = value;
+        }
         public ReactiveProperty<int>  Health {
             get => _health;
             set => _health = value;

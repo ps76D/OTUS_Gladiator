@@ -10,11 +10,11 @@ namespace PlayerProfileSystem
 
         [SerializeField] private int _money;
         
-        [SerializeField] private int _maxActionsCount;
+        /*[SerializeField] private int _maxActionsCount;*/
         
         public string ProfileName => _profileName;
         public int ProfileDays => _profileDays;
-        public int MaxActionsCount => _maxActionsCount;
+        /*public int MaxActionsCount => _maxActionsCount;*/
         
         public int Money => _money;
 
