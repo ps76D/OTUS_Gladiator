@@ -28,6 +28,8 @@ namespace UI
             _fadeCloseButton.onClick.AddListener(BackButtonClicked);
             _toTitleButton.onClick.AddListener(ToTitleButtonClicked);
             _settingsButton.onClick.AddListener(SettingsButtonClicked);
+
+            _loadButton.gameObject.SetActive(PlayerPrefs.HasKey("GameStateKey"));
         }
 
         public void Hide()

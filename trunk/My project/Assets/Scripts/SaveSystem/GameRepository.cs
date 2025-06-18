@@ -64,12 +64,12 @@ namespace SaveSystem
                 Debug.Log(message: "Save Failed"+ex);
             }
             
-            /*PlayerPrefs.SetString(GAME_STATE_KEY, encryptedJson);*/
+            PlayerPrefs.SetString(GAME_STATE_KEY, encryptedJson);
         }
 
         public void LoadState()
         {
-            /*if (PlayerPrefs.HasKey(GAME_STATE_KEY))
+            if (PlayerPrefs.HasKey(GAME_STATE_KEY))
             {
                 var encryptedJson = PlayerPrefs.GetString(GAME_STATE_KEY);
                 
@@ -83,12 +83,12 @@ namespace SaveSystem
             else
             {
                 Debug.Log("No Game State Loaded");
-            }*/
+            }
             
             
             
             
-            var savePath = Path.Combine(Application.persistentDataPath, "save.json");
+            /*var savePath = Path.Combine(Application.persistentDataPath, "save.json");
             
             if (!File.Exists(savePath))
             {
@@ -110,7 +110,7 @@ namespace SaveSystem
             catch (Exception)
             {
                 Debug.Log(message: "Save Data Not Read");
-            }
+            }*/
         }
     }
 }

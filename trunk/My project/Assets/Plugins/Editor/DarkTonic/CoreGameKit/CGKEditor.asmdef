@@ -1,0 +1,11 @@
+{
+    "name": "CGKEditor",
+    "references": [
+        "RIScripts",
+        "CGKScripts",
+        "MAEditor",
+        "MAScripts"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": []
+}

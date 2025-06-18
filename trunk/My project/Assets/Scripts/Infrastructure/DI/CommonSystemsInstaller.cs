@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using AesEncrypt;
+using DarkTonic.MasterAudio;
 using GameEngine;
 using GameEngine.ActionsSystem;
 using GameEngine.AI;
@@ -24,6 +25,8 @@ namespace Infrastructure.DI
         /*[SerializeField] private MoneyStorage _moneyStorage;*/
         /*[SerializeField] private DayService _dayService;*/
         
+        [SerializeField] private MasterAudio _masterAudio;
+        [SerializeField] private SoundSaveLoader _soundSaveLoader;
         [SerializeField] private PlayerProfileDefault _playerProfileDefault;
         [SerializeField] private CharacterInfoSObj _characterInfoDataDefault;
         [SerializeField] private CharacterDatabase _characterDatabase;
@@ -36,11 +39,15 @@ namespace Infrastructure.DI
         
         public override void InstallBindings()
         {
+            Container.Bind<MasterAudio>().FromInstance(_masterAudio).AsSingle().NonLazy();
+            Container.Bind<SoundSaveLoader>().FromInstance(_soundSaveLoader).AsSingle().NonLazy();
+            
             GameBootstrapper gameBootstrapper = FindObjectOfType<GameBootstrapper>();
             UIManager uiManager = FindObjectOfType<UIManager>();
 
             BindObjectAsSingleNonLazy(gameBootstrapper);
             BindObjectAsSingleNonLazy(uiManager);
+
 
             Container.Bind<PlayerProfileDefault>().FromInstance(_playerProfileDefault).AsSingle().NonLazy();
             

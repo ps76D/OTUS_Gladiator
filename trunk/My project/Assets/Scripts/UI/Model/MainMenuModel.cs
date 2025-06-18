@@ -1,15 +1,21 @@
-﻿using Infrastructure;
+﻿using DarkTonic.MasterAudio;
+using Infrastructure;
 using UI.Infrastructure;
+using Zenject;
 
 namespace UI.Model
 {
     public class MainMenuModel : IMainMenuModel
     {
+
+        
         private readonly UIManager _uiManager;
+        
 
         public MainMenuModel(UIManager uiManager)
         {
             _uiManager = uiManager;
+            uiManager.MainTheme.StartPlaylist("MainTheme");
         }
 
         public void StartGame()

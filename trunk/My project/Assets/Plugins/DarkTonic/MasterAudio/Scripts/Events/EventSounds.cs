@@ -1692,6 +1692,12 @@ namespace DarkTonic.MasterAudio {
                     break;
                 case MasterAudio.EventSoundFunctionType.GlobalControl:
                     switch (aEvent.currentGlobalCommand) {
+                        case MasterAudio.GlobalCommand.PauseAudioListener:
+                            AudioListener.pause = true;
+                            break;
+                        case MasterAudio.GlobalCommand.UnpauseAudioListener:
+                            AudioListener.pause = false;
+                            break;
                         case MasterAudio.GlobalCommand.SetMasterMixerVolume:
                             var targetVol = useSliderValue ? grp.sliderValue : aEvent.volume;
                             MasterAudio.MasterVolumeLevel = targetVol;
@@ -1730,7 +1736,10 @@ namespace DarkTonic.MasterAudio {
                     switch (aEvent.currentMixerCommand) {
                         case MasterAudio.UnityMixerCommand.TransitionToSnapshot:
                             var snapshot = aEvent.snapshotToTransitionTo;
-                            if (snapshot != null) {
+                            if (snapshot != null)
+                            {
+                                // if we add more mixer functionality, move this next line somewhere DRY.
+                                snapshot.audioMixer.updateMode = MasterAudio.Instance.mixerUpdateMode;
                                 snapshot.audioMixer.TransitionToSnapshots(
                                     new[] { snapshot },
                                     new[] { 1f },
@@ -1761,7 +1770,7 @@ namespace DarkTonic.MasterAudio {
                             }
 
                             if (snapshots.Count > 0) {
-                                Debug.Log("trans");
+                                theMixer.updateMode = MasterAudio.Instance.mixerUpdateMode;
                                 // ReSharper disable once PossibleNullReferenceException
                                 theMixer.TransitionToSnapshots(snapshots.ToArray(), weights.ToArray(), aEvent.snapshotTransitionTime);
                             }

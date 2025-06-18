@@ -85,8 +85,7 @@ namespace DarkTonic.MasterAudio.Examples
             var spawnPos = _trans.position;
             spawnPos.y += 1;
 
-            MasterAudio.PlaySound3DAtTransform("Arrow", _trans);
-            //Instantiate(ProjectilePrefab, spawnPos, ProjectilePrefab.transform.rotation);
+            Instantiate(ProjectilePrefab, spawnPos, ProjectilePrefab.transform.rotation);
         }
     }
 }

@@ -41,6 +41,8 @@ namespace UI.Model
             _disposables.Add(_battleService.Player.Energy.Subscribe(UpdatePlayerEnergy));
             _disposables.Add(_battleService.Opponent.Health.Subscribe(UpdateOpponentHealth));
             _disposables.Add(_battleService.Opponent.Energy.Subscribe(UpdateOpponentEnergy));
+            
+            uiManager.MainTheme.StartPlaylist("BattleTheme");
         }
 
         public int GetPlayerFullHealth()
@@ -155,6 +157,8 @@ namespace UI.Model
             
             foreach (var disposable in _disposables)
                 disposable.Dispose();
+            
+            _uiManager.MainTheme.StartPlaylist("MainTheme");
         }
     }
 }

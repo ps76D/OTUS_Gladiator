@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Audio;
 using Debug = UnityEngine.Debug;
+using Random = UnityEngine.Random;
 
 #if UNITY_2019_3_OR_NEWER
 using UnityEngine.Video;
@@ -55,6 +56,9 @@ namespace DarkTonic.MasterAudio {
         public static readonly List<string> ExemptChildNames = new List<string> { AmbientUtil.FollowerHolderName };
         public static readonly HashSet<int> ErrorNumbersLogged = new HashSet<int>();
         public static List<string> ImportanceChoices = new List<string> { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
+#if ADDRESSABLES_ENABLED
+        public static List<string> AddressableDeadIds = new List<string>();
+#endif
 
         /// <summary>
         /// Subscribe to this event to be notified when the number of Audio Sources being used by Master Audio changes.
@@ -121,23 +125,34 @@ namespace DarkTonic.MasterAudio {
         public bool showLocalization = true;
 
         public bool showVideoPlayerSettings = false;
-#if UNITY_2019_3_OR_NEWER
+#if UNITY_2019_3_OR_NEWER && VIDEO_ENABLED
         public List<VideoPlayer> videoPlayers = new List<VideoPlayer>();
 #endif
 
+        public bool useTextPlaylistFilter = false;
+        public string textPlaylistFilter = string.Empty;
         public bool playListExpanded = true;
         public bool playlistsExpanded = true;
 
         public AllMusicSpatialBlendType musicSpatialBlendType = AllMusicSpatialBlendType.ForceAllTo2D;
         public float musicSpatialBlend = 0f;
 
+#if DISABLE_3D_SOUND
+        public AllMixerSpatialBlendType mixerSpatialBlendType = AllMixerSpatialBlendType.ForceAllTo2D;
+#else
         public AllMixerSpatialBlendType mixerSpatialBlendType = AllMixerSpatialBlendType.ForceAllTo3D;
+#endif
         public float mixerSpatialBlend = 1f;
 
         public GroupPlayType groupPlayType = GroupPlayType.Always;
         public DefaultGroupPlayType defaultGroupPlayType = DefaultGroupPlayType.Always;
 
+#if DISABLE_3D_SOUND
+        public ItemSpatialBlendType newGroupSpatialType = ItemSpatialBlendType.ForceTo2D;
+#else
         public ItemSpatialBlendType newGroupSpatialType = ItemSpatialBlendType.ForceTo3D;
+#endif
+
         public float newGroupSpatialBlend = 1f;
 
         public List<Playlist> musicPlaylists = new List<Playlist>()
@@ -180,6 +195,7 @@ namespace DarkTonic.MasterAudio {
         public bool logAdvancedExpanded = true;
         public bool listenerAdvancedExpanded = false;
         public bool listenerFollowerHasRigidBody = true;
+        public bool deletePreviewerAudioSourceWhenPlaying = true;
         public VariationFollowerType variationFollowerType = VariationFollowerType.LateUpdate;
 
         public bool showFadingSettings = false;
@@ -205,8 +221,13 @@ namespace DarkTonic.MasterAudio {
         public bool showGroupSelect = false;
         public bool hideGroupsWithNoActiveVars = false;
 
+		public JukeBoxDisplayMode jukeBoxDisplayMode = JukeBoxDisplayMode.DisplayAll;
+
         public bool logPerfExpanded = true;
         public bool willWarm = true;
+
+        public bool mixerSettingsExpanded;
+        public AudioMixerUpdateMode mixerUpdateMode = AudioMixerUpdateMode.UnscaledTime;
 
         public string newEventName = "my event";
         public bool showCustomEvents = true;
@@ -246,6 +267,7 @@ namespace DarkTonic.MasterAudio {
         private Dictionary<string, List<int>> _randomizer = new Dictionary<string, List<int>>(StringComparer.OrdinalIgnoreCase);
         private Dictionary<string, List<int>> _randomizerOrigin = new Dictionary<string, List<int>>(StringComparer.OrdinalIgnoreCase);
         private Dictionary<string, List<int>> _randomizerLeftovers = new Dictionary<string, List<int>>(StringComparer.OrdinalIgnoreCase);
+        private Dictionary<string, List<int>> _nonRandomChoices = new Dictionary<string, List<int>>(StringComparer.OrdinalIgnoreCase);
 
         private Dictionary<string, List<int>> _clipsPlayedBySoundTypeOldestFirst = new Dictionary<string, List<int>>(StringComparer.OrdinalIgnoreCase);
 
@@ -277,7 +299,7 @@ namespace DarkTonic.MasterAudio {
         private readonly List<GameObject> OcclusionSourcesOutOfRange = new List<GameObject>(32);
         private readonly List<GameObject> OcclusionSourcesBlocked = new List<GameObject>(32);
         private readonly Queue<SoundGroupVariationUpdater> QueuedOcclusionRays = new Queue<SoundGroupVariationUpdater>(32);
-#if UNITY_2019_3_OR_NEWER
+#if UNITY_2019_3_OR_NEWER && VIDEO_ENABLED
         private readonly List<VideoPlayerTracker> VideoPlayerTrackers = new List<VideoPlayerTracker>();
 #endif
 #if ADDRESSABLES_ENABLED
@@ -302,7 +324,13 @@ namespace DarkTonic.MasterAudio {
 #endregion
 
 #region Master Audio enums
-        public enum BusVoiceLimitExceededMode
+		public enum JukeBoxDisplayMode
+		{
+			DisplayAll,
+			DisplayActive
+		}
+
+		public enum BusVoiceLimitExceededMode
         {
             DoNotPlayNewSound,
             StopOldestSound,
@@ -341,24 +369,36 @@ namespace DarkTonic.MasterAudio {
         }
 
         public enum AllMusicSpatialBlendType {
-            ForceAllTo2D,
+            ForceAllTo2D
+#if DISABLE_3D_SOUND
+#else
+            ,
             ForceAllTo3D,
             ForceAllToCustom,
             AllowDifferentPerController
+#endif
         }
 
         public enum AllMixerSpatialBlendType {
-            ForceAllTo2D,
+            ForceAllTo2D
+#if DISABLE_3D_SOUND
+#else
+            ,
             ForceAllTo3D,
             ForceAllToCustom,
             AllowDifferentPerGroup
+#endif
         }
 
         public enum ItemSpatialBlendType {
-            ForceTo2D,
+            ForceTo2D
+#if DISABLE_3D_SOUND
+#else
+            ,
             ForceTo3D,
             ForceToCustom,
             UseCurveFromAudioSource
+#endif
         }
 
         public enum GroupPlayType
@@ -513,7 +553,9 @@ namespace DarkTonic.MasterAudio {
             MuteEverything,
             UnmuteEverything,
             SetMasterMixerVolume,
-            SetMasterPlaylistVolume
+            SetMasterPlaylistVolume,
+            PauseAudioListener,
+            UnpauseAudioListener
         }
 
         public enum SoundGroupCommand {
@@ -666,6 +708,8 @@ namespace DarkTonic.MasterAudio {
             public bool newMetadataPropCanHaveMult = false;
             // ReSharper restore InconsistentNaming
 
+            private readonly List<int> _actorInstanceIds = new List<int>();
+
             public enum CrossfadeTimeMode {
                 UseMasterSetting,
                 Override
@@ -673,6 +717,27 @@ namespace DarkTonic.MasterAudio {
 
             public Playlist() {
                 MusicSettings = new List<MusicSetting>();
+            }
+
+            public void AddActorInstanceId(int instanceId)
+            {
+                if (_actorInstanceIds.Contains(instanceId))
+                {
+                    return;
+                }
+
+                _actorInstanceIds.Add(instanceId);
+            }
+
+            public void RemoveActorInstanceId(int instanceId)
+            {
+                _actorInstanceIds.Remove(instanceId);
+            }
+
+            public bool HasLiveActors {
+                get {
+                    return _actorInstanceIds.Count > 0;
+                }
             }
         }
 
@@ -725,12 +790,13 @@ namespace DarkTonic.MasterAudio {
                 return;
             }
 
+            AudioListener.pause = false; // in case you exited last time with it paused. You would hear nothing on next play.
             useGUILayout = false;
             _soundsLoaded = false;
             _mustRescanGroups = false;
 
             var listener = ListenerTrans;
-            if (listener != null) {
+            if (listener != null && deletePreviewerAudioSourceWhenPlaying) {
                 var aud = listener.GetComponent<AudioSource>();
                 if (aud != null) {
                     // delete the previewer
@@ -800,6 +866,7 @@ namespace DarkTonic.MasterAudio {
             _randomizer = new Dictionary<string, List<int>>(StringComparer.OrdinalIgnoreCase);
             _randomizerOrigin = new Dictionary<string, List<int>>(StringComparer.OrdinalIgnoreCase);
             _randomizerLeftovers = new Dictionary<string, List<int>>(StringComparer.OrdinalIgnoreCase);
+            _nonRandomChoices = new Dictionary<string, List<int>>(StringComparer.OrdinalIgnoreCase);
             _clipsPlayedBySoundTypeOldestFirst = new Dictionary<string, List<int>>(StringComparer.OrdinalIgnoreCase);
 
             var allVars = new List<SoundGroupVariation>();
@@ -929,6 +996,7 @@ namespace DarkTonic.MasterAudio {
                 // fill leftovers pool.
                 _randomizerLeftovers[soundType].AddRange(playedStatuses);
                 _clipsPlayedBySoundTypeOldestFirst.Add(soundType, new List<int>());
+                _nonRandomChoices.Add(soundType, new List<int>());
 
                 playedStatuses = new List<int>();
             }
@@ -976,7 +1044,7 @@ namespace DarkTonic.MasterAudio {
                 duckingBySoundType.Add(aDuck.soundType, aDuck);
             }
 
-#if UNITY_2019_3_OR_NEWER
+#if UNITY_2019_3_OR_NEWER && VIDEO_ENABLED
             if (videoPlayers.Count > 0)
             {
                 var videoPlayerHolder = VideoPlayerSoundGroupTransform;
@@ -1101,7 +1169,7 @@ namespace DarkTonic.MasterAudio {
 
             RefillInactiveGroupPools();
             FireCustomEventsWaiting();
-#if UNITY_2019_3_OR_NEWER
+#if UNITY_2019_3_OR_NEWER && VIDEO_ENABLED
             TrackVideoPlayers();
 #endif
 #if ADDRESSABLES_ENABLED
@@ -1128,9 +1196,7 @@ namespace DarkTonic.MasterAudio {
         }
 
         private void ManualUpdate() {
-#if UNITY_5_6_OR_NEWER
 			RecalcClosestColliderPositions();
-#endif
 
             AmbientUtil.ManualUpdate();
 
@@ -1209,7 +1275,6 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-#if UNITY_5_6_OR_NEWER
         private static void RecalcClosestColliderPositions() {
             if (!AmbientUtil.HasListenerFollower) { 
                 AmbientUtil.InitListenerFollower();
@@ -1246,9 +1311,8 @@ namespace DarkTonic.MasterAudio {
                 Instance.TransFollowerColliderPositionRecalcs.Enqueue(Instance.ProcessedColliderPositionRecalcs[i]);
             }
         }
-#endif
 
-#if UNITY_2019_3_OR_NEWER
+#if UNITY_2019_3_OR_NEWER && VIDEO_ENABLED
         private static void TrackVideoPlayers()
         {
             for (var i = 0; i < Instance.VideoPlayerTrackers.Count; i++)
@@ -1292,21 +1356,21 @@ namespace DarkTonic.MasterAudio {
                 return;
             }
 
-            var deadIds = new List<string>();
+            AddressableDeadIds.Clear();
 
             for (var i = 0; i < Instance.AddressablesToReleaseLater.Count; i++) {
                 var addToRelease = Instance.AddressablesToReleaseLater[i];
                 if (Time.realtimeSinceStartup >= addToRelease.RealtimeToRelease) {
-                    deadIds.Add(addToRelease.AddressableId);
+                    AddressableDeadIds.Add(addToRelease.AddressableId);
                 }
             }
 
-            foreach (var deadId in deadIds) {
+            foreach (var deadId in AddressableDeadIds) {
                 AudioAddressableOptimizer.MaybeReleaseAddressable(deadId, true);
             }
 
             Instance.AddressablesToReleaseLater.RemoveAll(delegate (AddressableDelayedRelease adr) {
-                return deadIds.Contains(adr.AddressableId);
+                return AddressableDeadIds.Contains(adr.AddressableId);
             });
         }
 #endif
@@ -1620,7 +1684,7 @@ namespace DarkTonic.MasterAudio {
         /// <param name="volumePercentage"><b>Optional</b> - used if you want to play the sound at a reduced volume (between 0 and 1).</param>
         /// <param name="pitch"><b>Optional</b> - used if you want to play the sound at a specific pitch. If you do, it will override the pich and random pitch in the variation.</param>
         /// <param name="delaySoundTime"><b>Optional</b> - used if you want to play the sound X seconds from now instead of immediately.</param>
-        /// <param name="variationName"><b>Optional</b> - used if you want to play a specific variation by name. Otherwise a random variation is played.</param>
+        /// <param name="variationName"><b>Optional</b> - used if you want to play a specific variation (or Clip id) by name. Otherwise a random variation is played.</param>
         /// <param name="timeToSchedulePlay"><b>Optional</b> - used to pass in the DSP time to play the sound. Normally do not use this, use the delaySoundTime param instead.</param>
         /// <returns>boolean- true indicating that the sound was either played or scheduled, false otherwise.</returns>
         public static bool PlaySoundAndForget(string sType, float volumePercentage = 1f, float? pitch = null,
@@ -1646,7 +1710,7 @@ namespace DarkTonic.MasterAudio {
         /// <param name="volumePercentage"><b>Optional</b> - used if you want to play the sound at a reduced volume (between 0 and 1).</param>
         /// <param name="pitch"><b>Optional</b> - used if you want to play the sound at a specific pitch. If you do, it will override the pich and random pitch in the variation.</param>
         /// <param name="delaySoundTime"><b>Optional</b> - used if you want to play the sound X seconds from now instead of immediately.</param>
-        /// <param name="variationName"><b>Optional</b> - used if you want to play a specific variation by name. Otherwise a random variation is played.</param>
+        /// <param name="variationName"><b>Optional</b> - used if you want to play a specific variation (or Clip id) by name. Otherwise a random variation is played.</param>
         /// <param name="timeToSchedulePlay"><b>Optional</b> - used to pass in the DSP time to play the sound. Normally do not use this, use the delaySoundTime param instead.</param>
         /// <param name="isChaining"><b>Don't ever specify this</b> - used to control number of loops for Chained Loop Groups. MasterAudio will pass this parameter when it needs it. Never specify this param.</param>
         /// <param name="isSingleSubscribedPlay"><b>Don't ever specify this</b> - MasterAudio will pass this parameter when it needs it. Never specify this param.</param>
@@ -1675,7 +1739,7 @@ namespace DarkTonic.MasterAudio {
         /// <param name="volumePercentage"><b>Optional</b> - used if you want to play the sound at a reduced volume (between 0 and 1).</param>
         /// <param name="pitch"><b>Optional</b> - used if you want to play the sound at a specific pitch. If you do, it will override the pich and random pitch in the variation.</param>
         /// <param name="delaySoundTime"><b>Optional</b> - used if you want to play the sound X seconds from now instead of immediately.</param>
-        /// <param name="variationName"><b>Optional</b> - used if you want to play a specific variation by name. Otherwise a random variation is played.</param>
+        /// <param name="variationName"><b>Optional</b> - used if you want to play a specific variation (or Clip id) by name. Otherwise a random variation is played.</param>
         /// <param name="timeToSchedulePlay"><b>Optional</b> - used to pass in the DSP time to play the sound. Normally do not use this, use the delaySoundTime param instead.</param>
         /// <returns>boolean- true indicating that the sound was either played or scheduled, false otherwise.</returns>
         public static bool PlaySound3DAtVector3AndForget(string sType, Vector3 sourcePosition,
@@ -1702,7 +1766,7 @@ namespace DarkTonic.MasterAudio {
         /// <param name="volumePercentage"><b>Optional</b> - used if you want to play the sound at a reduced volume (between 0 and 1).</param>
         /// <param name="pitch"><b>Optional</b> - used if you want to play the sound at a specific pitch. If you do, it will override the pich and random pitch in the variation.</param>
         /// <param name="delaySoundTime"><b>Optional</b> - used if you want to play the sound X seconds from now instead of immediately.</param>
-        /// <param name="variationName"><b>Optional</b> - used if you want to play a specific variation by name. Otherwise a random variation is played.</param>
+        /// <param name="variationName"><b>Optional</b> - used if you want to play a specific variation (or Clip id) by name. Otherwise a random variation is played.</param>
         /// <param name="timeToSchedulePlay"><b>Optional</b> - used to pass in the DSP time to play the sound. Normally do not use this, use the delaySoundTime param instead.</param>
         /// <returns>PlaySoundResult - this object can be used to read if the sound played or not and also gives access to the Variation object that was used.</returns>
         public static PlaySoundResult PlaySound3DAtVector3(string sType, Vector3 sourcePosition,
@@ -1728,7 +1792,7 @@ namespace DarkTonic.MasterAudio {
         /// <param name="volumePercentage"><b>Optional</b> - used if you want to play the sound at a reduced volume (between 0 and 1).</param>
         /// <param name="pitch"><b>Optional</b> - used if you want to play the sound at a specific pitch. If you do, it will override the pich and random pitch in the variation.</param>
         /// <param name="delaySoundTime"><b>Optional</b> - used if you want to play the sound X seconds from now instead of immediately.</param>
-        /// <param name="variationName"><b>Optional</b> - used if you want to play a specific variation by name. Otherwise a random variation is played.</param>
+        /// <param name="variationName"><b>Optional</b> - used if you want to play a specific variation (or Clip id) by name. Otherwise a random variation is played.</param>
         /// <param name="timeToSchedulePlay"><b>Optional</b> - used to pass in the DSP time to play the sound. Normally do not use this, use the delaySoundTime param instead.</param>
         /// <returns>boolean- true indicating that the sound was either played or scheduled, false otherwise.</returns>
         public static bool PlaySound3DAtTransformAndForget(string sType, Transform sourceTrans,
@@ -1755,7 +1819,7 @@ namespace DarkTonic.MasterAudio {
         /// <param name="volumePercentage"><b>Optional</b> - used if you want to play the sound at a reduced volume (between 0 and 1).</param>
         /// <param name="pitch"><b>Optional</b> - used if you want to play the sound at a specific pitch. If you do, it will override the pich and random pitch in the variation.</param>
         /// <param name="delaySoundTime"><b>Optional</b> - used if you want to play the sound X seconds from now instead of immediately.</param>
-        /// <param name="variationName"><b>Optional</b> - used if you want to play a specific variation by name. Otherwise a random variation is played.</param>
+        /// <param name="variationName"><b>Optional</b> - used if you want to play a specific variation (or Clip id) by name. Otherwise a random variation is played.</param>
         /// <param name="timeToSchedulePlay"><b>Optional</b> - used to pass in the DSP time to play the sound. Normally do not use this, use the delaySoundTime param instead.</param>
         /// <param name="isChaining"><b>Don't ever specify this</b> - used to control number of loops for Chained Loop Groups. MasterAudio will pass this parameter when it needs it. Never specify this param.</param>
         /// <param name="isSingleSubscribedPlay"><b>Don't ever specify this</b> - MasterAudio will pass this parameter when it needs it. Never specify this param.</param>
@@ -1784,7 +1848,7 @@ namespace DarkTonic.MasterAudio {
         /// <param name="volumePercentage"><b>Optional</b> - used if you want to play the sound at a reduced volume (between 0 and 1).</param>
         /// <param name="pitch"><b>Optional</b> - used if you want to play the sound at a specific pitch. If you do, it will override the pich and random pitch in the variation.</param>
         /// <param name="delaySoundTime"><b>Optional</b> - used if you want to play the sound X seconds from now instead of immediately.</param>
-        /// <param name="variationName"><b>Optional</b> - used if you want to play a specific variation by name. Otherwise a random variation is played.</param>
+        /// <param name="variationName"><b>Optional</b> - used if you want to play a specific variation (or Clip id) by name. Otherwise a random variation is played.</param>
         /// <param name="timeToSchedulePlay"><b>Optional</b> - used to pass in the DSP time to play the sound. Normally do not use this, use the delaySoundTime param instead.</param>
         /// <returns>boolean- true indicating that the sound was either played or scheduled, false otherwise.</returns>
         public static bool PlaySound3DFollowTransformAndForget(string sType, Transform sourceTrans,
@@ -1812,7 +1876,7 @@ namespace DarkTonic.MasterAudio {
         /// <param name="volumePercentage"><b>Optional</b> - used if you want to play the sound at a reduced volume (between 0 and 1).</param>
         /// <param name="pitch"><b>Optional</b> - used if you want to play the sound at a specific pitch. If you do, it will override the pich and random pitch in the variation.</param>
         /// <param name="delaySoundTime"><b>Optional</b> - used if you want to play the sound X seconds from now instead of immediately.</param>
-        /// <param name="variationName"><b>Optional</b> - used if you want to play a specific variation by name. Otherwise a random variation is played.</param>
+        /// <param name="variationName"><b>Optional</b> - used if you want to play a specific variation (or Clip id) by name. Otherwise a random variation is played.</param>
         /// <param name="timeToSchedulePlay"><b>Optional</b> - used to pass in the DSP time to play the sound. Normally do not use this, use the delaySoundTime param instead.</param>
         /// <param name="isChaining"><b>Don't ever specify this</b> - used to control number of loops for Chained Loop Groups. MasterAudio will pass this parameter when it needs it. Never specify this param.</param>
         /// <param name="isSingleSubscribedPlay"><b>Don't ever specify this</b> - MasterAudio will pass this parameter when it needs it. Never specify this param.</param>
@@ -1839,7 +1903,7 @@ namespace DarkTonic.MasterAudio {
         /// <param name="volumePercentage"><b>Optional</b> - used if you want to play the sound at a reduced volume (between 0 and 1).</param>
         /// <param name="pitch"><b>Optional</b> - used if you want to play the sound at a specific pitch. If you do, it will override the pich and random pitch in the variation.</param>
         /// <param name="delaySoundTime"><b>Optional</b> - used if you want to play the sound X seconds from now instead of immediately.</param>
-        /// <param name="variationName"><b>Optional</b> - used if you want to play a specific variation by name. Otherwise a random variation is played.</param>
+        /// <param name="variationName"><b>Optional</b> - used if you want to play a specific variation (or Clip id) by name. Otherwise a random variation is played.</param>
         /// <param name="completedAction"><b>Optional</b> - Code to execute when the sound is finished.</param>
         public static IEnumerator PlaySoundAndWaitUntilFinished(string sType, float volumePercentage = 1f,
             // ReSharper disable once RedundantNameQualifier
@@ -1880,7 +1944,7 @@ namespace DarkTonic.MasterAudio {
         /// <param name="volumePercentage"><b>Optional</b> - used if you want to play the sound at a reduced volume (between 0 and 1).</param>
         /// <param name="pitch"><b>Optional</b> - used if you want to play the sound at a specific pitch. If you do, it will override the pich and random pitch in the variation.</param>
         /// <param name="delaySoundTime"><b>Optional</b> - used if you want to play the sound X seconds from now instead of immediately.</param>
-        /// <param name="variationName"><b>Optional</b> - used if you want to play a specific variation by name. Otherwise a random variation is played.</param>
+        /// <param name="variationName"><b>Optional</b> - used if you want to play a specific variation (or Clip id) by name. Otherwise a random variation is played.</param>
         /// <param name="timeToSchedulePlay"><b>Optional</b> - used to pass in the DSP time to play the sound. Normally do not use this, use the delaySoundTime param instead.</param>
         /// <param name="completedAction"><b>Optional</b> - Code to execute when the sound is finished.</param>
         public static IEnumerator PlaySound3DAtTransformAndWaitUntilFinished(string sType, Transform sourceTrans,
@@ -1923,7 +1987,7 @@ namespace DarkTonic.MasterAudio {
         /// <param name="volumePercentage"><b>Optional</b> - used if you want to play the sound at a reduced volume (between 0 and 1).</param>
         /// <param name="pitch"><b>Optional</b> - used if you want to play the sound at a specific pitch. If you do, it will override the pich and random pitch in the variation.</param>
         /// <param name="delaySoundTime"><b>Optional</b> - used if you want to play the sound X seconds from now instead of immediately.</param>
-        /// <param name="variationName"><b>Optional</b> - used if you want to play a specific variation by name. Otherwise a random variation is played.</param>
+        /// <param name="variationName"><b>Optional</b> - used if you want to play a specific variation (or Clip id) by name. Otherwise a random variation is played.</param>
         /// <param name="timeToSchedulePlay"><b>Optional</b> - used to pass in the DSP time to play the sound. Normally do not use this, use the delaySoundTime param instead.</param>
         /// <param name="completedAction"><b>Optional</b> - Code to execute when the sound is finished.</param>
         public static IEnumerator PlaySound3DFollowTransformAndWaitUntilFinished(string sType, Transform sourceTrans,
@@ -2101,7 +2165,15 @@ namespace DarkTonic.MasterAudio {
 
             if (!soundSuccess) {
                 if (loggingEnabledForGrp || LogOutOfVoices) {
-                    LogMessage("All " + sources.Count + " children of " + sType + " were busy. Will not play this sound for this instance. If you need more voices, increase the 'Voices (Weight)' field on the Variation(s) in your Sound Group.");
+                    if (isNonSpecific) {
+                        LogMessage("All " + sources.Count + " children of " + sType +
+                                   " were busy. Will not play this sound for this instance. If you need more voices, increase the 'Voices (Weight)' field on the Variation(s) in your Sound Group.");
+                    } 
+                    else
+                    { 
+                        LogMessage("Child '" + randomSource.Variation.name + "' of " + sType +
+                                   " was busy. Will not play this sound for this instance. If you need more voices, increase the 'Voices (Weight)' field on the Variation(s) in your Sound Group.");
+                    }
                 }
 
                 return playedState;
@@ -2242,6 +2314,7 @@ namespace DarkTonic.MasterAudio {
                     if (otherChoices != null)
                     {
                         otherChoices.Clear();
+                        break;
                     }
                 }
             } while (otherChoices != null && (otherChoices.Count > 0 || !hasRefilledPool || isFinalExhaustivePlay));
@@ -2477,50 +2550,67 @@ namespace DarkTonic.MasterAudio {
             }
 
             // find source by name
-            var isFound = false;
             var matchesFound = 0;
+
+            var choiceMatches = Instance._nonRandomChoices[sType];
+            choiceMatches.Clear();
+
             for (var i = 0; i < sources.Count; i++)
             {
                 var aSource = sources[i];
-                if (aSource.Source.name != variationName)
+                if (!string.IsNullOrEmpty(aSource.Variation.clipAlias) && aSource.Variation.clipAlias == variationName)
                 {
+                    // name match
+                } else if (aSource.Source.name == variationName) {
+                    // name match
+                } else {
                     continue;
                 }
 
                 matchesFound++;
                 if (aSource.Variation.IsAvailableToPlay || (canUseBusVoiceToStop && aSource.Variation == busVoiceToStop))
                 {
-                    randomSource = aSource;
-                    isFound = true;
-                    pickedChoice = i;
-                    break;
+                    choiceMatches.Add(i);
                 }
             }
 
-            if (!isFound)
+            if (matchesFound == 0)
             {
-                if (matchesFound == 0)
+                if (loggingEnabledForGrp)
                 {
-                    if (loggingEnabledForGrp)
-                    {
-                        LogMessage("Can't find variation '" + variationName + "' of " + sType);
-                    }
+                    LogMessage("Can't find variation '" + variationName + "' of " + sType);
                 }
-                else
+
+                return false;
+            } 
+            
+            if (choiceMatches.Count == 0) {
+                if (loggingEnabledForGrp || LogOutOfVoices)
                 {
-                    if (loggingEnabledForGrp || LogOutOfVoices)
-                    {
-                        LogMessage("Can't find non-busy variation '" + variationName + "' of " + sType);
-                    }
+                    LogMessage("Can't find non-busy variation '" + variationName + "' of " + sType);
                 }
 
                 return false;
             }
 
+            if (choiceMatches.Count == 1)
+            {
+                randomIndex = 0;
+            }
+            else
+            {
+                randomIndex = Random.Range(0, choiceMatches.Count);
+            }
+
+            pickedChoice = choiceMatches[randomIndex.Value];
+            randomSource = sources[pickedChoice];
+            choiceMatches.Remove(pickedChoice);
+            otherChoices = choiceMatches;
+
             if (loggingEnabledForGrp)
             {
                 LogMessage(string.Format("Cueing child named '{0}' of {1}",
-                    variationName,
+                    randomSource.Variation.name,
                     sType));
             }
 
@@ -2860,7 +2950,11 @@ namespace DarkTonic.MasterAudio {
                 isRetriggerPlay = true;
             }
 
-            info.Variation.Stop(false, true);
+            if (!IsWarming)
+            {
+                info.Variation.Stop(false, true);
+            }
+
             info.Variation.ObjectToFollow = null;
 
             var shouldUseClipAgePriority = Instance.prioritizeOnDistance && (Instance.useClipAgePriority || info.Variation.ParentGroup.useClipAgePriority);
@@ -4405,6 +4499,7 @@ namespace DarkTonic.MasterAudio {
             Instance._randomizer.Remove(sType);
             Instance._randomizerLeftovers.Remove(sType);
             Instance._randomizerOrigin.Remove(sType);
+            Instance._nonRandomChoices.Remove(sType);
             Instance._clipsPlayedBySoundTypeOldestFirst.Remove(sType);
             RemoveRuntimeGroupInfo(sType);
             Instance.LastTimeSoundGroupPlayed.Remove(sType);
@@ -4447,11 +4542,10 @@ namespace DarkTonic.MasterAudio {
         /// This method will create a new Sound Group from the Audio Clips you pass in.
         /// </summary>
         /// <param name="aGroup">The object containing all variations and group info.</param>
-        /// <param name="creatorObjectName">The name of the object creating this group (for debug).</param>
+        /// <param name="creatorInstanceId">The InstanceId of the Game Object creating the Sound Group.</param>
         /// <param name="errorOnExisting">Whether to log an error if the Group already exists (same name).</param>
         /// <returns>Whether or not the Sound Group was created.</returns>
-        public static Transform CreateSoundGroup(DynamicSoundGroup aGroup, string creatorObjectName,
-            bool errorOnExisting = true) {
+        public static Transform CreateSoundGroup(DynamicSoundGroup aGroup, int? creatorInstanceId, bool errorOnExisting = true) {
             if (!SceneHasMasterAudio) {
                 return null;
             }
@@ -4531,6 +4625,7 @@ namespace DarkTonic.MasterAudio {
 #endif
                     }
 
+                    variation.clipAlias = aVariation.clipAlias;
                     variation.audLocation = aVariation.audLocation;
 
                     variation.original_pitch = aVarAudio.pitch;
@@ -4608,6 +4703,10 @@ namespace DarkTonic.MasterAudio {
             var groupScript = newGroup.GetComponent<MasterAudioGroup>();
             // populate other properties.
             groupScript.retriggerPercentage = aGroup.retriggerPercentage;
+            if (creatorInstanceId.HasValue)
+            {
+                groupScript.AddActorInstanceId(creatorInstanceId.Value);
+            }
 
             var persistentGrpVol = PersistentAudioSettings.GetGroupVolume(aGroup.name);
             groupScript.OriginalVolume = aGroup.groupMasterVolume;
@@ -4704,6 +4803,7 @@ namespace DarkTonic.MasterAudio {
             // fill leftovers
             Instance._randomizerLeftovers[groupName].AddRange(playedStatuses);
             Instance._clipsPlayedBySoundTypeOldestFirst.Add(groupName, new List<int>(playedStatuses.Count));
+            Instance._nonRandomChoices.Add(groupName, new List<int>());
 
             RescanGroupsNow();
 
@@ -4989,18 +5089,11 @@ namespace DarkTonic.MasterAudio {
                     continue; // soloed or muted
                 }
 
-                UnsilenceGroup(val.Group.GameObjectName);
+                UnsilenceGroup(val);
             }
         }
 
-        private static void UnsilenceGroup(string sType) {
-            if (!Instance.AudioSourcesBySoundType.ContainsKey(sType)) {
-                return;
-            }
-
-            var grp = Instance.AudioSourcesBySoundType[sType];
-
-            // ReSharper disable once ForCanBeConvertedToForeach
+        private static void UnsilenceGroup(AudioGroupInfo grp) {
             for (var i = 0; i < grp.Sources.Count; i++) {
                 grp.Sources[i].Source.mute = false;
             }
@@ -5012,18 +5105,11 @@ namespace DarkTonic.MasterAudio {
                     continue; // soloed or muted
                 }
 
-                SilenceGroup(val.Group.GameObjectName);
+                SilenceGroup(val);
             }
         }
 
-        private static void SilenceGroup(string sType) {
-            if (!Instance.AudioSourcesBySoundType.ContainsKey(sType)) {
-                return;
-            }
-
-            var grp = Instance.AudioSourcesBySoundType[sType];
-
-            // ReSharper disable once ForCanBeConvertedToForeach
+        private static void SilenceGroup(AudioGroupInfo grp) {
             for (var i = 0; i < grp.Sources.Count; i++) {
                 grp.Sources[i].Source.mute = true;
             }
@@ -5899,9 +5985,10 @@ namespace DarkTonic.MasterAudio {
         /// This method will create a new bus with the name you specify.
         /// </summary>
         /// <param name="busName">The name of the new bus.</param>
+        /// <param name="actorInstanceId">The actor instanceId of the creator. Used the track if another Dynamic Sound Group Creator is still active with the bus so we don't delete it yet.</param>
         /// <param name="errorOnExisting">Whether to log an error if the bus already exists (same name).</param>
 		/// <param name="isTemporary">Used by DGSC to create temporary buses.</param>
-		public static bool CreateBus(string busName, bool errorOnExisting = true, bool isTemporary = false) {
+		public static bool CreateBus(string busName, int? actorInstanceId, bool errorOnExisting = true, bool isTemporary = false) {
             var match = GroupBuses.FindAll(delegate (GroupBus obj) {
                 return obj.busName == busName;
             });
@@ -5923,6 +6010,11 @@ namespace DarkTonic.MasterAudio {
 
             if (busVol.HasValue) {
                 SetBusVolumeByName(busName, busVol.Value);
+            }
+
+            if (actorInstanceId.HasValue)
+            {
+                newBus.AddActorInstanceId(actorInstanceId.Value);
             }
 
             return true;
@@ -7710,26 +7802,41 @@ namespace DarkTonic.MasterAudio {
         /// </summary>
         /// <returns>The custom event category if not there.</returns>
         /// <param name="categoryName">Category name.</param>
+        /// <param name="actorInstanceId">The actor instanceId of the creator. Used the track if another Dynamic Sound Group Creator is still active with the bus so we don't delete it yet.</param>
+        /// <param name="errorOnDuplicates">Will log a duplicate if you pass "true" in.</param>
         /// <param name="isTemporary">If set to <c>true</c> is temporary.</param>
-        public static CustomEventCategory CreateCustomEventCategoryIfNotThere(string categoryName, bool isTemporary) {
+        public static CustomEventCategory CreateCustomEventCategoryIfNotThere(string categoryName, int? actorInstanceId, bool errorOnDuplicates, bool isTemporary) {
             if (AppIsShuttingDown) {
                 return null;
             }
 
-            if (Instance.customEventCategories.FindAll(delegate (CustomEventCategory cat) {
-                return cat.CatName == categoryName;
-            }).Count > 0) {
-                return null;
+            var matchingCat = Instance.customEventCategories.Find(delegate(CustomEventCategory cat)
+            {
+                return cat.CatName == categoryName && cat.IsTemporary == true;
+            });
+
+            if (matchingCat == null) {
+                matchingCat = new CustomEventCategory() {
+                    CatName = categoryName,
+                    ProspectiveName = categoryName,
+                    IsTemporary = isTemporary
+                };
+                Instance.customEventCategories.Add(matchingCat);
+            } else {
+                if (errorOnDuplicates)
+                {
+                    Debug.LogError("You already have a Custom Event Category with the name '" + categoryName +
+                                   "'. You must name them all uniquely. Not adding duplicate named Custom Event Category.");
+                    return null;
+                }
             }
 
-            var newCat = new CustomEventCategory() {
-                CatName = categoryName,
-                ProspectiveName = categoryName,
-                IsTemporary = isTemporary
-            };
+            if (actorInstanceId.HasValue)
+            {
+                matchingCat.AddActorInstanceId(actorInstanceId.Value);
+            }
 
-            Instance.customEventCategories.Add(newCat);
-            return newCat;
+            return matchingCat;
         }
         /*! \endcond */
 
@@ -7742,40 +7849,52 @@ namespace DarkTonic.MasterAudio {
         /// <param name="receiveFilter">Type to filter by (optional).</param>
         /// <param name="filterModeQty">The number to limit the filter by (optional).</param>
         /// <param name="categoryName">The category of the custom event.</param>
+        /// <param name="actorInstanceId">The actor instanceId of the creator. Used the track if another Dynamic Sound Group Creator is still active with the bus so we don't delete it yet.</param>
         /// <param name="isTemporary">Whether the category of the custom event is temporary or not.</param>
         /// <param name="errorOnDuplicate">Whether or not to log an error if the event already exists.</param>
         public static void CreateCustomEvent(string customEventName, CustomEventReceiveMode eventReceiveMode,
             float distanceThreshold, EventReceiveFilter receiveFilter, int filterModeQty,
-            string categoryName = "", bool isTemporary = false, bool errorOnDuplicate = true) {
+            int? actorInstanceId,
+            string categoryName = "", 
+            bool isTemporary = false, bool errorOnDuplicate = true) {
 
             if (AppIsShuttingDown) {
                 return;
             }
 
-            if (Instance.customEvents.FindAll(delegate (CustomEvent obj) {
+            var matchingEvent = Instance.customEvents.Find(delegate (CustomEvent obj) {
                 return obj.EventName == customEventName;
-            }).Count > 0) {
+            });
+
+            if (matchingEvent != null)
+            {
                 if (errorOnDuplicate) {
-                    Debug.LogError("You already have a Custom Event named '" + customEventName +
-                                   "'. No need to add it again.");
+                    Debug.LogError("You already have a Custom Event named '" + customEventName + "'. No need to add it again.");
+                    return;
                 }
-                return;
+            } else {
+                if (string.IsNullOrEmpty(categoryName))
+                {
+                    categoryName = Instance.customEventCategories[0].CatName;
+                }
+
+                matchingEvent = new CustomEvent(customEventName)
+                {
+                    eventReceiveMode = eventReceiveMode,
+                    distanceThreshold = distanceThreshold,
+                    eventRcvFilterMode = receiveFilter,
+                    filterModeQty = filterModeQty,
+                    categoryName = categoryName,
+                    isTemporary = isTemporary
+                };
+
+                Instance.customEvents.Add(matchingEvent);
             }
 
-            if (string.IsNullOrEmpty(categoryName)) {
-                categoryName = Instance.customEventCategories[0].CatName;
+            if (actorInstanceId.HasValue)
+            {
+                matchingEvent.AddActorInstanceId(actorInstanceId.Value);
             }
-
-            var newEvent = new CustomEvent(customEventName) {
-                eventReceiveMode = eventReceiveMode,
-                distanceThreshold = distanceThreshold,
-                eventRcvFilterMode = receiveFilter,
-                filterModeQty = filterModeQty,
-                categoryName = categoryName,
-                isTemporary = isTemporary
-            };
-
-            Instance.customEvents.Add(newEvent);
         }
 
         /// <summary>
@@ -8189,10 +8308,7 @@ namespace DarkTonic.MasterAudio {
 				return obj.ambient == ambient;
 			});
         }
-
-
-#if UNITY_5_6_OR_NEWER
-
+			
         /// <summary>
         /// Do not call this method ever. Used internally by Ambient Sounds script.
         /// </summary>
@@ -8209,7 +8325,6 @@ namespace DarkTonic.MasterAudio {
 
             Instance.TransFollowerColliderPositionRecalcs.Enqueue(follower);
         }
-#endif
         /*! \endcond */
 
 #endregion

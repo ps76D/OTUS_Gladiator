@@ -31,6 +31,7 @@ namespace DarkTonic.MasterAudio {
         public float randomVolumeMax = 0f;
 
         public int weight = 1;
+        public string clipAlias;
         public MasterAudio.AudioLocation audLocation = MasterAudio.AudioLocation.Clip;
         public string resourceFileName;
 #if ADDRESSABLES_ENABLED

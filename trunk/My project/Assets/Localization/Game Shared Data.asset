@@ -303,6 +303,14 @@ MonoBehaviour:
     m_Key: SETTINGS_MUSIC
     m_Metadata:
       m_Items: []
+  - m_Id: 331056332983394304
+    m_Key: SETTINGS_SOUND_VOLUME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 331056333008560128
+    m_Key: SETTINGS_MUSIC_VOLUME
+    m_Metadata:
+      m_Items: []
   - m_Id: 327275898831003648
     m_Key: Messages
     m_Metadata:

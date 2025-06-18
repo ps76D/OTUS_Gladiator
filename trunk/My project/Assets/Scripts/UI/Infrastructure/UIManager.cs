@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using DarkTonic.MasterAudio;
 using GameEngine;
 using GameEngine.MessagesSystem;
 using GameManager;
@@ -33,6 +34,14 @@ namespace UI.Infrastructure
         [Inject]
         private BattleService _battleService;
         
+        [Inject]
+        private MasterAudio _masterAudio;
+        
+        [Inject]
+        private SoundSaveLoader _soundSaveLoader;
+        
+        public PlaylistController MainTheme;
+        
         [SerializeField] private MainMenu _mainMenuScreen;
         [SerializeField] private Hud _hud;
         [SerializeField] private InGameMenu _inGameMenu;
@@ -42,6 +51,11 @@ namespace UI.Infrastructure
         [SerializeField] private LosePopupView _losePopupView;
         [SerializeField] private SettingsView _settingsView;
         
+        public bool MusicMuted;
+        public bool SoundMuted;
+        
+        public MasterAudio MasterAudio => _masterAudio;
+        public SoundSaveLoader SoundSaveLoader => _soundSaveLoader;
         public Hud Hud => _hud;
         public MatchmakingView MatchmakingView => _matchmakingView;
         public GameBootstrapper GameBootstrapper => _gameBootstrapper;
@@ -53,7 +67,9 @@ namespace UI.Infrastructure
         public SettingsView SettingsView => _settingsView;
 
         public Action OnBackToTraining;
+        
 
+        
         private void Start()
         {
             _gameBootstrapper.Game.StateMachine.GetState<MainMenuState>().OnMainMenuSceneLoaded += ShowMainMenu;

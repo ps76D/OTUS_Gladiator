@@ -275,11 +275,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 326695754965614640
-    m_Localized: Sound Volume
+    m_Localized: Sound
     m_Metadata:
       m_Items: []
   - m_Id: 326695754965614641
-    m_Localized: Music Volume
+    m_Localized: Music
     m_Metadata:
       m_Items: []
   - m_Id: 326698232255774720
@@ -344,6 +344,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 330166111085420544
     m_Localized: 'Energy - '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 331056332983394304
+    m_Localized: Sound Volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 331056333008560128
+    m_Localized: Music Volume
     m_Metadata:
       m_Items: []
   references:

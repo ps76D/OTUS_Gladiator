@@ -39,6 +39,7 @@ namespace DarkTonic.MasterAudio {
         public float randomVolumeMin = 0f;
         public float randomVolumeMax = 0f;
 
+        public string clipAlias;
         public MasterAudio.AudioLocation audLocation = MasterAudio.AudioLocation.Clip;
         public string resourceFileName;
 #if ADDRESSABLES_ENABLED
@@ -215,7 +216,7 @@ namespace DarkTonic.MasterAudio {
             }
 
             var shouldDisableVariation = true;
-#if UNITY_2019_3_OR_NEWER
+#if UNITY_2019_3_OR_NEWER && VIDEO_ENABLED
             if (MasterAudio.IsVideoPlayersGroup(ParentGroup.name))
             {
                 if (audLocation != MasterAudio.AudioLocation.Clip)
@@ -267,7 +268,15 @@ namespace DarkTonic.MasterAudio {
 
             SetOcclusion();
 
+            VarAudio.ignoreListenerPause = ParentGroup.ignoreListenerPause;
+
             SpatializerHelper.TurnOnSpatializerIfEnabled(VarAudio);
+
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+            if (shouldDisableVariation && _isWarmingPlay)
+            {
+                shouldDisableVariation = false;
+            }
 
             if (shouldDisableVariation) {
                 DTMonoHelper.SetActive(GameObj, false); // should begin disabled
@@ -414,6 +423,7 @@ namespace DarkTonic.MasterAudio {
 
             // in case it was changed at runtime.
             SetSpatialBlend();
+            SpatializerHelper.TurnOnSpatializerIfEnabled(VarAudio);
 
             // set fade mode
             curFadeMode = FadeMode.None;
@@ -748,10 +758,7 @@ namespace DarkTonic.MasterAudio {
 
         private void MaybeUnloadClip() {
             VarAudio.Stop();
-            if(VarAudio.clip != default)
-            {
-                VarAudio.time = 0f;
-            }
+            VarAudio.time = 0f;
             MasterAudio.EndDucking(VariationUpdater);
 
             switch (audLocation) { 
@@ -782,16 +789,14 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-        ///<summary>
-        /// This method allows you to stop the audio being played by this Variation. 
-        /// <para>
-        /// This will stop the sound immediately without respecting any fades. 
-        /// For fading out before stopping the sound: use FadeOutNow method instead 
-        /// and check "Sound Groups" under Fading Settings in the Advanced Settings section of Master Audio.
-        /// </para>
-        /// </summary>
-        /// <param name="stopEndDetection">Do not ever pass this in.</param>
-        /// <param name="skipLinked">Do not ever pass this in.</param>
+		/// <summary>
+		/// This method allows you to stop the audio being played by this Variation. 
+		/// This will stop the sound immediately without respecting any fades. 
+		/// For fading out before stopping the sound: use FadeOutNow method instead 
+		/// and check "Sound Groups" under Fading Settings in the Advanced Settings section of Master Audio.
+		/// </summary>
+		/// <param name="stopEndDetection">Do not ever pass this in.</param>
+		/// <param name="skipLinked">Do not ever pass this in.</param>
         public void Stop(bool stopEndDetection = false, bool skipLinked = false) {
             if (MasterAudio.IsVideoPlayersGroup(ParentGroup.name))
             {
@@ -867,7 +872,8 @@ namespace DarkTonic.MasterAudio {
         /*! \cond PRIVATE */
         private void StopEndCleanup() {
             MaybeUnloadClip();
-            if (!_isWarmingPlay) {
+            if (!_isWarmingPlay)
+            {
                 DTMonoHelper.SetActive(GameObj, false);
             }
         }
@@ -875,7 +881,8 @@ namespace DarkTonic.MasterAudio {
         private IEnumerator WaitForLoadToUnloadClipAndDeactivate() {
             _isUnloadAddressableCoroutineRunning = true;
 
-            while (_loadStatus == MasterAudio.VariationLoadStatus.Loading) {
+            while (_loadStatus == MasterAudio.VariationLoadStatus.Loading)
+            {
                 yield return MasterAudio.EndOfFrameDelay;
             }
 

@@ -22,6 +22,8 @@ namespace UI
             _startGameButton.onClick.AddListener(StartGameButton);
             _loadGameButton.onClick.AddListener(LoadGameButton);
             _settingsButton.onClick.AddListener(SettingsGameButton);
+
+            _loadGameButton.gameObject.SetActive(PlayerPrefs.HasKey("GameStateKey"));
         }
 
         public void Hide()
@@ -40,7 +42,11 @@ namespace UI
         
         private void LoadGameButton()
         {
-            _viewModel.LoadGame();
+            if (PlayerPrefs.HasKey("GameStateKey"))
+            {
+                _viewModel.LoadGame();
+            }
+            
         }
         
         private void SettingsGameButton()
