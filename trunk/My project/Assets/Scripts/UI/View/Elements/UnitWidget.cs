@@ -1,4 +1,5 @@
 ﻿using System;
+using GameManager;
 using TMPro;
 using UI.Model;
 using UnityEngine;
@@ -9,6 +10,8 @@ namespace UI
 {
     public class UnitWidget : UIScreen
     {
+        [SerializeField] private MatchMakingService _matchMakingService;
+        
         [SerializeField] private Image _unitPortrait;
         [SerializeField] private GameObject _selector;
         [SerializeField] private TMP_Text _titleText;
@@ -28,6 +31,9 @@ namespace UI
         public void SetupWidget(IUnitModel viewModel)
         {
             _unitModel = viewModel;
+
+            _matchMakingService = viewModel.MatchMakingService;
+            
             _titleText.text = viewModel.CharacterInfoSObj.CharacterName;
             _descriptionText.text = viewModel.CharacterInfoSObj.CharacterDescription;
             
@@ -37,12 +43,33 @@ namespace UI
 
         private void OnUnitSelected()
         {
+            if (!_matchMakingService.IsOpponentSelected.Value)
+            {
+                _unitModel.SelectOpponent();
+            
+                OnSelected?.Invoke(this);
+            }
+            else
+            {
+                if (_matchMakingService.CurrentOpponent == _unitModel.CharacterInfoSObj)
+                {
+                    _matchMakingService.DeselectOpponent();
+                    
+                    OnSelected?.Invoke(this);
+                }
+                else
+                {
+                    _unitModel.SelectOpponent();
+            
+                    OnSelected?.Invoke(this);
+                }
+            }
+            
+            
+            /*
             _unitModel.SelectOpponent();
             
-            OnSelected?.Invoke(this);
-            
-            /*bool shouldSelect = !_selector.activeSelf;
-            SetSelected(shouldSelect);*/
+            OnSelected?.Invoke(this);*/
         }
 
         public void SetSelected(bool isSelected)

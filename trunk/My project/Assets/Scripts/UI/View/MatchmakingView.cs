@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using GameEngine.CharacterSystem;
 using UI.Model;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 using Button = UnityEngine.UI.Button;
@@ -50,6 +51,8 @@ namespace UI
             _backButton.onClick.AddListener(Close);
             _fadeCloseButton.onClick.AddListener(Close);
             _toBattleButton.onClick.AddListener(ToBattle);
+            
+            _disposables.Add(_viewModel.IsOpponentSelected.SubscribeToInteractable(_toBattleButton));
         }
         
         public void Close()

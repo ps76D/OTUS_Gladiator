@@ -5,5 +5,6 @@
         void StartGame();
         void LoadGame();
         void OpenSettings();
+        void ExitGame();
     }
 }

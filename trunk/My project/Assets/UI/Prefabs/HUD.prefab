@@ -104,6 +104,7 @@ GameObject:
   - component: {fileID: 2116353367410708696}
   - component: {fileID: 5020622391017036905}
   - component: {fileID: 2140043078297641135}
+  - component: {fileID: 3564156581744556175}
   m_Layer: 5
   m_Name: InGameMenuButton
   m_TagString: Untagged
@@ -214,6 +215,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3564156581744556175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 190412036443478747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc25305771d98dc45a8333f4bafddf6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 2140043078297641135}
+  _soundName: ButtonClick
 --- !u!1 &195808792084934664
 GameObject:
   m_ObjectHideFlags: 0
@@ -853,6 +868,7 @@ GameObject:
   - component: {fileID: 4286930564176696846}
   - component: {fileID: 5822243299933691163}
   - component: {fileID: 7148491733798412883}
+  - component: {fileID: 333327755143623989}
   m_Layer: 5
   m_Name: TrainStrenghtButton
   m_TagString: Untagged
@@ -963,6 +979,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &333327755143623989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911026803714115813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc25305771d98dc45a8333f4bafddf6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 7148491733798412883}
+  _soundName: ButtonClick
 --- !u!1 &1057492912143712348
 GameObject:
   m_ObjectHideFlags: 0
@@ -4554,6 +4584,7 @@ GameObject:
   - component: {fileID: 1418693754711911042}
   - component: {fileID: 2911192818264866958}
   - component: {fileID: 2188221683629068594}
+  - component: {fileID: 1623748824641156567}
   m_Layer: 5
   m_Name: EndTurnButton
   m_TagString: Untagged
@@ -4664,6 +4695,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1623748824641156567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5187983681291266572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc25305771d98dc45a8333f4bafddf6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 2188221683629068594}
+  _soundName: ButtonClick
 --- !u!1 &5235378696420747369
 GameObject:
   m_ObjectHideFlags: 0
@@ -5835,6 +5880,7 @@ GameObject:
   - component: {fileID: 9065958822427980947}
   - component: {fileID: 3110255011453927484}
   - component: {fileID: 7216774810825532105}
+  - component: {fileID: 3911263600754619315}
   m_Layer: 5
   m_Name: RestButton
   m_TagString: Untagged
@@ -5945,6 +5991,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3911263600754619315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7274879494979320317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc25305771d98dc45a8333f4bafddf6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 7216774810825532105}
+  _soundName: ButtonClick
 --- !u!1 &7723432985496952720
 GameObject:
   m_ObjectHideFlags: 0
@@ -6309,6 +6369,7 @@ GameObject:
   - component: {fileID: 1122861677294432096}
   - component: {fileID: 2623210118569551542}
   - component: {fileID: 6849325309138178428}
+  - component: {fileID: 2682802676066592209}
   m_Layer: 5
   m_Name: ArenaButton
   m_TagString: Untagged
@@ -6419,6 +6480,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2682802676066592209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7749031248596645166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc25305771d98dc45a8333f4bafddf6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 6849325309138178428}
+  _soundName: ButtonClick
 --- !u!1 &7873419486061410835
 GameObject:
   m_ObjectHideFlags: 0
@@ -6577,6 +6652,7 @@ GameObject:
   - component: {fileID: 9222735532532141111}
   - component: {fileID: 7773598879434512224}
   - component: {fileID: 2918856704444864736}
+  - component: {fileID: 5421314573714046363}
   m_Layer: 5
   m_Name: TrainEnduranceButton
   m_TagString: Untagged
@@ -6687,6 +6763,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5421314573714046363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8202051638113584336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc25305771d98dc45a8333f4bafddf6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 2918856704444864736}
+  _soundName: ButtonClick
 --- !u!1 &8386896574821230173
 GameObject:
   m_ObjectHideFlags: 0
@@ -7339,6 +7429,7 @@ GameObject:
   - component: {fileID: 7083095395273653051}
   - component: {fileID: 8190762538195309591}
   - component: {fileID: 7656226668528983233}
+  - component: {fileID: 2325010091295520252}
   m_Layer: 5
   m_Name: TrainAgilityButton
   m_TagString: Untagged
@@ -7449,6 +7540,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2325010091295520252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8754715804768930541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc25305771d98dc45a8333f4bafddf6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 7656226668528983233}
+  _soundName: ButtonClick
 --- !u!1 &8814818968664261341
 GameObject:
   m_ObjectHideFlags: 0

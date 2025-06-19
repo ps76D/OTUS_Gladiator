@@ -5,6 +5,7 @@ using GameEngine.CharacterSystem;
 using GameManager;
 using Infrastructure;
 using UI.Infrastructure;
+using UniRx;
 using UnityEngine;
 using Zenject;
 using CharacterInfo = GameEngine.CharacterSystem.CharacterInfo;
@@ -23,6 +24,9 @@ namespace UI.Model
         
         private CharacterInfoSObj _opponentInfoSObj;
         
+        public IReadOnlyReactiveProperty<bool> IsOpponentSelected => _isOpponentSelected;
+        private readonly ReactiveProperty<bool> _isOpponentSelected = new ();
+        
         private readonly List<IDisposable> _disposables = new();
         
         public MatchMakingService MatchMakingService => _makingService;
@@ -33,6 +37,8 @@ namespace UI.Model
             _characterDatabase = characterDatabase;
             _currentCharacter = uiManager.ProfileService.PlayerProfile.CharacterService.CurrentCharacterProfile.CharacterInfo;
             _makingService = uiManager.MatchMakingService;
+            
+            _disposables.Add(_makingService.IsOpponentSelected.Subscribe(x => _isOpponentSelected.Value = x));
         }
 
         public List<CharacterInfoSObj> GetCharacters()

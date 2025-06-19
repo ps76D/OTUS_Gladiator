@@ -821,6 +821,7 @@ GameObject:
   - component: {fileID: 1703726555896683561}
   - component: {fileID: 1703726555896683560}
   - component: {fileID: 1703726555896683563}
+  - component: {fileID: 6816940267646049180}
   m_Layer: 5
   m_Name: GiveUpButton
   m_TagString: Untagged
@@ -931,6 +932,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6816940267646049180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703726555896683565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc25305771d98dc45a8333f4bafddf6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 1703726555896683563}
+  _soundName: ButtonClick
 --- !u!1 &1703726555910529807
 GameObject:
   m_ObjectHideFlags: 0
@@ -943,6 +958,7 @@ GameObject:
   - component: {fileID: 1703726555910529803}
   - component: {fileID: 1703726555910529802}
   - component: {fileID: 1703726555910529805}
+  - component: {fileID: 4207086760094643828}
   m_Layer: 5
   m_Name: SkipTurnButton
   m_TagString: Untagged
@@ -1053,6 +1069,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4207086760094643828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703726555910529807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc25305771d98dc45a8333f4bafddf6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 1703726555910529805}
+  _soundName: ButtonClick
 --- !u!1 &1703726555981412517
 GameObject:
   m_ObjectHideFlags: 0
@@ -2000,6 +2030,7 @@ GameObject:
   - component: {fileID: 1703726556291549448}
   - component: {fileID: 1703726556291549451}
   - component: {fileID: 1703726556291549450}
+  - component: {fileID: 7810835245370697790}
   m_Layer: 5
   m_Name: PowerfulAttackButton
   m_TagString: Untagged
@@ -2110,6 +2141,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7810835245370697790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703726556291549452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc25305771d98dc45a8333f4bafddf6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 1703726556291549450}
+  _soundName: ButtonClick
 --- !u!1 &1703726556304514972
 GameObject:
   m_ObjectHideFlags: 0
@@ -2298,6 +2343,7 @@ GameObject:
   - component: {fileID: 1703726556313196751}
   - component: {fileID: 1703726556313196750}
   - component: {fileID: 1703726556313196721}
+  - component: {fileID: 5200130931994403515}
   m_Layer: 5
   m_Name: BlockButton
   m_TagString: Untagged
@@ -2408,6 +2454,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5200130931994403515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703726556313196723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc25305771d98dc45a8333f4bafddf6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 1703726556313196721}
+  _soundName: ButtonClick
 --- !u!1 &1703726556365718343
 GameObject:
   m_ObjectHideFlags: 0
@@ -3328,6 +3388,7 @@ GameObject:
   - component: {fileID: 1703726557011104635}
   - component: {fileID: 1703726557011104634}
   - component: {fileID: 1703726557011104637}
+  - component: {fileID: 7831746672614865278}
   m_Layer: 5
   m_Name: AttackButton
   m_TagString: Untagged
@@ -3438,6 +3499,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &7831746672614865278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703726557011104639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc25305771d98dc45a8333f4bafddf6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 1703726557011104637}
+  _soundName: ButtonClick
 --- !u!1 &1703726557131725189
 GameObject:
   m_ObjectHideFlags: 0
@@ -4585,6 +4660,7 @@ GameObject:
   - component: {fileID: 7570134653742955389}
   - component: {fileID: 7099743450247769256}
   - component: {fileID: 5860832534627411879}
+  - component: {fileID: 6370035003660279172}
   m_Layer: 5
   m_Name: PreparePowerfulAttackButton
   m_TagString: Untagged
@@ -4695,6 +4771,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6370035003660279172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7783914479743178512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc25305771d98dc45a8333f4bafddf6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 5860832534627411879}
+  _soundName: ButtonClick
 --- !u!1 &7877613851198172026
 GameObject:
   m_ObjectHideFlags: 0

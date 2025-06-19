@@ -1335,7 +1335,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 5178272869891442776}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.5457378
+  m_Size: 0.54610276
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1352,6 +1352,7 @@ GameObject:
   - component: {fileID: 5178272869835380304}
   - component: {fileID: 5178272869835380305}
   - component: {fileID: 5178272869835380302}
+  - component: {fileID: 6304025006058803878}
   m_Layer: 5
   m_Name: ToBattleButton
   m_TagString: Untagged
@@ -1462,6 +1463,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6304025006058803878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5178272869835380300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc25305771d98dc45a8333f4bafddf6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 5178272869835380302}
+  _soundName: ButtonClick
 --- !u!1 &5178272869845451689
 GameObject:
   m_ObjectHideFlags: 0
@@ -2555,6 +2570,7 @@ GameObject:
   - component: {fileID: 6489724992559123675}
   - component: {fileID: 6759845052738575952}
   - component: {fileID: 8823347512123656337}
+  - component: {fileID: 5483827855268547807}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -2665,6 +2681,20 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5483827855268547807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6074486933951213128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc25305771d98dc45a8333f4bafddf6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 8823347512123656337}
+  _soundName: ButtonClick
 --- !u!1 &6748972180701176233
 GameObject:
   m_ObjectHideFlags: 0

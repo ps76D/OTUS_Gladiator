@@ -295,6 +295,10 @@ MonoBehaviour:
     m_Key: INGAMEMENU_BACK
     m_Metadata:
       m_Items: []
+  - m_Id: 331423127149895680
+    m_Key: INGAMEMENU_EXIT
+    m_Metadata:
+      m_Items: []
   - m_Id: 326695754965614639
     m_Key: Settings
     m_Metadata:

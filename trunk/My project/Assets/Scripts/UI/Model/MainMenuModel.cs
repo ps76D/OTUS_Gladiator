@@ -1,16 +1,12 @@
-﻿using DarkTonic.MasterAudio;
-using Infrastructure;
+﻿using Infrastructure;
 using UI.Infrastructure;
-using Zenject;
+using UnityEngine;
 
 namespace UI.Model
 {
     public class MainMenuModel : IMainMenuModel
     {
-
-        
         private readonly UIManager _uiManager;
-        
 
         public MainMenuModel(UIManager uiManager)
         {
@@ -34,6 +30,17 @@ namespace UI.Model
         public void OpenSettings()
         {
             _uiManager.ShowSettings();
+        }
+
+        public void ExitGame()
+        {
+#if UNITY_STANDALONE_WIN
+            Application.Quit();
+#endif
+        
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#endif
         }
     }
 }

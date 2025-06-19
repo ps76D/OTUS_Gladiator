@@ -31,6 +31,9 @@ namespace GameManager
         
         public Action OnUnitSelected;
         
+        public IReadOnlyReactiveProperty<bool> IsOpponentSelected => _isOpponentSelected;
+        private readonly ReactiveProperty<bool> _isOpponentSelected = new ();
+        
         public CharacterInfoSObj CurrentOpponent { get; private set; }
 
         [Button]
@@ -54,12 +57,18 @@ namespace GameManager
             
             _battleService.Init(playerBattleData, opponentBattleData);
         }
-
+        
+        public void DeselectOpponent()
+        {
+            _isOpponentSelected.Value = false;
+        }
+        
         [Button]
         public void SelectOpponent(CharacterInfoSObj characterInfo)
         {
             _opponentProfile = new CharacterProfile(characterInfo, _dayService);
             CurrentOpponent = characterInfo;
+            _isOpponentSelected.Value = true;
         }
 
         private UnitBattleData SetUnitBattleData(CharacterStatsInfo statsInfo, float moralModifier)

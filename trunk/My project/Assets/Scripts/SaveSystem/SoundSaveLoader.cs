@@ -29,8 +29,8 @@ namespace SaveSystem
             CheckSoundInPrefs();
             CheckMusicInPrefs();
 
-            _disposables.Add(_musicNotMuted.Subscribe(SwitchMusic));
             _disposables.Add(_soundNotMuted.Subscribe(SwitchSound));
+            _disposables.Add(_musicNotMuted.Subscribe(SwitchMusic));
 
         }
         
@@ -80,12 +80,30 @@ namespace SaveSystem
         {
             if (value)
             {
-                MasterAudio.UnpauseMixer();
+                if (MasterAudio.PlaylistsMuted)
+                {
+                    MasterAudio.UnmuteEverything();
+                    SwitchMusic(false);
+                }
+                else
+                {
+                    MasterAudio.UnmuteEverything();
+                }
+
                 Debug.Log("UnmuteSounds");
             }
             else
             {
-                MasterAudio.PauseMixer();
+                if (!MasterAudio.PlaylistsMuted)
+                {
+                    MasterAudio.MuteEverything();
+                    SwitchMusic(true);
+                }
+                else
+                {
+                    MasterAudio.MuteEverything();
+                }
+                
                 Debug.Log("MuteSounds");
             }
         }
