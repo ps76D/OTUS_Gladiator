@@ -37,6 +37,7 @@ namespace UI.Model
             _uiManager.HideLosePopup();
             yield return new WaitForSeconds(1f);
             _uiManager.HideBattleScreen();
+            _uiManager.MatchmakingView.CloseDispose();
         }
         
         public void ChangeMoral()

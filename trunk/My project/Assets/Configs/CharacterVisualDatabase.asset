@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d775c3e8defe45c9b8fe4003bede8ec8, type: 3}
+  m_Name: CharacterVisualDatabase
+  m_EditorClassIdentifier: 
+  _characterViews:
+  - _maxLevel: 0
+    _characterBodyImage: {fileID: 21300000, guid: f2657dc46b4f04c43a5d9220ad7e8210, type: 3}
+    _characterPortraitImage: {fileID: 21300000, guid: dba9b8cad43c39f49be1abad71f14380, type: 3}
+  - _maxLevel: 3
+    _characterBodyImage: {fileID: 21300000, guid: 5ad901b1496dc044f8d471db9f0b0edf, type: 3}
+    _characterPortraitImage: {fileID: 21300000, guid: ec936f6f5386c9541beeacc23837de24, type: 3}
+  - _maxLevel: 5
+    _characterBodyImage: {fileID: 21300000, guid: a8344ea7ae71fe44eacae8ee9387f540, type: 3}
+    _characterPortraitImage: {fileID: 21300000, guid: cfd7f172066566a4aa98e6554bc36e3c, type: 3}

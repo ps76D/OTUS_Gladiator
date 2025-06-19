@@ -3,13 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using GameEngine;
+using GameEngine.CharacterSystem;
 using GameEngine.MessagesSystem;
 using PlayerProfileSystem;
 using Sirenix.OdinInspector;
-using UI;
 using UI.Infrastructure;
-using UI.Model;
-using UI.SO;
 using UnityEngine;
 using Zenject;
 
@@ -25,6 +23,11 @@ namespace GameManager
         
         [Inject]
         [SerializeField] private BattleConfig _battleConfig;
+        
+        /*[Inject]
+        [SerializeField] private CharacterService _characterService;*/
+        
+        [SerializeField] private SpriteRenderer _playerBodyImage;
         
         [SerializeField] private MessagesDatabase _messagesDatabase;
         
@@ -43,8 +46,12 @@ namespace GameManager
             _uiManager.Hud.OnAgilityIncreased += ShowMessageIncreaseAgility;
             _playerProfile.CharacterService.CurrentCharacterProfile.CharacterLevel.OnLevelUp += ShowMessageLevelUp;
             _uiManager.Hud.OnMoralChanged += ShowMessageMoralChanged;
+            _playerProfile.DayService.OnDayChanged += SetPlayerBodyImage;
             
             _messagesPull.Clear();
+            
+            _playerProfile.CharacterService.SetupCharacterViewImages();
+            SetPlayerBodyImage();
         }
 
         private void OnDisable()
@@ -54,10 +61,21 @@ namespace GameManager
             _uiManager.Hud.OnAgilityIncreased -= ShowMessageIncreaseAgility;
             _playerProfile.CharacterService.CurrentCharacterProfile.CharacterLevel.OnLevelUp -= ShowMessageLevelUp;
             _uiManager.Hud.OnMoralChanged -= ShowMessageMoralChanged;
+            _playerProfile.DayService.OnDayChanged -= SetPlayerBodyImage;
             
             _messagesPull.Clear();
         }
 
+        [Button]
+        public void SetPlayerBodyImage()
+        {
+            _playerBodyImage.sprite = _playerProfile.CharacterService.CurrentCharacterProfile.CharacterInfo._battleImage;
+        }
+
+        private void SetPlayerBodyImage(int value)
+        {
+            _playerBodyImage.sprite = _playerProfile.CharacterService.CurrentCharacterProfile.CharacterInfo._battleImage;
+        }
 
         [Button]
         private void ShowMessage(MessageModel messageModel)

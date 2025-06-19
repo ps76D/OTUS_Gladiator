@@ -41,6 +41,11 @@ namespace UI.Model
             _disposables.Add(_makingService.IsOpponentSelected.Subscribe(x => _isOpponentSelected.Value = x));
         }
 
+        public void Cleanup()
+        {
+            _makingService.DeselectOpponent();
+        }
+        
         public List<CharacterInfoSObj> GetCharacters()
         {
             return _characterDatabase.CharacterInfoDatabaseSObjs;

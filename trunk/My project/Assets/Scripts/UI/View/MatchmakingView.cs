@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using GameEngine.CharacterSystem;
 using UI.Model;
@@ -33,10 +32,6 @@ namespace UI
         private IMatchmakingModel _viewModel;
         public IMatchmakingModel ViewModel => _viewModel;
 
-        
-        
-        /*public Action OnBattleButtonClicked;*/
-
         public void Show(IMatchmakingModel viewModel)
         {
             _viewModel = viewModel;
@@ -54,8 +49,8 @@ namespace UI
             
             _disposables.Add(_viewModel.IsOpponentSelected.SubscribeToInteractable(_toBattleButton));
         }
-        
-        public void Close()
+
+        private void Close()
         {            
             Cleanup();
             
@@ -63,10 +58,10 @@ namespace UI
             _fadeCloseButton.onClick.RemoveListener(Close);
             _toBattleButton.onClick.RemoveListener(ToBattle);
 
+            _viewModel.Cleanup();
+            
             foreach (var disposable in _disposables)
                 disposable.Dispose();
-            
-            /*_viewModel.Dispose();*/
             
             gameObject.SetActive(false);
         }
@@ -74,25 +69,15 @@ namespace UI
         public void CloseDispose()
         {
             Close();
-            (_viewModel as IDisposable)?.Dispose(); // Уничтожаем модель
+            (_viewModel as IDisposable)?.Dispose();
             _viewModel = null;
         }
 
-        /*private IEnumerator DisposeCoroutine(IDisposable viewModel)
-        {
-            yield return new WaitForSeconds(1f);
-            yield return null;
-
-            viewModel.Dispose(); // Уничтожаем модель
-        }*/
         
         private void ToBattle()
         {
             _viewModel.StartMatch();
-            /*OnBattleButtonClicked?.Invoke();*/
             Close();
-            /*_uiManager.HideMatchmakingScreen();*/
-
         }
         private void SetupEnemyWidgets(IMatchmakingModel viewModel)
         {
@@ -134,7 +119,7 @@ namespace UI
 
         public void ScrollToCurrentOpponent(IMatchmakingModel viewModel)
         {
-            
+            //ToDo ScrollToCurrentOpponent
         }
 
         private void Cleanup()

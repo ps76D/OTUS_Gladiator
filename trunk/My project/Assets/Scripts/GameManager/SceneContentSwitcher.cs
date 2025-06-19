@@ -24,54 +24,58 @@ namespace GameManager
         {
             /*_uiManager.MatchmakingView.OnBattleButtonClicked += ShowBattleScene;*/
             _uiManager.GameBootstrapper.Game.StateMachine.GetState<BattleState>().OnBattleState += ShowBattleScene;
-            _uiManager.GameBootstrapper.Game.StateMachine.GetState<LoadInGameState>().OnLoadInGameState += ShowTrainingScene;
+            _uiManager.GameBootstrapper.Game.StateMachine.GetState<LoadInGameState>().OnGameLoopSceneLoaded += ShowTrainingScene;
             /*_uiManager.OnBackToTraining += ShowTrainingScene;*/
         }
 
         private void OnDisable()
         {
             _uiManager.GameBootstrapper.Game.StateMachine.GetState<BattleState>().OnBattleState -= ShowBattleScene;
-            _uiManager.GameBootstrapper.Game.StateMachine.GetState<LoadInGameState>().OnLoadInGameState -= ShowTrainingScene;
+            _uiManager.GameBootstrapper.Game.StateMachine.GetState<LoadInGameState>().OnGameLoopSceneLoaded -= ShowTrainingScene;
         }
         
-        public void ShowScene<T>()
+        public void ShowScene(SceneContentView sceneToLoad)
         { 
             foreach (SceneContentView sceneView in _sceneViews)
             {
-                bool isTarget = sceneView is T;
-                sceneView.gameObject.SetActive(isTarget);
+
+                sceneView.gameObject.SetActive(false);
             }
+            
+            sceneToLoad.gameObject.SetActive(true);
+            
         }
         
         [Button]
         public void ShowTrainingScene()
         {
-            StartCoroutine(ChangeSceneToTraining<TrainingSceneContentView>());
+            StartCoroutine(ChangeSceneToTraining(_trainingSceneContentView));
         }
         
         [Button]
         public void ShowBattleScene()
         {
-            StartCoroutine(ChangeSceneToBattle<BattleSceneView>());
+            StartCoroutine(ChangeSceneToBattle(_battleView));
 
         }
 
-        private IEnumerator ChangeSceneToBattle<T>()
+        private IEnumerator ChangeSceneToBattle<T>(T sceneToLoad) where T : SceneContentView
         {
             _uiManager.GameBootstrapper.LoadingCurtain.Hide();
             yield return new WaitForSeconds(1f);
 
-            ShowScene<T>();
+            ShowScene(sceneToLoad);
             
             _uiManager.GameBootstrapper.LoadingCurtain.Show();
         }
         
-        private IEnumerator ChangeSceneToTraining<T>()
+        private IEnumerator ChangeSceneToTraining<T>(T sceneToLoad) where T : SceneContentView
         {
-            _uiManager.GameBootstrapper.LoadingCurtain.Hide();
-            yield return new WaitForSeconds(1f);
+            /*_uiManager.GameBootstrapper.LoadingCurtain.Hide();
+            yield return new WaitForSeconds(1f);*/
+            yield return null;
             
-            ShowScene<T>();
+            ShowScene(sceneToLoad);
 
             _uiManager.GameBootstrapper.LoadingCurtain.Show();
         }

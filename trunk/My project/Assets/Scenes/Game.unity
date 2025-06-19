@@ -206,7 +206,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &56845799
 Transform:
   m_ObjectHideFlags: 0
@@ -247,6 +247,8 @@ MonoBehaviour:
           _icon: {fileID: 0}
           _battleImage: {fileID: 0}
   _uiManager: {fileID: 0}
+  _battleConfig: {fileID: 0}
+  _playerBodyImage: {fileID: 1900258674}
   _messagesDatabase: {fileID: 11400000, guid: 06fb0a3f702e9a546bdb9bc078738280, type: 2}
   _messagesRoot: {fileID: 1895260775}
   _messageViewPrefab: {fileID: 839193227230637422, guid: a1c2fe27f8beeb345a62664378ec7969, type: 3}

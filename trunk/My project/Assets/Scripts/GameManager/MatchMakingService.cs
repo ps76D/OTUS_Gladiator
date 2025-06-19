@@ -46,6 +46,7 @@ namespace GameManager
             UnitBattleData playerBattleData = SetUnitBattleData(_playerCharacterProfile.CharacterStatsInfo, playerMoralModifier);
             UnitBattleData opponentBattleData = SetUnitBattleData(_opponentProfile.CharacterStatsInfo,1);
 
+            playerBattleData.Sprite = _playerCharacterProfile.CharacterInfo._battleImage;
             opponentBattleData.Sprite = _opponentProfile.CharacterInfo._battleImage;
             
             playerBattleData.MoralModifier = playerMoralModifier;

@@ -30,6 +30,7 @@ namespace Infrastructure.DI
         [SerializeField] private PlayerProfileDefault _playerProfileDefault;
         [SerializeField] private CharacterInfoSObj _characterInfoDataDefault;
         [SerializeField] private CharacterDatabase _characterDatabase;
+        [SerializeField] private CharacterVisualDatabase _characterVisualDatabase;
         [SerializeField] private MoralConfig _moralConfig;
         [SerializeField] private MatchMakingService _matchMakingService;
         [SerializeField] private BattleService _battleService;
@@ -68,6 +69,7 @@ namespace Infrastructure.DI
 
             Container.Bind<CharacterInfoSObj>().FromInstance(_characterInfoDataDefault).AsSingle().NonLazy();
             Container.Bind<CharacterDatabase>().FromInstance(_characterDatabase).AsSingle().NonLazy();
+            Container.Bind<CharacterVisualDatabase>().FromInstance(_characterVisualDatabase).AsSingle().NonLazy();
 
             Container.Bind<MessagesDatabase>().FromInstance(_messagesDatabase).AsSingle().NonLazy();
             /*Container.Bind<CharacterDatabase>().FromInstance(_enemyDatabase).AsSingle().NonLazy();*/

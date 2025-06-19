@@ -40,6 +40,7 @@ namespace UI.Model
             _uiManager.HideWinPopup();
             yield return new WaitForSeconds(1f);
             _uiManager.HideBattleScreen();
+            _uiManager.MatchmakingView.CloseDispose();
         }
 
         public void GiveRewards()

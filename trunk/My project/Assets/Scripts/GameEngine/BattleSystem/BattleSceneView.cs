@@ -272,6 +272,7 @@ namespace GameEngine
 
         private void StartBattle()
         {
+            _playerBattleImage.sprite = _battleService.Player.Sprite;
             _opponentBattleImage.sprite = _battleService.Opponent.Sprite;
             
             _playerAnimator.Play(BattleConst.STAND);

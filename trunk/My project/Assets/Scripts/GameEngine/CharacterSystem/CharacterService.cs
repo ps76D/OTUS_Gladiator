@@ -7,7 +7,7 @@ using Zenject;
 namespace GameEngine.CharacterSystem
 {
     [Serializable]
-    public sealed class CharacterService
+    public sealed class CharacterService: IDisposable
     {
         [Inject]
         private DayService _dayService;
@@ -16,6 +16,9 @@ namespace GameEngine.CharacterSystem
         private CharacterDatabase _characterDatabase;
         [Inject]
         private CharacterInfoSObj _characterInfoDefault;
+        
+        [Inject]
+        private CharacterVisualDatabase _characterVieDatabase;
         
         private CharacterInfoSObj _currentCharacterInfoSObj;
         
@@ -39,25 +42,57 @@ namespace GameEngine.CharacterSystem
             
             _currentCharacterInfoSObj = _characterDatabase.CharacterInfoDatabaseSObjs.
                 Find(c => c.CharacterGuid == _currentCharacterProfile.CharacterInfo._guid);
-            
-            _currentCharacterProfile.CharacterInfo._icon = _currentCharacterInfoSObj.CharacterIcon;
-            _currentCharacterProfile.CharacterInfo._battleImage = _currentCharacterInfoSObj.CharacterBattleImage;
+
+            UpdateCharacterViewImages();
+            /*_currentCharacterProfile.CharacterInfo._icon = _currentCharacterInfoSObj.CharacterIcon;
+            _currentCharacterProfile.CharacterInfo._battleImage = _currentCharacterInfoSObj.CharacterBattleImage;*/
             
             _currentCharacterProfile.CharacterStatsInfo.SetStats(characterData);
 
             _currentCharacterProfile.ActionsService.BaseMaxActionsCount = characterData.BaseMaxActionsCount;
             _currentCharacterProfile.ActionsService.MaxActionsCount.Value = characterData.MaxActionsCount;
             _currentCharacterProfile.ActionsService.AvailableActions.Value = characterData.AvailableActions;
+
+            _dayService.OnDayChanged += UpdateCharacterViewImages;
             
             OnCharacterDataChanged?.Invoke(_currentCharacterProfile);
         }
-        
+
+        private void UpdateCharacterViewImages(int value)
+        {
+            SetupCharacterViewImages();
+        }
+        private void UpdateCharacterViewImages()
+        {
+            SetupCharacterViewImages();
+        }
+
         [Button]
         public void CreateCharacter(CharacterInfoSObj characterInfo)
         {
             _currentCharacterProfile = new CharacterProfile(characterInfo, _dayService);
             
             OnCharacterDataChanged?.Invoke(_currentCharacterProfile);
+        }
+
+        public void SetupCharacterViewImages()
+        {
+            var level = _currentCharacterProfile.CharacterLevel.CurrentLevel;
+
+            foreach (var view in _characterVieDatabase.CharacterViews)
+            {
+                if (level >= view.MaxLevel)
+                {
+                    _currentCharacterProfile.CharacterInfo._icon = view.CharacterPortraitImage;
+                    _currentCharacterProfile.CharacterInfo._battleImage = view.CharacterBodyImage; 
+                }
+            }
+        }
+
+
+        public void Dispose()
+        {
+            _dayService.OnDayChanged -= UpdateCharacterViewImages;
         }
     }
 }

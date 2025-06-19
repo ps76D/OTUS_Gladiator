@@ -12,6 +12,7 @@ namespace UI.Model
         List<CharacterInfoSObj> GetCharacters();
         CharacterInfo GetCurrentCharacter();
         void StartMatch();
+        void Cleanup();
 
         MatchMakingService MatchMakingService {
             get;

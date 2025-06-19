@@ -578,6 +578,7 @@ MonoBehaviour:
   _playerProfileDefault: {fileID: 11400000, guid: 80a2af59dec551946969e9d8565e2417, type: 2}
   _characterInfoDataDefault: {fileID: 11400000, guid: 49f6266bfe3643b45b18c9acc206d366, type: 2}
   _characterDatabase: {fileID: 11400000, guid: e7b5d65b12260de4dacc36da2bfcc0bc, type: 2}
+  _characterVisualDatabase: {fileID: 11400000, guid: 3630bb73ec5ebc74ea6219632400ee68, type: 2}
   _moralConfig: {fileID: 11400000, guid: 3e468d2ad8248c24ebe7a0947cd6f4cf, type: 2}
   _matchMakingService: {fileID: 486572270}
   _battleService: {fileID: 722976859}
