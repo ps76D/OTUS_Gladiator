@@ -1,10 +1,12 @@
-﻿using UniRx;
+﻿using GameEngine;
+using UniRx;
 using UnityEngine.Localization;
 
 namespace UI.Model
 {
     public interface IHudModel
     {
+        GameConfig GameConfig { get; }
         IReadOnlyReactiveProperty<int> DayCount { get; }
         IReadOnlyReactiveProperty<int> MoneyCount { get; }
         IReadOnlyReactiveProperty<int> LevelCount { get; }
@@ -12,6 +14,7 @@ namespace UI.Model
         IReadOnlyReactiveProperty<int> RequiredExpCount { get; }
         IReadOnlyReactiveProperty<bool> LevelUpButtonIsInteractable { get; }
         IReadOnlyReactiveProperty<bool> ActionsButtonIsInteractable { get; }
+        IReadOnlyReactiveProperty<bool> MoneyEnoughForRest { get; }
         IReadOnlyReactiveProperty<int> CurrentMoral { get; }
         void EndDay();
         void InGameMenuShow();
@@ -23,5 +26,7 @@ namespace UI.Model
         void DegreaseMoral(int moral);
         void Rest();
         void ShowMatchmakingScreen();
+        
+        
     }
 }

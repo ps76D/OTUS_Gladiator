@@ -29,6 +29,9 @@ namespace PlayerProfileSystem
         [Inject]
         private MoralConfig _moralConfig;
         
+        public MoneyStorage MoneyStorage => _moneyStorage;
+        public MoralService MoralService => _moralService;
+        
         public PlayerProfile PlayerProfile
         {
             get => _playerProfile;

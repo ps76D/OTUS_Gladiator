@@ -30,6 +30,8 @@ namespace GameManager
         public CharacterProfile OpponentProfile => _opponentProfile;
         
         public Action OnUnitSelected;
+        
+        public CharacterInfoSObj CurrentOpponent { get; private set; }
 
         [Button]
         public void StartMatch()
@@ -57,6 +59,7 @@ namespace GameManager
         public void SelectOpponent(CharacterInfoSObj characterInfo)
         {
             _opponentProfile = new CharacterProfile(characterInfo, _dayService);
+            CurrentOpponent = characterInfo;
         }
 
         private UnitBattleData SetUnitBattleData(CharacterStatsInfo statsInfo, float moralModifier)

@@ -71,14 +71,6 @@ namespace UI
             UpdatePlayerEnergy(_viewModel.GetPlayerFullEnergy());
             UpdateOpponentHealth(_viewModel.GetOpponentFullHealth());
             UpdateOpponentEnergy(_viewModel.GetOpponentFullEnergy());
-            /*Cleanup();
-
-            SetupEnemyWidgets(_viewModel);
-            SetupPlayerWidget(_viewModel);
-
-            _backButton.onClick.AddListener(Close);
-            _fadeCloseButton.onClick.AddListener(Close);
-            _toBattleButton.onClick.AddListener(ToBattle);*/
         }
 
         private void ShowHidePowerfulAttackButton(bool value)
@@ -123,20 +115,13 @@ namespace UI
             _blockButton.onClick.RemoveListener(_viewModel.PlayerBlocks);
             _skipTurnButton.onClick.RemoveListener(_viewModel.PlayerSkipTurn);
             _giveUpButton.onClick.RemoveListener(_viewModel.PlayerGiveUp);
-            
-            /*_attackOppButton.onClick.RemoveListener(_viewModel.OpponentAttack);
-            _preparePowerfulAttackOppButton.onClick.RemoveListener(_viewModel.OpponentPrepareAttack);
-            _powerfulAttackOppButton.onClick.RemoveListener(_viewModel.OpponentPowerfulAttack);
-            _blockOppButton.onClick.RemoveListener(_viewModel.OpponentBlocks);
-            _skipTurnOppButton.onClick.RemoveListener(_viewModel.OpponentSkipTurn);
-            _giveUpOppButton.onClick.RemoveListener(_viewModel.OpponentGiveUp);*/
-
+ 
             foreach (var disposable in _disposables)
                 disposable.Dispose();
             
             gameObject.SetActive(false);
             
-            (_viewModel as IDisposable)?.Dispose(); // Уничтожаем модель
+            (_viewModel as IDisposable)?.Dispose();
             _viewModel = null;
         }
     }

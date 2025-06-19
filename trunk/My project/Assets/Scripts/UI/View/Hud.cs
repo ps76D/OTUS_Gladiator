@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using GameEngine.CharacterSystem;
-using GameEngine.CharacterSystem.StatsSystem;
 using TMPro;
 using UI.Model;
 using UniRx;
@@ -26,6 +25,7 @@ namespace UI
         [SerializeField] private TMP_Text _levelCountText;
         [SerializeField] private TMP_Text _expCountText;
         [SerializeField] private TMP_Text _currentMoralText;
+        [SerializeField] private TMP_Text _restPriceText;
         [SerializeField] private Slider _expSlider;
         
         [SerializeField] private StatsView _statsView;
@@ -40,8 +40,10 @@ namespace UI
         
         public Action OnMoralChanged;
         
-        
-        
+        public IReadOnlyReactiveProperty<bool> ActionsButtonIsInteractable => _actionsButtonIsInteractable;
+        private readonly ReactiveProperty<bool> _actionsButtonIsInteractable = new ();
+        public IReadOnlyReactiveProperty<bool> MoneyEnoughForRest => _moneyEnoughForRest;
+        private readonly ReactiveProperty<bool> _moneyEnoughForRest = new ();
         
         private IHudModel _viewModel;
         public IHudModel ViewModel => _viewModel;
@@ -57,11 +59,18 @@ namespace UI
             _disposables.Add(viewModel.ExpCount.Subscribe(UpdateExpText));
             _disposables.Add(viewModel.LevelCount.Subscribe(UpdateLevelText));
             _disposables.Add(viewModel.CurrentMoral.Subscribe(UpdateMoralText));
+            
+            _disposables.Add(viewModel.ActionsButtonIsInteractable.Subscribe(CheckRestButtonIsInteractable));
+            _disposables.Add(viewModel.MoneyEnoughForRest.Subscribe(CheckRestButtonIsInteractable));
+            
+
             _disposables.Add(viewModel.LevelUpButtonIsInteractable.SubscribeToInteractable(_levelUpButton));
             _disposables.Add(viewModel.ActionsButtonIsInteractable.SubscribeToInteractable(_trainStatStrengthButton));
             _disposables.Add(viewModel.ActionsButtonIsInteractable.SubscribeToInteractable(_trainStatEnduranceButton));
             _disposables.Add(viewModel.ActionsButtonIsInteractable.SubscribeToInteractable(_trainStatAgilityButton));
-            _disposables.Add(viewModel.ActionsButtonIsInteractable.SubscribeToInteractable(_restButton));
+            /*_disposables.Add(viewModel.ActionsButtonIsInteractable.SubscribeToInteractable(_restButton));*/
+            
+            /*_disposables.Add(viewModel.MoneyEnoughForRest.SubscribeToInteractable(_restButton));*/
 
             _endDayButton.onClick.AddListener(EndDayButtonClicked);
             _inGameMenuButton.onClick.AddListener(InGameMenuButtonClicked);
@@ -76,6 +85,32 @@ namespace UI
             _statsView.Show(new StatsModel(_uiManager));
 
             _actionsPanelView.Show(new ActionsPanelModel(_uiManager));
+            
+            UpdateRestPriceText();
+        }
+
+        private void CheckRestButtonIsInteractable(bool value)
+        {
+            if (_viewModel.ActionsButtonIsInteractable.Value && _viewModel.MoneyEnoughForRest.Value)
+            {
+                _restButton.interactable = true;
+            }
+            else
+            {
+                _restButton.interactable = false;
+            }
+        }
+        
+        /*private void CheckActionsButtonIsInteractable(bool value)
+        {
+            _actionsButtonIsInteractable.Value = value;
+        }*/
+        
+        
+
+        private void UpdateRestPriceText()
+        {
+            _restPriceText.text = _viewModel.GameConfig.RestPrice.ToString();
         }
 
         public void Hide()
@@ -87,8 +122,11 @@ namespace UI
             _trainStatStrengthButton.onClick.RemoveListener(TrainStatStrength);
             _trainStatEnduranceButton.onClick.RemoveListener(TrainStatEndurance);
             _trainStatAgilityButton.onClick.RemoveListener(TrainStatAgility);
-            _matchmakingButton.onClick.RemoveListener(MatchmakingButtonClicked);
+            _levelUpButton.onClick.RemoveListener(LevelUpButtonClicked);
+            _restButton.onClick.RemoveListener(RestButtonClicked);
             
+            _matchmakingButton.onClick.RemoveListener(MatchmakingButtonClicked);
+
             foreach (var disposable in _disposables)
                 disposable.Dispose();
             

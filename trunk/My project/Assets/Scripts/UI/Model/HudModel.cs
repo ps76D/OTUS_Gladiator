@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using GameEngine;
 using GameEngine.ActionsSystem;
 using GameEngine.CharacterSystem;
-using GameEngine.CharacterSystem.StatsSystem;
 using GameEngine.DaySystem;
 using Infrastructure;
 using UI.Infrastructure;
@@ -19,17 +18,15 @@ namespace UI.Model
         private readonly MoneyStorage _moneyStorage;
         private readonly MoralService _moralService;
         private readonly CharacterService _characterService;
+        private readonly GameConfig _gameConfig;
+        
+        public GameConfig GameConfig => _gameConfig;
         
         public IReadOnlyReactiveProperty<int> DayCount => _dayCount;
         private readonly ReactiveProperty<int> _dayCount = new(0);
         
         public IReadOnlyReactiveProperty<int> MoneyCount => _moneyCount;
         private readonly ReactiveProperty<int> _moneyCount = new(0);
-        
-        /*public IReadOnlyReactiveProperty<int> AvailableActions => _availableActions;
-        private readonly ReactiveProperty<int> _availableActions = new(0);
-        public IReadOnlyReactiveProperty<int> MaxActionsCount => _maxActionsCount;
-        private readonly ReactiveProperty<int> _maxActionsCount = new(0);*/
         
         public IReadOnlyReactiveProperty<int> LevelCount => _levelCount;
         private readonly ReactiveProperty<int> _levelCount = new(0);
@@ -47,6 +44,9 @@ namespace UI.Model
         public IReadOnlyReactiveProperty<bool> ActionsButtonIsInteractable => _actionsButtonIsInteractable;
         private readonly ReactiveProperty<bool> _actionsButtonIsInteractable = new ();
         
+        public IReadOnlyReactiveProperty<bool> MoneyEnoughForRest => _moneyEnoughForRest;
+        private readonly ReactiveProperty<bool> _moneyEnoughForRest = new ();
+        
         public IReadOnlyReactiveProperty<int> CurrentMoral => _currentMoral;
         private readonly ReactiveProperty<int> _currentMoral = new(0);
         
@@ -55,6 +55,8 @@ namespace UI.Model
         public HudModel(UIManager uiManager)
         {
             _uiManager = uiManager;
+            
+            _gameConfig = uiManager.GameConfig;
             
             _dayService = uiManager.ProfileService.PlayerProfile.DayService;
             _moneyStorage = uiManager.ProfileService.PlayerProfile.MoneyStorage;
@@ -65,6 +67,7 @@ namespace UI.Model
             
             _dayService.OnDayChanged += UpdateDayCount;
             _moneyStorage.OnMoneyChanged += UpdateMoneyCount;
+            _moneyStorage.OnMoneyChanged += CheckIfMoneyEnoughForRest;
             characterService.CurrentCharacterProfile.CharacterLevel.OnExperienceChanged += UpdateExp;
             characterService.CurrentCharacterProfile.CharacterLevel.OnRequiredExperienceChanged += UpdateRequiredExp;
             characterService.CurrentCharacterProfile.CharacterLevel.OnLevelUp += UpdateLevel;
@@ -89,6 +92,8 @@ namespace UI.Model
             UpdateExp(characterService.CurrentCharacterProfile.CharacterLevel.CurrentExperience.Value);
             UpdateRequiredExp(characterService.CurrentCharacterProfile.CharacterLevel.RequiredExperience);
             UpdateMoralState(_moralService.CurrentMoral.Value);
+
+            CheckIfMoneyEnoughForRest();
         }
 
         public void EndDay()
@@ -96,6 +101,30 @@ namespace UI.Model
             _dayService.NextDay();
             //TODO Перенести магические цифры в глобальный конфиг геймплея
             IncreaseMoral(1);
+        }
+
+        private void CheckIfMoneyEnoughForRest(int money)
+        {
+            if (_moneyStorage.Money >= _gameConfig.RestPrice)
+            {
+                _moneyEnoughForRest.Value = true;
+            }
+            else
+            {
+                _moneyEnoughForRest.Value = false;
+            }
+        }
+
+        private void CheckIfMoneyEnoughForRest()
+        {
+            if (_moneyStorage.Money >= _gameConfig.RestPrice)
+            {
+                _moneyEnoughForRest.Value = true;
+            }
+            else
+            {
+                _moneyEnoughForRest.Value = false;
+            }
         }
 
         private void UpdateMoralState(int moral)
@@ -153,12 +182,12 @@ namespace UI.Model
             var level = _characterService.CurrentCharacterProfile.CharacterLevel;
             
             //TODO Сделать расчет прироста опыта при прокачке
-            level.AddExperience(25);
+            level.AddExperience(_gameConfig.LeveExpIncreaseByTraining);
             
             CharacterStat stat = _characterStatsInfo.Value.GetStat(statName);
             
             //TODO Сделать прирост опыта стата зависящим от разных условий
-            stat.AddStatExperience(1);
+            stat.AddStatExperience(_gameConfig.StatExpIncreaseByTraining);
 
             stat.IncreaseValue();
             
@@ -176,22 +205,23 @@ namespace UI.Model
         {
             _uiManager.ProfileService.PlayerProfile.CharacterService.CurrentCharacterProfile.ActionsService.SpendAction(action);
         }
-        
-        public void Dispose()
-        {
-            foreach (var disposable in _disposables)
-                disposable.Dispose();
-        }
-        
+
         public void Rest()
         {
-            SpendAction(1);
-            IncreaseMoral(5);
+            SpendAction(_gameConfig.RestActionRequired);
+            IncreaseMoral(_gameConfig.RestMoralIncrease);
+            _moneyStorage.SpendMoney(_gameConfig.RestPrice);
         }
 
         public void ShowMatchmakingScreen()
         {
             _uiManager.ShowMatchmakingScreen();
+        }
+
+        public void Dispose()
+        {
+            foreach (var disposable in _disposables)
+                disposable.Dispose();
         }
     }
 }

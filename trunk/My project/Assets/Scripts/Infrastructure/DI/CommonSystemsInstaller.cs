@@ -34,6 +34,7 @@ namespace Infrastructure.DI
         [SerializeField] private MatchMakingService _matchMakingService;
         [SerializeField] private BattleService _battleService;
         [SerializeField] private BattleConfig _battleConfig;
+        [SerializeField] private GameConfig _gameConfig;
         [SerializeField] private MessagesDatabase _messagesDatabase;
         /*[SerializeField] private CharacterDatabase _enemyDatabase;*/
         
@@ -53,6 +54,7 @@ namespace Infrastructure.DI
             
             /*Container.Bind<ActionsService>().FromNew().AsSingle().NonLazy();*/
             /*Container.Bind<ISaveLoader>().To<ActionsSaveLoader>().AsCached().NonLazy();*/
+            Container.Bind<GameConfig>().FromInstance(_gameConfig).AsSingle().NonLazy();
             Container.Bind<MoralConfig>().FromInstance(_moralConfig).AsSingle().NonLazy();
 
             Container.Bind<MoralService>().FromNew().AsSingle().NonLazy();

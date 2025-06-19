@@ -33,34 +33,15 @@ namespace GameEngine
         private readonly ReactiveProperty<bool> _isPlayerPowerfulAttackPrepared = new ();
         
         [SerializeField] private bool _isOpponentPowerfulAttackPrepared;
-
-        /*[SerializeField] private bool _isOpponentDecideToPowerfulAttack;*/
-        /*[SerializeField] private bool _isOpponentDecideToAttack;*/
         [SerializeField] private bool _isEnoughOpponentEnergy;
-
-
-        /*[SerializeField] private bool _isEndTurn;*/
-        /*[SerializeField] private bool _isOpponentTurn;*/
-
-        /*[SerializeField] private bool _isOpponentDead;*/
         [SerializeField] private bool _isPlayerDead;
-
-        /*[SerializeField] private bool _isOpponentDecideToBlock;*/
-
+        
         public IReadOnlyReactiveProperty<bool> IsPlayerTurn => _isPlayerTurn;
         private readonly ReactiveProperty<bool> _isPlayerTurn = new ();
 
         public float PlayerAnimTime => _playerAnimTime;
-        /*public bool IsEndTurn => _isEndTurn;
-        public bool IsOpponentTurn => _isOpponentTurn;
-        public bool IsOpponentDead => _isOpponentDead;
-        public bool IsPlayerDead => _isPlayerDead;
-        public bool IsOpponentDecideToBlock => _isOpponentDecideToBlock;
-        public bool IsPlayerBlocks => _isPlayerBlocks;
-        public bool IsOpponentBlocks => _isOpponentBlocks;*/
+
         public bool IsOpponentPowerfulAttackPrepared => _isOpponentPowerfulAttackPrepared;
-        /*public bool IsOpponentDecideToPowerfulAttack => _isOpponentDecideToPowerfulAttack;
-        public bool IsOpponentDecideToAttack => _isOpponentDecideToAttack;*/
 
         public UnitBattleData Player => _player;
         public UnitBattleData Opponent => _opponent;
@@ -110,15 +91,7 @@ namespace GameEngine
             _isOpponentBlocks = false;
             _isPlayerPowerfulAttackPrepared.Value = false; 
             _isOpponentPowerfulAttackPrepared = false;
-            /*_isOpponentDecideToPowerfulAttack = false;*/
-            /*_isOpponentDecideToAttack = false;*/
             _isEnoughOpponentEnergy = false;
-            /*_isEndTurn = false;*/
-            
-            /*_isOpponentTurn = false;*/
-            
-            /*_isOpponentDead = false;*/
-            /*_isOpponentDecideToBlock = false;*/
             
             _isPlayerTurn.Value = true;
             
@@ -135,22 +108,15 @@ namespace GameEngine
         {
             OnOpponentTurnEnd?.Invoke();
             
-            /*_isOpponentTurn = false;*/
-
-            /*_isEndTurn = true; */
-            
             yield return new WaitForSeconds(_battleConfig.NextTurnDelayTime);
             
             _isPlayerBlocks = false;
             _isPlayerTurn.Value = true;
-            /*_isEndTurn = false;*/
         }
         
         [Button]
         public void SetIsPlayerTurn()
         {
-            /*CleanupForNextTurn();*/
-            
             StartCoroutine(SetIsPlayerTurnCoroutine());
         }
 
@@ -161,8 +127,6 @@ namespace GameEngine
             yield return new WaitForSeconds(_battleConfig.NextTurnDelayTime);
             
             _isOpponentBlocks = false;
-            /*_isEndTurn = false;*/
-            /*_isOpponentTurn = true;*/
             
             OnOpponentTurn?.Invoke();
         }
@@ -299,8 +263,6 @@ namespace GameEngine
             
             Debug.Log("<color=magenta>Opponent Blocks</color>");
             
-            /*_isOpponentDecideToBlock = false;*/
-            
             SetIsPlayerTurn();
         }
 
@@ -425,7 +387,6 @@ namespace GameEngine
         {
             if (!CheckIsPlayerTurn()) return;
             _player.Health.Value = 0;
-            /*OnPlayerHealthChanged?.Invoke(_player.Health.Value);*/
         }
         
         [Button]
@@ -433,7 +394,6 @@ namespace GameEngine
         {
             if (CheckIsPlayerTurn()) return;
             _opponent.Health.Value = 0;
-            /*OnOpponentHealthChanged?.Invoke(_opponent.Health.Value);*/
         }
         
         [Button]
@@ -479,7 +439,6 @@ namespace GameEngine
         {
             if (_player.Health.Value <= 0)
             {
-                /*_player.Health.Value = 0;*/
                 OnPlayerDead?.Invoke();
                 _isPlayerDead = true;
                 StartCoroutine(Lose());
@@ -490,7 +449,6 @@ namespace GameEngine
         {
             if (_player.Energy.Value <= 0)
             {
-                /*_player.Energy.Value = 0;*/
                 OnPlayerDead?.Invoke();
                 _isPlayerDead = true;
                 StartCoroutine(Lose());
@@ -501,9 +459,7 @@ namespace GameEngine
         {
             if (_opponent.Health.Value <= 0)
             {
-                /*_opponent.Health.Value = 0;*/
                 OnOpponentDead?.Invoke();
-                /*_isOpponentDead = true;*/
 
                 if (!_isPlayerDead) StartCoroutine(Win());
             }
@@ -513,9 +469,7 @@ namespace GameEngine
         {
             if (_opponent.Energy.Value <= 0)
             {
-                /*_opponent.Energy.Value = 0;*/
                 OnOpponentDead?.Invoke();
-                /*_isOpponentDead = true;*/
                 
                 if (!_isPlayerDead) StartCoroutine(Win());
             }
@@ -546,12 +500,10 @@ namespace GameEngine
             {
                 Debug.Log("<color=magenta>Opponent Decided to Block</color>");
                 OnOpponentDecideToBlock?.Invoke();
-                /*_isOpponentDecideToBlock = true;*/
             }
             else
             {
                 OnOpponentDecideToNotBlock?.Invoke();
-                /*_isOpponentDecideToBlock = false;*/
                 Debug.Log("<color=magenta>Opponent Decided to Choose Attack</color>");
             }
         }
@@ -562,17 +514,11 @@ namespace GameEngine
             if (chance >= value)
             {
                 Debug.Log("<color=magenta>Opponent Decided to Prepare Powerful Attack</color>");
-                /*_isOpponentDecideToPowerfulAttack = true;*/
-                /*_isOpponentDecideToAttack = false;*/
-
                 OnOpponentDecideToPowerfulAttack?.Invoke();
             }
             else
             {
                 Debug.Log("<color=magenta>Opponent Decided to Attack</color>");
-                /*_isOpponentDecideToAttack = true;*/
-                /*_isOpponentDecideToPowerfulAttack = false;*/
-                
                 OnOpponentDecideToAttack?.Invoke();
             }
         }
@@ -594,12 +540,5 @@ namespace GameEngine
             foreach (var disposable in _disposables)
                 disposable.Dispose();
         }
-
-        /*public void CleanupForNextTurn()
-        {
-            /*_isOpponentDecideToBlock = false;#1#
-            /*_isOpponentDecideToPowerfulAttack = false;#1#
-            /*_isOpponentDecideToAttack = false;#1#
-        }*/
     }
 }

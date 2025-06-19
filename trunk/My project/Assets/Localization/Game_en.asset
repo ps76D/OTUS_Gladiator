@@ -354,6 +354,10 @@ MonoBehaviour:
     m_Localized: Music Volume
     m_Metadata:
       m_Items: []
+  - m_Id: 331387841330176000
+    m_Localized: 'Awards received:'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

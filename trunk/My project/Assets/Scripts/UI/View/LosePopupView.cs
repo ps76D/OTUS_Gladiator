@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UI.Model;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +12,7 @@ namespace UI
     public class LosePopupView : UIScreen
     {
         [SerializeField] private Button _nextButton;
+        [SerializeField] private TMP_Text _moralChanged;
         
         private ILosePopupModel _viewModel;
         public ILosePopupModel ViewModel => _viewModel;
@@ -22,6 +26,8 @@ namespace UI
             gameObject.SetActive(true);
 
             _nextButton.onClick.AddListener(BackToTraining);
+            
+            _disposables.Add(_viewModel.MoralLevelChanged.Subscribe(UpdateMoralLabel));
         }
 
         public void Close()
@@ -38,6 +44,11 @@ namespace UI
         {
             _viewModel.BackToTraining();
             Close();
+        }
+        
+        private void UpdateMoralLabel(string text)
+        {
+            _moralChanged.text = text;
         }
     }
 }

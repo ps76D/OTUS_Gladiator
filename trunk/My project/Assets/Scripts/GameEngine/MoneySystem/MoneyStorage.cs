@@ -31,8 +31,15 @@ namespace GameEngine
         [Button]
         public void SpendMoney(int range)
         {
-            _money -= range;
-            OnMoneyChanged?.Invoke(_money);
+            if (_money >= range)
+            {            
+                _money -= range;
+                OnMoneyChanged?.Invoke(_money);
+            }
+            else
+            {
+                Debug.Log("Not enough money!");
+            }
         }
     }
 }

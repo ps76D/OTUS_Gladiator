@@ -40,6 +40,9 @@ namespace UI.Infrastructure
         [Inject]
         private SoundSaveLoader _soundSaveLoader;
         
+        [Inject]
+        private GameConfig _gameConfig;
+        
         public PlaylistController MainTheme;
         
         [SerializeField] private MainMenu _mainMenuScreen;
@@ -65,6 +68,7 @@ namespace UI.Infrastructure
         public WinPopupView WinPopupView => _winPopupView;
         public LosePopupView LosePopupView => _losePopupView;
         public SettingsView SettingsView => _settingsView;
+        public GameConfig GameConfig => _gameConfig;
 
         public Action OnBackToTraining;
         
@@ -208,12 +212,22 @@ namespace UI.Infrastructure
             OnBackToTraining?.Invoke();
         }
         
-        private IEnumerator DisposeCoroutine(IDisposable viewModel, float delay)
+        public IEnumerator DisposeCoroutine<T>(T viewModel, float delay)
         {
             yield return new WaitForSeconds(delay);
             yield return null;
             
-            viewModel.Dispose(); // Уничтожаем модель
+            (viewModel as IDisposable)?.Dispose();
+        }
+
+        public void DisposeModel<T>(T viewModel)
+        {
+            (viewModel as IDisposable)?.Dispose();
+        }
+        
+        public void DisposeModelWithDelay<T>(T viewModel, float delay)
+        {
+            StartCoroutine(DisposeCoroutine(viewModel, delay));
         }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UI.Model;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +12,8 @@ namespace UI
     public class WinPopupView : UIScreen
     {
         [SerializeField] private Button _nextButton;
+        [SerializeField] private TMP_Text _moneyReward;
+        [SerializeField] private TMP_Text _moralChanged;
         
         private IWinPopupModel _viewModel;
         public IWinPopupModel ViewModel => _viewModel;
@@ -22,6 +27,9 @@ namespace UI
             gameObject.SetActive(true);
             
             _nextButton.onClick.AddListener(BackToTraining);
+
+            _disposables.Add(_viewModel.RewardCount.Subscribe(UpdateRewardCount));
+            _disposables.Add(_viewModel.MoralLevelChanged.Subscribe(UpdateMoralLabel));
         }
         
         public void Close()
@@ -30,8 +38,6 @@ namespace UI
 
             foreach (var disposable in _disposables)
                 disposable.Dispose();
-
-            /*_viewModel.Dispose();*/
             
             gameObject.SetActive(false);
         }
@@ -40,7 +46,16 @@ namespace UI
         {
             _viewModel.BackToTraining();
             Close();
-            /*_uiManager.HideWinPopup();*/
+        }
+
+        private void UpdateRewardCount(int count)
+        {
+            _moneyReward.text = count.ToString();
+        }
+        
+        private void UpdateMoralLabel(string text)
+        {
+            _moralChanged.text = text;
         }
     }
 }

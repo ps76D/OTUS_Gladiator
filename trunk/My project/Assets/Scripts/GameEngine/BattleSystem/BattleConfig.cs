@@ -11,9 +11,7 @@ namespace GameEngine
         [SerializeField] private float _attackAnimTime = 1.5f;
         [SerializeField] private float _powerfulAttackAnimTime = 1.5f;
         [SerializeField] private float _dyingAnimTime = 2f;
-        /*[SerializeField] private float _dodgeAnimTime;*/
         [SerializeField] private float _blockAnimTime = 0.5f;
-        /*[SerializeField] private float _hitAnimTime;*/
         [SerializeField] private float _skipTurnAnimTime = 1f;
         [SerializeField] private float _preparePowerfulAttackAnimTime = 1f;
         

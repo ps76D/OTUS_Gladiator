@@ -50,10 +50,8 @@ namespace UI.Model
             _uiManager.GameBootstrapper.Game.StateMachine.Enter<BattleState>();
             
             _makingService.StartMatch();
-            /*_uiManager.ShowBattleScreen();*/
 
             _uiManager.StartCoroutine(SwitchToBattleScreen());
-
         }
 
         private IEnumerator SwitchToBattleScreen()

@@ -582,6 +582,7 @@ MonoBehaviour:
   _matchMakingService: {fileID: 486572270}
   _battleService: {fileID: 722976859}
   _battleConfig: {fileID: 11400000, guid: cb1c3f8285389a54ba731d9ce829d826, type: 2}
+  _gameConfig: {fileID: 11400000, guid: ca4844753a70648458010fed0a64a8a7, type: 2}
   _messagesDatabase: {fileID: 11400000, guid: 06fb0a3f702e9a546bdb9bc078738280, type: 2}
 --- !u!1 &1143439074916920643
 GameObject:

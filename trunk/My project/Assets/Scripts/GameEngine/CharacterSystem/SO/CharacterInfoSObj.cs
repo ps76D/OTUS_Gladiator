@@ -15,6 +15,9 @@ namespace GameEngine.CharacterSystem
         [SerializeField] private StatsDatabase _statsDatabase;
         
         [SerializeField] private int _maxActionsCount;
+        [SerializeField] private int _rewardForDefeatEnemy;
+        
+        
         public int MaxActionsCount => _maxActionsCount;
 
         public string CharacterGuid => _characterGuid;
@@ -23,6 +26,7 @@ namespace GameEngine.CharacterSystem
         public Sprite CharacterIcon => _characterIcon;
         public Sprite CharacterBattleImage => _characterBattleImage;
         public StatsDatabase StatsDatabase => _statsDatabase;
+        public int RewardForDefeatEnemy => _rewardForDefeatEnemy;
 
     }
 }

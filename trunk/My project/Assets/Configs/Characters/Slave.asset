@@ -20,3 +20,4 @@ MonoBehaviour:
   _characterBattleImage: {fileID: 21300000, guid: f2657dc46b4f04c43a5d9220ad7e8210, type: 3}
   _statsDatabase: {fileID: 11400000, guid: 549018d6bccf97d48aaf82785557ac77, type: 2}
   _maxActionsCount: 3
+  _rewardForDefeatEnemy: 1000
