@@ -18,7 +18,7 @@ namespace GameEngine.CharacterSystem
         private CharacterInfoSObj _characterInfoDefault;
         
         [Inject]
-        private CharacterVisualDatabase _characterVieDatabase;
+        private CharacterVisualDatabase _characterViewDatabase;
         
         private CharacterInfoSObj _currentCharacterInfoSObj;
         
@@ -43,17 +43,19 @@ namespace GameEngine.CharacterSystem
             _currentCharacterInfoSObj = _characterDatabase.CharacterInfoDatabaseSObjs.
                 Find(c => c.CharacterGuid == _currentCharacterProfile.CharacterInfo._guid);
 
-            UpdateCharacterViewImages();
             /*_currentCharacterProfile.CharacterInfo._icon = _currentCharacterInfoSObj.CharacterIcon;
             _currentCharacterProfile.CharacterInfo._battleImage = _currentCharacterInfoSObj.CharacterBattleImage;*/
-            
+
+
             _currentCharacterProfile.CharacterStatsInfo.SetStats(characterData);
 
             _currentCharacterProfile.ActionsService.BaseMaxActionsCount = characterData.BaseMaxActionsCount;
             _currentCharacterProfile.ActionsService.MaxActionsCount.Value = characterData.MaxActionsCount;
             _currentCharacterProfile.ActionsService.AvailableActions.Value = characterData.AvailableActions;
+            
+            UpdateCharacterViewImages();
 
-            _dayService.OnDayChanged += UpdateCharacterViewImages;
+            _currentCharacterProfile.CharacterLevel.OnLevelUp += UpdateCharacterViewImages;
             
             OnCharacterDataChanged?.Invoke(_currentCharacterProfile);
         }
@@ -79,7 +81,7 @@ namespace GameEngine.CharacterSystem
         {
             var level = _currentCharacterProfile.CharacterLevel.CurrentLevel;
 
-            foreach (var view in _characterVieDatabase.CharacterViews)
+            foreach (var view in _characterViewDatabase.CharacterViews)
             {
                 if (level >= view.MaxLevel)
                 {
@@ -92,7 +94,7 @@ namespace GameEngine.CharacterSystem
 
         public void Dispose()
         {
-            _dayService.OnDayChanged -= UpdateCharacterViewImages;
+            _currentCharacterProfile.CharacterLevel.OnLevelUp -= UpdateCharacterViewImages;
         }
     }
 }

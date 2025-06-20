@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using GameEngine;
-using GameEngine.CharacterSystem;
 using GameEngine.MessagesSystem;
 using PlayerProfileSystem;
 using Sirenix.OdinInspector;
@@ -50,7 +49,6 @@ namespace GameManager
             
             _messagesPull.Clear();
             
-            _playerProfile.CharacterService.SetupCharacterViewImages();
             SetPlayerBodyImage();
         }
 

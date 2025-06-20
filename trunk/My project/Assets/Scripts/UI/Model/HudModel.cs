@@ -68,9 +68,10 @@ namespace UI.Model
             _dayService.OnDayChanged += UpdateDayCount;
             _moneyStorage.OnMoneyChanged += UpdateMoneyCount;
             _moneyStorage.OnMoneyChanged += CheckIfMoneyEnoughForRest;
-            characterService.CurrentCharacterProfile.CharacterLevel.OnExperienceChanged += UpdateExp;
-            characterService.CurrentCharacterProfile.CharacterLevel.OnRequiredExperienceChanged += UpdateRequiredExp;
-            characterService.CurrentCharacterProfile.CharacterLevel.OnLevelUp += UpdateLevel;
+            _characterService.CurrentCharacterProfile.CharacterLevel.OnExperienceChanged += UpdateExp;
+            _characterService.CurrentCharacterProfile.CharacterLevel.OnRequiredExperienceChanged += UpdateRequiredExp;
+            _characterService.CurrentCharacterProfile.CharacterLevel.OnLevelUp += UpdateLevel;
+            _characterService.CurrentCharacterProfile.CharacterLevel.OnLevelUp += UpdateIcons;
             
             var levelUpInteractableSubscription = characterService.CurrentCharacterProfile.CharacterLevel.CurrentExperience.
                 Subscribe(count => _levelUpButtonIsInteractable.Value = characterService.CurrentCharacterProfile.CharacterLevel.CanLevelUp());
@@ -94,6 +95,12 @@ namespace UI.Model
             UpdateMoralState(_moralService.CurrentMoral.Value);
 
             CheckIfMoneyEnoughForRest();
+            
+        }
+
+        private void UpdateIcons(int value)
+        {
+            _characterService.SetupCharacterViewImages();
         }
 
         public void EndDay()
@@ -220,6 +227,14 @@ namespace UI.Model
 
         public void Dispose()
         {
+            _dayService.OnDayChanged -= UpdateDayCount;
+            _moneyStorage.OnMoneyChanged -= UpdateMoneyCount;
+            _moneyStorage.OnMoneyChanged -= CheckIfMoneyEnoughForRest;
+            _characterService.CurrentCharacterProfile.CharacterLevel.OnExperienceChanged -= UpdateExp;
+            _characterService.CurrentCharacterProfile.CharacterLevel.OnRequiredExperienceChanged -= UpdateRequiredExp;
+            _characterService.CurrentCharacterProfile.CharacterLevel.OnLevelUp -= UpdateLevel;
+            _characterService.CurrentCharacterProfile.CharacterLevel.OnLevelUp -= UpdateIcons;
+            
             foreach (var disposable in _disposables)
                 disposable.Dispose();
         }
